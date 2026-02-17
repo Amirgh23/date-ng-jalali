@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../core/services/theme.service';
 import { ThemeConfig } from '../../core/models/theme.model';
 
@@ -11,7 +12,7 @@ import { ThemeConfig } from '../../core/models/theme.model';
     <div class="theme-selector">
       <div class="theme-selector-header">
         <h3>انتخاب تم</h3>
-        <button class="close-btn" (click)="close()">×</button>
+        <button *ngIf="showCloseButton" class="close-btn" (click)="close()">×</button>
       </div>
       
       <div class="theme-grid">
@@ -204,17 +205,24 @@ import { ThemeConfig } from '../../core/models/theme.model';
   `]
 })
 export class ThemeSelectorComponent implements OnInit {
+  @Input() showCloseButton = false;
+  @Output() closed = new EventEmitter<void>();
+
   themes: ThemeConfig[];
   currentTheme: ThemeConfig;
+
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(private themeService: ThemeService) { }
 
   ngOnInit() {
     this.themes = this.themeService.getThemes();
     this.currentTheme = this.themeService.getCurrentTheme();
-    this.themeService.currentTheme$.subscribe(theme => {
-      this.currentTheme = theme;
-    });
+    this.themeService.currentTheme$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(theme => {
+        this.currentTheme = theme;
+      });
   }
 
   selectTheme(theme: ThemeConfig) {
@@ -230,6 +238,6 @@ export class ThemeSelectorComponent implements OnInit {
   }
 
   close() {
-    // يمكن إضافة منطق إغلاق المكون
+    this.closed.emit();
   }
 }

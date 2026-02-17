@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../core/services/theme.service';
 import { ColorPalette } from '../../core/models/theme.model';
 
@@ -154,17 +155,23 @@ export class ColorPickerComponent {
   currentPalette: ColorPalette;
   presetPalettes: ColorPalette[];
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(private themeService: ThemeService) {
     this.currentPalette = this.themeService.getCurrentPalette();
     this.presetPalettes = this.themeService.getPresetPalettes(this.themeService.getCurrentTheme().isDark);
 
-    this.themeService.currentTheme$.subscribe(theme => {
-      this.presetPalettes = this.themeService.getPresetPalettes(theme.isDark);
-    });
+    this.themeService.currentTheme$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(theme => {
+        this.presetPalettes = this.themeService.getPresetPalettes(theme.isDark);
+      });
 
-    this.themeService.colorPalette$.subscribe(palette => {
-      this.currentPalette = palette;
-    });
+    this.themeService.colorPalette$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(palette => {
+        this.currentPalette = palette;
+      });
   }
 
   updateColor(key: keyof ColorPalette, event: any) {

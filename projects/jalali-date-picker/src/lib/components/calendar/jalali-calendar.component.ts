@@ -1,8 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JalaliDateService } from '../../core/services/jalali-date.service';
 import { HolidaysService } from '../../core/services/holidays.service';
 import { DayInfo } from '../../core/models/jalali-date.model';
+import { JalaliCalendarUtils } from '../../core/utils/jalali-calendar.utils';
+import { DateRange, SelectionMode } from '../../core/models/jalali-date.model';
 
 @Component({
   selector: 'jalali-calendar',
@@ -48,6 +50,10 @@ import { DayInfo } from '../../core/models/jalali-date.model';
           [class.holiday]="isHoliday(date)"
           [class.weekend]="isWeekend(date)"
           [class.selected]="isSelected(date)"
+          [class.in-range]="isInRange(date)"
+          [class.range-start]="isRangeStart(date)"
+          [class.range-end]="isRangeEnd(date)"
+          [class.disabled]="isDisabled(date)"
           [class.official-holiday]="isOfficialHoliday(date)"
           [class.non-official-holiday]="isNonOfficialHoliday(date)"
           (click)="selectDate(date)">
@@ -184,6 +190,25 @@ import { DayInfo } from '../../core/models/jalali-date.model';
         color: white;
         border-color: var(--primary-color);
       }
+
+      &.in-range {
+        background: rgba(59, 130, 246, 0.12);
+        border-color: rgba(59, 130, 246, 0.25);
+      }
+
+      &.range-start,
+      &.range-end {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      &.disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
+      }
       
       &.holiday {
         border-color: var(--accent-color);
@@ -256,9 +281,14 @@ import { DayInfo } from '../../core/models/jalali-date.model';
     }
   `]
 })
-export class JalaliCalendarComponent implements OnInit {
-  @Input() calendarType: 'jalali' | 'gregorian' = 'jalali';
+export class JalaliCalendarComponent implements OnInit, OnChanges {
+  @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali';
   @Input() selectedDate: Date;
+  @Input() selectionMode: SelectionMode = 'single';
+  @Input() selectedRange: DateRange | null = null;
+  @Input() selectedDates: Date[] = [];
+  @Input() minDate: Date | null = null;
+  @Input() maxDate: Date | null = null;
   @Output() dateSelect = new EventEmitter<Date>();
   @Output() monthChange = new EventEmitter<{ year: number; month: number }>();
 
@@ -277,24 +307,48 @@ export class JalaliCalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.goToToday();
+    this.goToDate(this.selectedDate || this.jalaliDateService.today());
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['calendarType'] && !changes['calendarType'].firstChange) {
+      this.goToDate(this.selectedDate || this.jalaliDateService.today());
+    }
+    if (changes['selectedDate'] && !changes['selectedDate'].firstChange) {
+      this.goToDate(this.selectedDate || this.jalaliDateService.today());
+    }
   }
 
   goToToday() {
-    const today = this.jalaliDateService.today();
+    this.goToDate(this.jalaliDateService.today());
+  }
+
+  goToDate(date: Date) {
+    const target = date;
     if (this.calendarType === 'jalali') {
-      const jalaliDate = this.jalaliDateService.gregorianToJalali(today);
+      const jalaliDate = this.jalaliDateService.gregorianToJalali(target);
       this.currentYear = jalaliDate.year;
       this.currentMonth = jalaliDate.month;
+    } else if (this.calendarType === 'gregorian') {
+      this.currentYear = target.getFullYear();
+      this.currentMonth = target.getMonth() + 1;
     } else {
-      this.currentYear = today.getFullYear();
-      this.currentMonth = today.getMonth() + 1;
+      const hijriDate = this.jalaliDateService.gregorianToHijri(target);
+      this.currentYear = hijriDate.year;
+      this.currentMonth = hijriDate.month;
     }
     this.updateCalendar();
   }
 
   previousMonth() {
     if (this.calendarType === 'jalali') {
+      if (this.currentMonth === 1) {
+        this.currentMonth = 12;
+        this.currentYear--;
+      } else {
+        this.currentMonth--;
+      }
+    } else if (this.calendarType === 'gregorian') {
       if (this.currentMonth === 1) {
         this.currentMonth = 12;
         this.currentYear--;
@@ -320,6 +374,13 @@ export class JalaliCalendarComponent implements OnInit {
       } else {
         this.currentMonth++;
       }
+    } else if (this.calendarType === 'gregorian') {
+      if (this.currentMonth === 12) {
+        this.currentMonth = 1;
+        this.currentYear++;
+      } else {
+        this.currentMonth++;
+      }
     } else {
       if (this.currentMonth === 12) {
         this.currentMonth = 1;
@@ -335,14 +396,34 @@ export class JalaliCalendarComponent implements OnInit {
     if (this.calendarType === 'jalali') {
       this.currentMonthName = this.jalaliDateService.getJalaliMonthName(this.currentMonth);
       this.generateJalaliDates();
-    } else {
+    } else if (this.calendarType === 'gregorian') {
       this.currentMonthName = [
         'ژانویه', 'فوریه', 'مارس', 'آوریل', 'مه', 'ژوئن',
         'ژوئیه', 'اوت', 'سپتامبر', 'اکتبر', 'نوامبر', 'دسامبر'
       ][this.currentMonth - 1];
       this.generateGregorianDates();
+    } else {
+      this.currentMonthName = JalaliCalendarUtils.hijriMonths[this.currentMonth - 1];
+      this.generateHijriDates();
     }
     this.monthChange.emit({ year: this.currentYear, month: this.currentMonth });
+  }
+
+  generateHijriDates() {
+    const daysInMonth = this.jalaliDateService.getDaysInHijriMonth(this.currentYear, this.currentMonth);
+    const firstDay = this.jalaliDateService.getFirstDayOfHijriMonth(this.currentYear, this.currentMonth);
+
+    this.previousMonthEmptyDays = Array(firstDay).fill(0);
+    this.currentMonthDates = [];
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const gregorianDate = this.jalaliDateService.hijriToGregorian(this.currentYear, this.currentMonth, day);
+      this.currentMonthDates.push(gregorianDate);
+    }
+
+    const totalDays = firstDay + daysInMonth;
+    const nextMonthDays = totalDays % 7 === 0 ? 0 : 7 - (totalDays % 7);
+    this.nextMonthEmptyDays = Array(nextMonthDays).fill(0);
   }
 
   generateJalaliDates() {
@@ -379,6 +460,9 @@ export class JalaliCalendarComponent implements OnInit {
   }
 
   selectDate(date: Date) {
+    if (this.isDisabled(date)) {
+      return;
+    }
     this.dateSelect.emit(date);
   }
 
@@ -388,7 +472,51 @@ export class JalaliCalendarComponent implements OnInit {
   }
 
   isSelected(date: Date): boolean {
-    return this.selectedDate && this.jalaliDateService.isSameDay(date, this.selectedDate);
+    if (this.selectionMode === 'multiple') {
+      return (this.selectedDates || []).some(d => this.jalaliDateService.isSameDay(d, date));
+    }
+
+    if (this.selectionMode === 'range') {
+      const start = this.selectedRange?.start;
+      const end = this.selectedRange?.end;
+      return !!(
+        (start && this.jalaliDateService.isSameDay(date, start)) ||
+        (end && this.jalaliDateService.isSameDay(date, end))
+      );
+    }
+
+    return !!(this.selectedDate && this.jalaliDateService.isSameDay(date, this.selectedDate));
+  }
+
+  isInRange(date: Date): boolean {
+    if (this.selectionMode !== 'range') return false;
+    const start = this.selectedRange?.start;
+    const end = this.selectedRange?.end;
+    if (!start || !end) return false;
+    const t = date.getTime();
+    const a = start.getTime();
+    const b = end.getTime();
+    const min = Math.min(a, b);
+    const max = Math.max(a, b);
+    return t > min && t < max;
+  }
+
+  isRangeStart(date: Date): boolean {
+    if (this.selectionMode !== 'range') return false;
+    const start = this.selectedRange?.start;
+    return !!(start && this.jalaliDateService.isSameDay(date, start));
+  }
+
+  isRangeEnd(date: Date): boolean {
+    if (this.selectionMode !== 'range') return false;
+    const end = this.selectedRange?.end;
+    return !!(end && this.jalaliDateService.isSameDay(date, end));
+  }
+
+  isDisabled(date: Date): boolean {
+    if (this.minDate && date.getTime() < this.minDate.getTime()) return true;
+    if (this.maxDate && date.getTime() > this.maxDate.getTime()) return true;
+    return false;
   }
 
   isHoliday(date: Date): boolean {
@@ -411,8 +539,12 @@ export class JalaliCalendarComponent implements OnInit {
     if (this.calendarType === 'jalali') {
       const jalaliDate = this.jalaliDateService.gregorianToJalali(date);
       return jalaliDate.day;
+    } else if (this.calendarType === 'gregorian') {
+      return date.getDate();
+    } else {
+      const hijriDate = this.jalaliDateService.gregorianToHijri(date);
+      return hijriDate.day;
     }
-    return date.getDate();
   }
 }
 

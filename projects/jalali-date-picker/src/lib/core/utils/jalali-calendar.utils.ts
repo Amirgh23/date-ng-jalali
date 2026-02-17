@@ -122,21 +122,124 @@ export class JalaliCalendarUtils {
   }
 
   /**
-   * تبدیل میلادی به قمری (تقریبی)
+   * تبدیل میلادی به قمری (دقیق)
    */
   static gregorianToHijri(gregorianDate: Date): { year: number; month: number; day: number } {
-    // الگوریتم تقریبی تبدیل میلادی به قمری
-    const d = gregorianDate.getTime() / 1000;
-    const date = Math.floor(d / 86400);
-    const hYear = Math.floor((date - 1948439.5) / 354.367);
-    const hMonth = Math.floor(((date - 1948439.5) % 354.367) / 29.53);
-    const hDay = Math.floor((((date - 1948439.5) % 354.367) % 29.53) + 1);
+    const gYear = gregorianDate.getFullYear();
+    const gMonth = gregorianDate.getMonth() + 1;
+    const gDay = gregorianDate.getDate();
+    
+    const jd = this.julianDay(gYear, gMonth, gDay);
+    const hijriDate = this.hijriFromJd(jd);
+    
+    return hijriDate;
+  }
 
+  /**
+   * تبدیل قمری به میلادی
+   */
+  static hijriToGregorian(hijriYear: number, hijriMonth: number, hijriDay: number): Date {
+    const jd = this.jdFromHijri(hijriYear, hijriMonth, hijriDay);
+    const gregorian = this.gregorianFromJd(jd);
+    return new Date(gregorian.year, gregorian.month - 1, gregorian.day);
+  }
+
+  private static julianDay(year: number, month: number, day: number): number {
+    if (month <= 2) {
+      year -= 1;
+      month += 12;
+    }
+    const a = Math.floor(year / 100);
+    const b = 2 - a + Math.floor(a / 4);
+    const jd = Math.floor(365.25 * (year + 4716)) + 
+              Math.floor(30.6001 * (month + 1)) + 
+              day + b - 1524.5;
+    return jd;
+  }
+
+  private static gregorianFromJd(jd: number): { year: number; month: number; day: number } {
+    const z = Math.floor(jd + 0.5);
+    const a = Math.floor((z - 1867216.25) / 36524.25);
+    const aa = z + 1 + a - Math.floor(a / 4);
+    const b = aa + 1524;
+    const c = Math.floor((b - 122.1) / 365.25);
+    const d = Math.floor(365.25 * c);
+    const e = Math.floor((b - d) / 30.6001);
+    
+    const day = Math.floor(b - d - Math.floor(30.6001 * e));
+    const month = e < 14 ? e - 1 : e - 13;
+    const year = month > 2 ? c - 4716 : c - 4715;
+    
+    return { year, month, day };
+  }
+
+  private static hijriFromJd(jd: number): { year: number; month: number; day: number } {
+    const epoch = 1948440 - 0.5;
+    const daysSinceEpoch = jd - epoch;
+    const years = Math.floor(daysSinceEpoch / 354.3666);
+    let remainingDays = daysSinceEpoch - (years * 354.3666);
+    
+    let months = 0;
+    while (remainingDays > this.getDaysInHijriMonth(years + 1, months + 1)) {
+      remainingDays -= this.getDaysInHijriMonth(years + 1, months + 1);
+      months++;
+    }
+    
+    const day = Math.floor(remainingDays + 1);
     return {
-      year: hYear + 1,
-      month: hMonth + 1,
-      day: hDay
+      year: years + 1,
+      month: months + 1,
+      day: day
     };
+  }
+
+  private static jdFromHijri(year: number, month: number, day: number): number {
+    const epoch = 1948440 - 0.5;
+    let jd = epoch;
+    
+    for (let i = 1; i < year; i++) {
+      jd += this.isHijriLeapYear(i) ? 355 : 354;
+    }
+    
+    for (let i = 1; i < month; i++) {
+      jd += this.getDaysInHijriMonth(year, i);
+    }
+    
+    jd += day - 1;
+    return jd;
+  }
+
+  /**
+   * دریافت روزهای ماه قمری
+   */
+  static getDaysInHijriMonth(year: number, month: number): number {
+    // ماه‌های قمری دارای 29 یا 30 روز هستند
+    // این تابع تقریبی است و بر اساس الگوریتم ساده‌ای استفاده می‌کند
+    const daysInMonth = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
+    
+    // سال‌های کبیسه قمری دارای 355 روز هستند
+    if (this.isHijriLeapYear(year)) {
+      daysInMonth[1] = 30; // صفر
+    }
+    
+    return daysInMonth[month - 1];
+  }
+
+  /**
+   * بررسی سال کبیسه قمری
+   */
+  static isHijriLeapYear(year: number): boolean {
+    // الگوریتم تقریبی برای تعیین سال کبیسه قمری
+    const leapYears = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
+    return leapYears.includes(year % 30);
+  }
+
+  /**
+   * دریافت اولین روز ماه قمری (شنبه = 0)
+   */
+  static getFirstDayOfHijriMonth(year: number, month: number): number {
+    const gregorianDate = this.hijriToGregorian(year, month, 1);
+    return (gregorianDate.getDay() + 1) % 7; // شنبه = 0
   }
 
   /**

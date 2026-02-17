@@ -21,6 +21,7 @@ export interface HijriDate {
   month: number;
   day: number;
   monthName: string;
+  dayName: string;
   formatted: string;
 }
 
@@ -34,3 +35,14 @@ export interface DayInfo {
   season: string;
   weekNumber: number;
 }
+
+export type CalendarType = 'jalali' | 'gregorian' | 'hijri';
+
+export interface DateRange {
+  start: Date | null;
+  end: Date | null;
+}
+
+export type SelectionMode = 'single' | 'range' | 'multiple';
+
+export type DatePickerValue = Date | DateRange | Date[] | null;

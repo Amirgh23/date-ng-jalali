@@ -20,6 +20,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         (click)="switchCalendar('gregorian')">
         <span class="label">میلادی</span>
       </button>
+      
+      <div class="switch-divider"></div>
+      
+      <button 
+        class="switch-btn" 
+        [class.active]="calendarType === 'hijri'"
+        (click)="switchCalendar('hijri')">
+        <span class="label">قمری</span>
+      </button>
     </div>
   `,
   styles: [`
@@ -65,10 +74,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   `]
 })
 export class CalendarSwitchComponent {
-  @Input() calendarType: 'jalali' | 'gregorian' = 'jalali';
-  @Output() calendarChange = new EventEmitter<'jalali' | 'gregorian'>();
+  @Input() calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali';
+  @Output() calendarChange = new EventEmitter<'jalali' | 'gregorian' | 'hijri'>();
   
-  switchCalendar(type: 'jalali' | 'gregorian') {
+  switchCalendar(type: 'jalali' | 'gregorian' | 'hijri') {
     this.calendarType = type;
     this.calendarChange.emit(type);
   }

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست تقویم هجری</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .test-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .test-section h2 {
+            color: #667eea;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        .date-display {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #495057;
+            margin: 10px 0;
+        }
+        
+        .calendar-preview {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
+            background: white;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            background: #f8f9fa;
+            transition: all 0.2s;
+        }
+        
+        .calendar-day:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+        
+        .calendar-day.header {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            border: none;
+        }
+        
+        .calendar-day.today {
+            background: #764ba2;
+            color: white;
+            border-color: #764ba2;
+        }
+        
+        .calendar-day.selected {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .calendar-day {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تقویم هجری قمری</h1>
+        
+        <div class="controls">
+            <button onclick="testCurrentDate()">تاریخ امروز</button>
+            <button onclick="testSpecificDate()">تاریخ خاص</button>
+            <button onclick="testLeapYear()">سال کبیسه</button>
+            <button onclick="testMonthDays()">روزهای ماه</button>
+            <button onclick="testPreview()">پیش‌نمایش ماه</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>نتایج:</h2>
+            <div id="results" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // دالت‌های تبدیل تاریخ هجری
+        const HijriMonths = [
+            "محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", 
+            "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", 
+            "رمضان", "شوال", "ذیقعده", "ذیحجه"
+        ];
+        
+        const GregorianMonths = [
+            "ژانویه", "فوریه", "مارس", "آوریل", "مه", "ژوئن",
+            "ژوئیه", "اوت", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"
+        ];
+        
+        // تبدیل تاریخ میلادی به هجری
+        function gregorianToHijri(year, month, day) {
+            const a = Math.floor((14 - month) / 12);
+            const y = year + 4800 - a;
+            const m = month + 12 * a - 3;
+            const jd = day + Math.floor((153 * m + 2) / 5) + 365 * y + 
+                      Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+            
+            const jdHijri = jd - 1948440 + 10632;
+            const n = Math.floor((jdHijri - 1) / 10631);
+            const jdHijri2 = jdHijri - 10631 * n + 354;
+            const j = Math.floor((jdHijri2 - 1) / 10985) + 1;
+            const jdHijri3 = jdHijri2 - 10985 * j + 5420;
+            const mHijri = Math.floor((jdHijri3 - 1) / 354) + 1;
+            const jdHijri4 = jdHijri3 - 354 * mHijri + 353;
+            const dHijri = Math.floor((jdHijri4 - 1) / 29.5) + 1;
+            
+            return {
+                year: 30 * n + j,
+                month: mHijri,
+                day: dHijri
+            };
+        }
+        
+        // تبدیل تاریخ هجری به میلادی
+        function hijriToGregorian(year, month, day) {
+            const n = Math.floor((year - 1) / 30);
+            const j = (year - 1) % 30;
+            const m = month - 1;
+            const d = day - 1;
+            
+            const jd = 1948440 - 10632 + 10631 * n + 10985 * j + 354 * m + 
+                      Math.floor((30 - m) / 11) + d + 5420;
+            
+            const z = Math.floor(jd + 0.5);
+            const a = Math.floor((z - 1867216.25) / 36524.25);
+            const aa = z + 1 + a - Math.floor(a / 4);
+            const b = aa + 1524;
+            const c = Math.floor((b - 122.1) / 365.25);
+            const dGreg = Math.floor(365.25 * c);
+            const e = Math.floor((b - dGreg) / 30.6001);
+            
+            const dayGreg = Math.floor(b - dGreg - Math.floor(30.6001 * e));
+            const monthGreg = e < 14 ? e - 1 : e - 13;
+            const yearGreg = monthGreg > 2 ? c - 4716 : c - 4715;
+            
+            return {
+                year: yearGreg,
+                month: monthGreg,
+                day: dayGreg
+            };
+        }
+        
+        // بررسی سال کبیسه هجری
+        function isHijriLeapYear(year) {
+            const leapYears = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
+            return leapYears.includes(year % 30);
+        }
+        
+        // دریافت تعداد روزهای یک ماه هجری
+        function getHijriMonthDays(year, month) {
+            if (month === 2) {
+                return isHijriLeapYear(year) ? 30 : 29;
+            }
+            return month % 2 === 1 ? 30 : 29;
+        }
+        
+        // دریافت نام ماه هجری
+        function getHijriMonthName(month) {
+            return HijriMonths[month - 1];
+        }
+        
+        // دریافت نام ماه میلادی
+        function getGregorianMonthName(month) {
+            return GregorianMonths[month - 1];
+        }
+        
+        // تست تاریخ امروز
+        function testCurrentDate() {
+            const now = new Date();
+            const hijriDate = gregorianToHijri(now.getFullYear(), now.getMonth() + 1, now.getDate());
+            const result = `
+تاریخ میلادی: ${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()} (${getGregorianMonthName(now.getMonth() + 1)})
+تاریخ هجری: ${hijriDate.year}/${hijriDate.month}/${hijriDate.day} (${getHijriMonthName(hijriDate.month)})
+            `;
+            showResult(result, 'success');
+        }
+        
+        // تست تاریخ خاص
+        function testSpecificDate() {
+            const year = prompt('ورود سال میلادی (مثال: 2024):', '2024');
+            const month = prompt('ورود ماه میلادی (1-12):', '1');
+            const day = prompt('ورود روز میلادی (1-31):', '1');
+            
+            if (!year || !month || !day) {
+                showResult('ورودی نامعتبر', 'error');
+                return;
+            }
+            
+            const hijriDate = gregorianToHijri(parseInt(year), parseInt(month), parseInt(day));
+            const result = `
+تاریخ میلادی: ${year}/${month}/${day} (${getGregorianMonthName(parseInt(month))})

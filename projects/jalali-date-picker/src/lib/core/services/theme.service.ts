@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ThemeConfig, ColorPalette, THEMES, DEFAULT_THEME, DEFAULT_PALETTE, DEFAULT_DARK_PALETTE, PRESET_PALETTES, PRESET_DARK_PALETTES } from '../models/theme.model';
+import {
+  ALL_THEMES,
+  ColorPalette,
+  DEFAULT_DARK_PALETTE,
+  DEFAULT_PALETTE,
+  DEFAULT_THEME,
+  PRESET_DARK_PALETTES,
+  PRESET_PALETTES,
+  ThemeConfig,
+} from '../models/theme.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,25 +29,47 @@ export class ThemeService {
    * بارگذاری تنظیمات از localStorage
    */
   loadSavedSettings() {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
+
     const savedTheme = localStorage.getItem('jalali-datepicker-theme');
     const savedPalette = localStorage.getItem('jalali-datepicker-palette');
 
+    // Theme is persisted primarily by name (string). We also accept the older JSON form.
     if (savedTheme) {
       try {
-        const parsed = JSON.parse(savedTheme);
-        this.setTheme(parsed);
-      } catch (error) {
-        console.error('Invalid theme configuration in localStorage:', error);
+        let themeName: string | null = null;
+        if (savedTheme.trim().startsWith('{')) {
+          const parsed = JSON.parse(savedTheme) as Partial<ThemeConfig>;
+          themeName = typeof parsed?.name === 'string' ? parsed.name : null;
+        } else {
+          themeName = savedTheme;
+        }
+
+        if (themeName) {
+          const found = ALL_THEMES.find(t => t.name === themeName);
+          if (found) {
+            this.currentTheme.next(found);
+          }
+        }
+      } catch {
+        // If localStorage is corrupted, ignore and keep defaults.
       }
     }
 
     if (savedPalette) {
       try {
-        const parsed = JSON.parse(savedPalette);
-        this.setPalette(parsed);
-      } catch (error) {
-        console.error('Invalid color palette in localStorage:', error);
+        const parsed = JSON.parse(savedPalette) as ColorPalette;
+        if (parsed && typeof parsed.primary === 'string') {
+          this.colorPalette.next(parsed);
+        }
+      } catch {
+        // ignore
       }
+    } else {
+      // Ensure palette follows the theme by default.
+      this.colorPalette.next(this.currentTheme.value.colors);
     }
   }
 
@@ -47,8 +78,12 @@ export class ThemeService {
    */
   setTheme(theme: ThemeConfig) {
     this.currentTheme.next(theme);
-    localStorage.setItem('jalali-datepicker-theme', JSON.stringify(theme));
-    this.applyTheme(theme);
+    this.colorPalette.next(theme.colors);
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('jalali-datepicker-theme', theme.name);
+      localStorage.setItem('jalali-datepicker-palette', JSON.stringify(theme.colors));
+    }
   }
 
   /**
@@ -56,8 +91,9 @@ export class ThemeService {
    */
   setPalette(palette: ColorPalette) {
     this.colorPalette.next(palette);
-    localStorage.setItem('jalali-datepicker-palette', JSON.stringify(palette));
-    this.applyPalette(palette);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('jalali-datepicker-palette', JSON.stringify(palette));
+    }
   }
 
   /**
@@ -78,7 +114,7 @@ export class ThemeService {
    * دریافت لیست تم‌های پیشرفته
    */
   getThemes(): ThemeConfig[] {
-    return THEMES;
+    return ALL_THEMES;
   }
 
   /**
@@ -95,12 +131,11 @@ export class ThemeService {
     const current = this.getCurrentTheme();
     if (current.isDark) {
       // تغییر به تم روشن
-      const lightTheme = THEMES.find(t => t.name === 'light') || DEFAULT_THEME;
+      const lightTheme = ALL_THEMES.find(t => t.name === 'light') || DEFAULT_THEME;
       this.setTheme(lightTheme);
-      this.setPalette(DEFAULT_PALETTE);
     } else {
       // تغییر به تم تاریک
-      const darkTheme = THEMES.find(t => t.name === 'dark') || {
+      const darkTheme = ALL_THEMES.find(t => t.name === 'dark') || {
         ...DEFAULT_THEME,
         name: 'dark',
         displayName: 'تم تاریک',
@@ -108,38 +143,7 @@ export class ThemeService {
         colors: DEFAULT_DARK_PALETTE
       };
       this.setTheme(darkTheme);
-      this.setPalette(DEFAULT_DARK_PALETTE);
     }
-  }
-
-  /**
-   * اعمال تم به DOM
-   */
-  private applyTheme(theme: ThemeConfig) {
-    const root = document.documentElement;
-    root.setAttribute('data-theme', theme.name);
-
-    // اضافه/حذف کلاس dark-mode
-    if (theme.isDark) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-
-    // اعمال رنگ‌های تم به CSS variables
-    this.applyPalette(theme.colors);
-  }
-
-  /**
-   * اعمال رنگ‌ها به DOM
-   */
-  private applyPalette(palette: ColorPalette) {
-    const root = document.documentElement;
-    root.style.setProperty('--primary-color', palette.primary);
-    root.style.setProperty('--secondary-color', palette.secondary);
-    root.style.setProperty('--accent-color', palette.accent);
-    root.style.setProperty('--background', palette.background);
-    root.style.setProperty('--text-color', palette.text);
   }
 
   /**

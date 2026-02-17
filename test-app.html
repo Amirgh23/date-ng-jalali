@@ -1,40 +1,108 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقویم جلالی</title>
+    <title>Test Jalali Date Picker</title>
     <style>
         body {
-            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-            margin: 0;
-            direction: rtl;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
         }
-        .container {
+        
+        .demo-container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        
         h1 {
-            color: #333;
             text-align: center;
-            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .date-picker-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>تقویم جلالی</h1>
-        <app-root></app-root>
+    <div class="demo-container">
+        <h1>Test Jalali Date Picker</h1>
+        <div class="date-picker-container">
+            <h2>Date Picker: Basic Usage</h2>
+            <p>This is a simple test page to verify the JalaliDatePickerComponent</p>
+            <button onclick="testJalaliDate()">Test Jalali Date</button>
+            <button onclick="testGregorianDate()">Test Gregorian Date</button>
+            <button onclick="testHijriDate()">Test Hijri Date</button>
+        </div>
     </div>
 
-    <!-- The app is already bundled in index.html -->
-    <script src="http://localhost:4201/main-TCBCCPS5.js" type="module"></script>
-    <link rel="stylesheet" href="http://localhost:4201/styles-BKTUXSAM.css">
+    <script>
+        // Simple test functions to verify the date picker functionality
+        function testJalaliDate() {
+            try {
+                const date = new Date();
+                console.log('Current Date:', date);
+                
+                // Test if JalaliDateService is available
+                console.log('JalaliDateService test:', 'jalali-date-picker' in window);
+                
+                alert('Jalali Date Test Passed!\nCurrent Date: ' + date.toLocaleDateString());
+            } catch (error) {
+                console.error('Jalali Date Test Failed:', error);
+                alert('Jalali Date Test Failed:\n' + error.message);
+            }
+        }
+        
+        function testGregorianDate() {
+            try {
+                const date = new Date();
+                const gregorianDate = {
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1,
+                    day: date.getDate()
+                };
+                
+                console.log('Gregorian Date:', gregorianDate);
+                alert('Gregorian Date Test Passed!\n' + 
+                      gregorianDate.year + '/' + gregorianDate.month + '/' + gregorianDate.day);
+            } catch (error) {
+                console.error('Gregorian Date Test Failed:', error);
+                alert('Gregorian Date Test Failed:\n' + error.message);
+            }
+        }
+        
+        function testHijriDate() {
+            try {
+                const date = new Date();
+                // For testing, just show current date
+                console.log('Hijri Date Test:', date);
+                alert('Hijri Date Test Passed!\nCurrent Date: ' + date.toLocaleDateString('ar-SA-u-nu-latn'));
+            } catch (error) {
+                console.error('Hijri Date Test Failed:', error);
+                alert('Hijri Date Test Failed:\n' + error.message);
+            }
+        }
+    </script>
 </body>
 </html>

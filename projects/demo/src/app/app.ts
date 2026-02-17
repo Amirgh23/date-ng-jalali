@@ -11,7 +11,7 @@ import { JalaliDatePickerComponent } from 'jalali-date-picker';
   styleUrls: ['./app.scss']
 })
 export class AppComponent {
-  title = 'تقویم جلالی انگولار';
+  title = 'تقویم جلالی ';
   selectedDate: Date = new Date();
 
   onDateSelect(date: Date) {

@@ -47,8 +47,30 @@ export class JalaliDateService {
       month: hijriDate.month,
       day: hijriDate.day,
       monthName: JalaliCalendarUtils.hijriMonths[hijriDate.month - 1],
+      dayName: JalaliCalendarUtils.getJalaliDayName(gregorianDate.getDay()),
       formatted: JalaliCalendarUtils.formatHijriDate(hijriDate)
     };
+  }
+
+  /**
+   * دریافت روزهای ماه قمری
+   */
+  getDaysInHijriMonth(year: number, month: number): number {
+    return JalaliCalendarUtils.getDaysInHijriMonth(year, month);
+  }
+
+  /**
+   * دریافت اولین روز ماه قمری
+   */
+  getFirstDayOfHijriMonth(year: number, month: number): number {
+    return JalaliCalendarUtils.getFirstDayOfHijriMonth(year, month);
+  }
+
+  /**
+   * تبدیل قمری به میلادی
+   */
+  hijriToGregorian(hijriYear: number, hijriMonth: number, hijriDay: number): Date {
+    return JalaliCalendarUtils.hijriToGregorian(hijriYear, hijriMonth, hijriDay);
   }
 
   /**
