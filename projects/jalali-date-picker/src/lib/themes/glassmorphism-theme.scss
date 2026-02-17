@@ -1,0 +1,116 @@
+/* Glassmorphism theme with blur and transparency effects */
+
+[data-theme="glassmorphism"] {
+  --primary-color: #6366f1;
+  --secondary-color: #8b5cf6;
+  --accent-color: #ec4899;
+  --background: rgba(255, 255, 255, 0.1);
+  --background-light: rgba(255, 255, 255, 0.15);
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --blur-effect: blur(10px);
+  
+  .calendar-container {
+    background: var(--background);
+    backdrop-filter: var(--blur-effect);
+    border-radius: 16px;
+    border: var(--border-color);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendar-popup {
+    background: var(--background);
+    backdrop-filter: var(--blur-effect);
+    border: var(--border-color);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .date-input {
+    background: var(--background);
+    backdrop-filter: var(--blur-effect);
+    border: var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    
+    &:focus {
+      backdrop-filter: blur(15px);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+  }
+  
+  .calendar-day {
+    background: var(--background-light);
+    backdrop-filter: var(--blur-effect);
+    border: var(--border-color);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn {
+    background: var(--background-light);
+    backdrop-filter: var(--blur-effect);
+    border: var(--border-color);
+    color: var(--text-color);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+    }
+  }
+  
+  .today-btn {
+    background: var(--primary-color);
+    backdrop-filter: var(--blur-effect);
+    color: white;
+    border: none;
+    
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+  
+  .selected {
+    background: var(--primary-color);
+    backdrop-filter: var(--blur-effect);
+    color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .holiday {
+    background: rgba(236, 72, 153, 0.1);
+    backdrop-filter: var(--blur-effect);
+    border-color: var(--accent-color);
+  }
+  
+  .official-holiday {
+    background: rgba(99, 102, 241, 0.15);
+    backdrop-filter: var(--blur-effect);
+    border-color: var(--primary-color);
+  }
+  
+  .holiday-dot {
+    background: var(--accent-color);
+  }
+  
+  /* Glassmorphism effect for modal */
+  .modal-content {
+    background: var(--background);
+    backdrop-filter: var(--blur-effect);
+    border: var(--border-color);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-overlay {
+    backdrop-filter: blur(5px);
+  }
+}

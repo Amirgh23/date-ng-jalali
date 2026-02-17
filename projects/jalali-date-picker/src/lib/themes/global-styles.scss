@@ -1,0 +1,58 @@
+/* Global styles for Jalali Date Picker */
+
+:root {
+  /* Default variables */
+  --primary-color: #3b82f6;
+  --secondary-color: #6366f1;
+  --accent-color: #f59e0b;
+  --background: #ffffff;
+  --background-light: #f8fafc;
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+}
+
+/* Dark mode variables */
+.dark-mode {
+  --background: #1f2937;
+  --background-light: #374151;
+  --text-color: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-color: #4b5563;
+}
+
+/* Common styles */
+.jalali-date-picker {
+  font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Calendar day hover effect */
+.calendar-day:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .jalali-date-picker {
+    font-size: 14px;
+  }
+  
+  .calendar-container {
+    padding: 12px;
+  }
+  
+  .calendar-days {
+    gap: 4px;
+  }
+}

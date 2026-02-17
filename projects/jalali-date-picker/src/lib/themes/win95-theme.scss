@@ -1,0 +1,168 @@
+/* Windows 95 retro theme with classic styling */
+
+[data-theme="win95"] {
+  --primary-color: #000080;
+  --secondary-color: #808080;
+  --accent-color: #ff0000;
+  --background: #c0c0c0;
+  --background-light: #d0d0d0;
+  --text-color: #000000;
+  --text-muted: #666666;
+  --border-outset: 2px outset #ffffff;
+  --border-inset: 2px inset #808080;
+  
+  .calendar-container {
+    background: var(--background);
+    border: var(--border-outset);
+    box-shadow: none;
+    padding: 8px;
+  }
+  
+  .calendar-popup {
+    background: var(--background);
+    border: var(--border-outset);
+    box-shadow: none;
+    padding: 8px;
+  }
+  
+  .date-input {
+    background: var(--background);
+    border: var(--border-outset);
+    color: var(--text-color);
+    font-family: 'Microsoft Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    padding: 2px 4px;
+    
+    &:focus {
+      border: var(--border-inset);
+      outline: none;
+    }
+    
+    &:active {
+      border: var(--border-inset);
+    }
+  }
+  
+  .calendar-day {
+    background: var(--background);
+    border: var(--border-outset);
+    color: var(--text-color);
+    transition: all 0.1s;
+    font-family: 'Microsoft Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    
+    &:hover {
+      background: var(--background-light);
+    }
+    
+    &:active {
+      border: var(--border-inset);
+    }
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn,
+  .today-btn {
+    background: var(--background);
+    border: var(--border-outset);
+    color: var(--text-color);
+    font-family: 'Microsoft Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    padding: 2px 8px;
+    
+    &:hover {
+      background: var(--background-light);
+    }
+    
+    &:active {
+      border: var(--border-inset);
+    }
+  }
+  
+  .selected {
+    background: var(--primary-color);
+    color: white;
+    border: var(--border-outset);
+    
+    &:active {
+      border: var(--border-inset);
+    }
+  }
+  
+  .holiday {
+    background: var(--accent-color);
+    color: white;
+    border: var(--border-outset);
+  }
+  
+  .official-holiday {
+    background: var(--primary-color);
+    color: white;
+    border: var(--border-outset);
+  }
+  
+  .holiday-dot {
+    background: var(--accent-color);
+  }
+  
+  /* Window title bar style */
+  .modal-header {
+    background: var(--primary-color);
+    color: white;
+    border: var(--border-outset);
+    padding: 2px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: var(--background);
+    border: var(--border-outset);
+    box-shadow: none;
+  }
+  
+  .modal-overlay {
+    background: #c0c0c0;
+  }
+  
+  /* Retro button style */
+  button {
+    font-family: 'Microsoft Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    cursor: default;
+  }
+  
+  /* Window style elements */
+  .calendar-header,
+  .theme-panel {
+    border-bottom: var(--border-inset);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+  }
+  
+  .calendar-days {
+    gap: 2px;
+  }
+  
+  /* Classic scrollbar */
+  ::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+    border: var(--border-outset);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--background);
+    border: var(--border-outset);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--background-light);
+  }
+}

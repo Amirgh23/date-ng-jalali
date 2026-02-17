@@ -1,0 +1,160 @@
+/* Minimal theme with clean, modern design */
+
+[data-theme="minimal"] {
+  --primary-color: #3b82f6;
+  --secondary-color: #6366f1;
+  --accent-color: #f59e0b;
+  --background: #ffffff;
+  --background-light: #f8fafc;
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  
+  .calendar-container {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendar-popup {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .date-input {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 16px;
+    padding: 10px 16px;
+    
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      outline: none;
+    }
+  }
+  
+  .calendar-day {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    transition: all 0.2s;
+    font-size: 14px;
+    
+    &:hover {
+      background: var(--background-light);
+      border-color: var(--primary-color);
+    }
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 14px;
+    padding: 8px;
+    
+    &:hover {
+      background: var(--background-light);
+      border-color: var(--primary-color);
+    }
+  }
+  
+  .today-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    padding: 8px 16px;
+    
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+  
+  .selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .holiday {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+  
+  .official-holiday {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  .holiday-dot {
+    background: var(--accent-color);
+  }
+  
+  /* Clean typography */
+  h3,
+  h4,
+  h5 {
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-color);
+  }
+  
+  .current-month {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .current-year {
+    font-size: 18px;
+    color: var(--text-muted);
+  }
+  
+  /* Clean borders and shadows */
+  .calendar-header,
+  .theme-panel {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .calendar-days {
+    gap: 4px;
+  }
+  
+  /* Smooth transitions */
+  * {
+    transition: all 0.2s ease;
+  }
+  
+  /* Modern scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--background-light);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+}

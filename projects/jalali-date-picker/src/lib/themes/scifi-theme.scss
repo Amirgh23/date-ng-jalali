@@ -1,0 +1,106 @@
+/* Sci-Fi theme with neon effects and glow animations */
+
+[data-theme="scifi"] {
+  --primary-color: #00ffff;
+  --secondary-color: #ff00ff;
+  --accent-color: #ffff00;
+  --background: rgba(0, 20, 40, 0.9);
+  --background-light: rgba(0, 30, 60, 0.8);
+  --text-color: #ffffff;
+  --text-muted: #a0a0a0;
+  --border-color: rgba(0, 255, 255, 0.3);
+  --glow-effect: 0 0 10px var(--primary-color);
+  --border-glow: 1px solid var(--primary-color);
+  
+  .calendar-day {
+    border: var(--border-glow);
+    box-shadow: var(--glow-effect);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 0 20px var(--primary-color);
+      transform: scale(1.1);
+    }
+  }
+  
+  .date-input {
+    background: rgba(0, 20, 40, 0.8);
+    border: var(--border-glow);
+    box-shadow: var(--glow-effect);
+    color: var(--primary-color);
+    
+    &:focus {
+      box-shadow: 0 0 15px var(--primary-color);
+      border-color: var(--secondary-color);
+    }
+  }
+  
+  .calendar-popup {
+    background: rgba(0, 20, 40, 0.95);
+    border: var(--border-glow);
+    box-shadow: 0 0 20px var(--primary-color);
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn {
+    background: rgba(0, 30, 60, 0.8);
+    border: var(--border-glow);
+    color: var(--primary-color);
+    
+    &:hover {
+      background: rgba(255, 0, 255, 0.2);
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 10px var(--secondary-color);
+    }
+  }
+  
+  .today-btn {
+    background: var(--primary-color);
+    color: #000;
+    border: none;
+    
+    &:hover {
+      background: var(--secondary-color);
+      color: #fff;
+    }
+  }
+  
+  .selected {
+    background: var(--secondary-color);
+    color: #000;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
+  }
+  
+  .holiday {
+    background: rgba(255, 0, 255, 0.2);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+  }
+  
+  .official-holiday {
+    background: rgba(0, 255, 255, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+  }
+  
+  .holiday-dot {
+    background: var(--accent-color);
+    box-shadow: 0 0 5px var(--accent-color);
+  }
+  
+  /* Neon animation */
+  @keyframes neon-pulse {
+    0%, 100% {
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+    50% {
+      box-shadow: 0 0 20px var(--primary-color);
+    }
+  }
+  
+  .calendar-container {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+}

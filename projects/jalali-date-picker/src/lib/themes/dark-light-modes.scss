@@ -1,0 +1,200 @@
+/* Dark and Light mode styles */
+
+/* Dark mode */
+[data-theme="dark"] {
+  --primary-color: #60a5fa;
+  --secondary-color: #818cf8;
+  --accent-color: #fbbf24;
+  --background: #1f2937;
+  --background-light: #374151;
+  --text-color: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-color: #4b5563;
+  
+  .calendar-container,
+  .calendar-popup,
+  .modal-content {
+    background: var(--background);
+    border-color: var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .date-input {
+    background: var(--background);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+    }
+  }
+  
+  .calendar-day {
+    background: var(--background);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    
+    &:hover {
+      background: var(--background-light);
+      border-color: var(--primary-color);
+    }
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn {
+    background: var(--background);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    
+    &:hover {
+      background: var(--background-light);
+      border-color: var(--primary-color);
+    }
+  }
+  
+  .today-btn {
+    background: var(--primary-color);
+    color: #1f2937;
+    
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+  
+  .selected {
+    background: var(--primary-color);
+    color: #1f2937;
+    border-color: var(--primary-color);
+  }
+  
+  .holiday {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+  
+  .official-holiday {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Light mode */
+[data-theme="light"] {
+  --primary-color: #3b82f6;
+  --secondary-color: #6366f1;
+  --accent-color: #f59e0b;
+  --background: #ffffff;
+  --background-light: #f8fafc;
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  
+  .calendar-container,
+  .calendar-popup,
+  .modal-content {
+    background: var(--background);
+    border-color: var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .date-input {
+    background: var(--background);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+  
+  .calendar-day {
+    background: var(--background);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    
+    &:hover {
+      background: var(--background-light);
+      border-color: var(--primary-color);
+    }
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn {
+    background: var(--background);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    
+    &:hover {
+      background: var(--background-light);
+      border-color: var(--primary-color);
+    }
+  }
+  
+  .today-btn {
+    background: var(--primary-color);
+    color: white;
+    
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+  
+  .selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .holiday {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+  
+  .official-holiday {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Responsive light/dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primary-color: #60a5fa;
+    --secondary-color: #818cf8;
+    --accent-color: #fbbf24;
+    --background: #1f2937;
+    --background-light: #374151;
+    --text-color: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-color: #4b5563;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --primary-color: #3b82f6;
+    --secondary-color: #6366f1;
+    --accent-color: #f59e0b;
+    --background: #ffffff;
+    --background-light: #f8fafc;
+    --text-color: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+  }
+}

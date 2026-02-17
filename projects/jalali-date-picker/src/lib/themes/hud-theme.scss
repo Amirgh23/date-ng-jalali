@@ -1,0 +1,154 @@
+/* HUD theme with green scanline effects */
+
+[data-theme="hud"] {
+  --primary-color: #00ff00;
+  --secondary-color: #00cc00;
+  --accent-color: #ffff00;
+  --background: rgba(0, 10, 0, 0.8);
+  --background-light: rgba(0, 20, 0, 0.7);
+  --text-color: #00ff00;
+  --text-muted: #00cc00;
+  --border-color: #00ff00;
+  --scanline: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 0, 0.1) 2px,
+    rgba(0, 255, 0, 0.1) 4px
+  );
+  
+  .calendar-container {
+    background: var(--background);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--scanline);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+  
+  .calendar-popup {
+    background: var(--background);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--scanline);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+  
+  .date-input {
+    background: var(--background);
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    
+    &:focus {
+      box-shadow: 0 0 10px var(--primary-color);
+      border-color: var(--accent-color);
+    }
+  }
+  
+  .calendar-day {
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    transition: all 0.2s;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    
+    &:hover {
+      background: rgba(0, 255, 0, 0.2);
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    }
+  }
+  
+  .theme-btn,
+  .date-input-btn,
+  .nav-btn {
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    
+    &:hover {
+      background: rgba(0, 255, 0, 0.2);
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    }
+  }
+  
+  .today-btn {
+    background: var(--primary-color);
+    color: #000;
+    border: none;
+    font-weight: bold;
+    
+    &:hover {
+      background: var(--accent-color);
+      color: #000;
+    }
+  }
+  
+  .selected {
+    background: var(--primary-color);
+    color: #000;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+  }
+  
+  .holiday {
+    background: rgba(255, 0, 0, 0.2);
+    border-color: #ff0000;
+    color: #ff0000;
+  }
+  
+  .official-holiday {
+    background: rgba(0, 255, 0, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  }
+  
+  .holiday-dot {
+    background: var(--accent-color);
+  }
+  
+  /* Digital font style */
+  .current-month,
+  .current-year,
+  .day-number {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+  }
+  
+  /* CRT effect */
+  @keyframes crt-flicker {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.95;
+    }
+  }
+  
+  .calendar-container,
+  .calendar-popup {
+    animation: crt-flicker 0.1s infinite;
+  }
+}
