@@ -1,154 +1,187 @@
-/* HUD theme with green scanline effects */
+// HUD Theme (Heads-Up Display)
+// تم نمایش سر
 
-[data-theme="hud"] {
-  --primary-color: #00ff00;
-  --secondary-color: #00cc00;
-  --accent-color: #ffff00;
-  --background: rgba(0, 10, 0, 0.8);
-  --background-light: rgba(0, 20, 0, 0.7);
-  --text-color: #00ff00;
-  --text-muted: #00cc00;
-  --border-color: #00ff00;
-  --scanline: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 255, 0, 0.1) 2px,
-    rgba(0, 255, 0, 0.1) 4px
-  );
-  
-  .calendar-container {
-    background: var(--background);
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--scanline);
-      pointer-events: none;
-      z-index: 1;
-    }
-  }
-  
-  .calendar-popup {
-    background: var(--background);
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--scanline);
-      pointer-events: none;
-      z-index: 1;
-    }
-  }
-  
-  .date-input {
-    background: var(--background);
-    border: 2px solid var(--primary-color);
-    color: var(--text-color);
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+[data-theme='hud'] {
+  --color-primary: #00ff00;
+  --color-secondary: #00cc00;
+  --color-accent: #ffff00;
+  --color-background: #000000;
+  --color-surface: #0a0a0a;
+  --color-text: #00ff00;
+  --color-textSecondary: #00cc00;
+  --color-border: #00ff00;
+  --color-success: #00ff00;
+  --color-warning: #ffff00;
+  --color-error: #ff0000;
+  --color-info: #00ffff;
+
+  // Font
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+
+  // Background with CRT effect
+  background: #000000;
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
+
+  // Text glow
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3);
+
+  // Borders
+  border-color: #00ff00;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #0a0a0a;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
     font-family: 'Courier New', monospace;
-    font-weight: bold;
-    
+    letter-spacing: 0.05em;
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
+
     &:focus {
-      box-shadow: 0 0 10px var(--primary-color);
-      border-color: var(--accent-color);
+      border-color: #00ffff;
+      box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1), 0 0 20px rgba(0, 255, 0, 0.8);
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    }
+
+    &::placeholder {
+      color: #00cc00;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
     }
   }
-  
-  .calendar-day {
-    background: var(--background-light);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
+
+  // Buttons
+  button {
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    background-color: transparent;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
     transition: all 0.2s;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
+
     &:hover {
-      background: rgba(0, 255, 0, 0.2);
-      box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+      background-color: rgba(0, 255, 0, 0.1);
+      box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1), 0 0 20px rgba(0, 255, 0, 0.8);
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    }
+
+    &:active {
+      background-color: rgba(0, 255, 0, 0.2);
     }
   }
-  
-  .theme-btn,
-  .date-input-btn,
-  .nav-btn {
-    background: var(--background-light);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    
+
+  // Links
+  a {
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+
     &:hover {
-      background: rgba(0, 255, 0, 0.2);
-      box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
     }
   }
-  
-  .today-btn {
-    background: var(--primary-color);
-    color: #000;
-    border: none;
-    font-weight: bold;
-    
-    &:hover {
-      background: var(--accent-color);
-      color: #000;
+
+  // Calendar specific
+  .jalali-calendar {
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1);
+    background: #000000;
+
+    .calendar-header {
+      border-bottom: 2px solid #00ff00;
+      background: linear-gradient(90deg, rgba(0, 255, 0, 0.1), transparent);
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      transition: all 0.2s;
+      background: transparent;
+
+      &:hover {
+        background-color: rgba(0, 255, 0, 0.1);
+        box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
+      }
+
+      &.selected {
+        background-color: rgba(0, 255, 0, 0.2);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.2);
+        border: 2px solid #00ff00;
+      }
+
+      &.today {
+        border: 2px solid #00ffff;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
     }
   }
-  
-  .selected {
-    background: var(--primary-color);
-    color: #000;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 10px var(--accent-color);
+
+  // CRT Scanlines animation
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+      0deg,
+      transparent 24%,
+      rgba(0, 255, 0, 0.05) 25%,
+      rgba(0, 255, 0, 0.05) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(0, 255, 0, 0.05) 75%,
+      rgba(0, 255, 0, 0.05) 76%,
+      transparent 77%,
+      transparent
+    );
+    background-size: 100% 4px;
+    animation: scanLines 8s linear infinite;
+    z-index: 1;
   }
-  
-  .holiday {
-    background: rgba(255, 0, 0, 0.2);
-    border-color: #ff0000;
-    color: #ff0000;
+}
+
+// HUD Animations
+@keyframes scanLines {
+  0% {
+    transform: translateY(0);
   }
-  
-  .official-holiday {
-    background: rgba(0, 255, 0, 0.3);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  100% {
+    transform: translateY(10px);
   }
-  
-  .holiday-dot {
-    background: var(--accent-color);
+}
+
+@keyframes hudPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
   }
-  
-  /* Digital font style */
-  .current-month,
-  .current-year,
-  .day-number {
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
+  50% {
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
   }
-  
-  /* CRT effect */
-  @keyframes crt-flicker {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.95;
-    }
+}
+
+[data-theme='hud'] .hud-pulse {
+  animation: hudPulse 2s ease-in-out infinite;
+}
+
+// Radar effect
+@keyframes radar {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .calendar-container,
-  .calendar-popup {
-    animation: crt-flicker 0.1s infinite;
+  100% {
+    transform: rotate(360deg);
   }
+}
+
+[data-theme='hud'] .radar {
+  animation: radar 4s linear infinite;
 }

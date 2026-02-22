@@ -1,0 +1,137 @@
+// ============================================
+// Lara Dark Blue Theme
+// PrimeNG-inspired dark theme for Jalali Date Picker
+// ============================================
+
+@use '../base/variables' as *;
+@use '../base/css-variables';
+@use '../base/layers';
+@use '../base/mixins' as *;
+
+// Dark theme color overrides
+$surface-0: #1e293b;
+$surface-50: #334155;
+$surface-100: #475569;
+$surface-200: #64748b;
+$surface-300: #94a3b8;
+$surface-400: #cbd5e1;
+$surface-500: #e2e8f0;
+$surface-600: #f1f5f9;
+$surface-700: #f8fafc;
+$surface-800: #ffffff;
+$surface-900: #ffffff;
+
+$text-color: #f1f5f9;
+$text-color-secondary: #cbd5e1;
+$text-color-muted: #94a3b8;
+$border-color: #475569;
+
+$primary-500: #60a5fa;
+$primary-600: #3b82f6;
+$primary-700: #2563eb;
+
+// Apply dark theme CSS variables
+:root[data-theme="dark"],
+:root[data-theme="lara-dark-blue"],
+.jdp-theme-dark {
+  // Surface colors
+  --jdp-surface-0: #{$surface-0};
+  --jdp-surface-50: #{$surface-50};
+  --jdp-surface-100: #{$surface-100};
+  --jdp-surface-200: #{$surface-200};
+  --jdp-surface-300: #{$surface-300};
+  --jdp-surface-400: #{$surface-400};
+  --jdp-surface-500: #{$surface-500};
+  --jdp-surface-600: #{$surface-600};
+  --jdp-surface-700: #{$surface-700};
+  --jdp-surface-800: #{$surface-800};
+  --jdp-surface-900: #{$surface-900};
+  
+  // Text colors
+  --jdp-text-color: #{$text-color};
+  --jdp-text-color-secondary: #{$text-color-secondary};
+  --jdp-text-color-muted: #{$text-color-muted};
+  
+  // Border
+  --jdp-border-color: #{$border-color};
+  
+  // Primary colors
+  --jdp-primary-500: #{$primary-500};
+  --jdp-primary-600: #{$primary-600};
+  --jdp-primary-700: #{$primary-700};
+  
+  // Shadows (darker for dark theme)
+  --jdp-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --jdp-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --jdp-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --jdp-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+// Component styles in the components layer
+@layer jdp-components {
+  
+  // Dark theme specific adjustments
+  :root[data-theme="dark"],
+  :root[data-theme="lara-dark-blue"],
+  .jdp-theme-dark {
+    
+    .jdp-calendar {
+      
+      &-day-cell {
+        
+        &:hover:not(.jdp-calendar-day-cell--disabled):not(.jdp-calendar-day-cell--other-month) {
+          background: var(--jdp-surface-100);
+        }
+        
+        &--today {
+          background: rgba(96, 165, 250, 0.15);
+        }
+        
+        &--selected {
+          background: var(--jdp-primary-600);
+        }
+        
+        &--in-range {
+          background: rgba(96, 165, 250, 0.2);
+        }
+        
+        &--weekend {
+          background: rgba(239, 68, 68, 0.1);
+        }
+        
+        &--holiday {
+          background: rgba(245, 158, 11, 0.15);
+        }
+        
+        &--official-holiday {
+          background: rgba(96, 165, 250, 0.15);
+        }
+      }
+    }
+    
+    // Date Picker dark adjustments
+    .jdp-date-picker {
+      
+      &-input {
+        background: var(--jdp-surface-50);
+        
+        &:focus {
+          background: var(--jdp-surface-0);
+        }
+      }
+      
+      &-button {
+        background: var(--jdp-surface-100);
+        
+        &:hover {
+          background: var(--jdp-surface-200);
+        }
+      }
+      
+      &-panel {
+        background: var(--jdp-surface-0);
+        border-color: var(--jdp-border-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+// Sunset Theme
+// تم غروب
+
+[data-theme='sunset'] {
+  --color-primary: #ff6b6b;
+  --color-secondary: #ff8c42;
+  --color-accent: #ffd93d;
+  --color-background: #fff5e1;
+  --color-surface: #ffe8cc;
+  --color-text: #6d3c1b;
+  --color-textSecondary: #a0522d;
+  --color-border: #ff8c42;
+  --color-success: #6bcf7f;
+  --color-warning: #ff8c42;
+  --color-error: #ff6b6b;
+  --color-info: #ff8c42;
+
+  // Background with gradient
+  background: linear-gradient(135deg, #fff5e1 0%, #ffe8cc 50%, #ffd9a8 100%);
+  background-attachment: fixed;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #ffe8cc;
+    border: 1px solid #ff8c42;
+    color: #6d3c1b;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(255, 140, 66, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #ffd93d;
+      box-shadow: 0 2px 12px rgba(255, 217, 61, 0.2);
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #c9956f;
+    }
+  }
+
+  // Buttons
+  button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8c42 100%);
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 140, 66, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      outline: 2px solid #ffd93d;
+      outline-offset: 2px;
+    }
+  }
+
+  // Links
+  a {
+    color: #ff8c42;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #ff6b6b;
+      text-decoration: underline;
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: linear-gradient(135deg, #ffe8cc 0%, #ffd9a8 100%);
+    border: 1px solid #ff8c42;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(255, 140, 66, 0.15);
+
+    .calendar-header {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff8c42 100%);
+      color: #ffffff;
+      border-bottom: 2px solid #6d3c1b;
+      padding: 12px;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(255, 140, 66, 0.2);
+      background: rgba(255, 232, 204, 0.5);
+      transition: all 0.2s ease;
+      border-radius: 6px;
+      padding: 8px;
+      color: #6d3c1b;
+
+      &:hover {
+        background: rgba(255, 140, 66, 0.1);
+        border: 1px solid #ff8c42;
+        box-shadow: 0 2px 8px rgba(255, 140, 66, 0.2);
+      }
+
+      &.selected {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ff8c42 100%);
+        color: #ffffff;
+        border: 1px solid #6d3c1b;
+        box-shadow: 0 2px 12px rgba(255, 140, 66, 0.3);
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #ffd93d;
+        box-shadow: 0 0 10px rgba(255, 217, 61, 0.2);
+      }
+    }
+  }
+
+  // Sunset glow
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 217, 61, 0.1) 0%, transparent 50%);
+    z-index: -1;
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fff5e1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ff8c42;
+    border-radius: 4px;
+
+    &:hover {
+      background: #ff6b6b;
+    }
+  }
+}
+
+// Sunset animations
+@keyframes sunsetGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 140, 66, 0.5);
+  }
+}
+
+[data-theme='sunset'] .sunset-glow {
+  animation: sunsetGlow 3s ease-in-out infinite;
+}

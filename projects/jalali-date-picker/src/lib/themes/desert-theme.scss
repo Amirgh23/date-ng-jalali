@@ -1,0 +1,165 @@
+// Desert Theme
+// تم صحرا
+
+[data-theme='desert'] {
+  --color-primary: #d4a574;
+  --color-secondary: #c9a961;
+  --color-accent: #e8b44f;
+  --color-background: #f5e6d3;
+  --color-surface: #ede0d9;
+  --color-text: #5d4e37;
+  --color-textSecondary: #8b7355;
+  --color-border: #d4a574;
+  --color-success: #6b8e23;
+  --color-warning: #cd853f;
+  --color-error: #a0522d;
+  --color-info: #d4a574;
+
+  // Background
+  background: linear-gradient(135deg, #f5e6d3 0%, #ede0d9 50%, #e8d5c4 100%);
+  background-attachment: fixed;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #ede0d9;
+    border: 1px solid #d4a574;
+    color: #5d4e37;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(212, 165, 116, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #c9a961;
+      box-shadow: 0 2px 12px rgba(201, 169, 97, 0.2);
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #a0826d;
+    }
+  }
+
+  // Buttons
+  button {
+    background: linear-gradient(135deg, #d4a574 0%, #c9a961 100%);
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(212, 165, 116, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      outline: 2px solid #8b7355;
+      outline-offset: 2px;
+    }
+  }
+
+  // Links
+  a {
+    color: #d4a574;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #c9a961;
+      text-decoration: underline;
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: linear-gradient(135deg, #ede0d9 0%, #e8d5c4 100%);
+    border: 1px solid #d4a574;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(212, 165, 116, 0.15);
+
+    .calendar-header {
+      background: linear-gradient(135deg, #d4a574 0%, #c9a961 100%);
+      color: #ffffff;
+      border-bottom: 2px solid #8b7355;
+      padding: 12px;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(212, 165, 116, 0.2);
+      background: rgba(237, 224, 217, 0.5);
+      transition: all 0.2s ease;
+      border-radius: 6px;
+      padding: 8px;
+      color: #5d4e37;
+
+      &:hover {
+        background: rgba(212, 165, 116, 0.1);
+        border: 1px solid #d4a574;
+        box-shadow: 0 2px 8px rgba(212, 165, 116, 0.2);
+      }
+
+      &.selected {
+        background: linear-gradient(135deg, #d4a574 0%, #c9a961 100%);
+        color: #ffffff;
+        border: 1px solid #8b7355;
+        box-shadow: 0 2px 12px rgba(212, 165, 116, 0.3);
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #8b7355;
+        box-shadow: 0 0 10px rgba(139, 115, 85, 0.2);
+      }
+    }
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f5e6d3;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #d4a574;
+    border-radius: 4px;
+
+    &:hover {
+      background: #c9a961;
+    }
+  }
+}
+
+// Desert animations
+@keyframes desertWave {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+}
+
+[data-theme='desert'] .desert-wave {
+  animation: desertWave 3s ease-in-out infinite;
+}

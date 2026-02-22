@@ -1,0 +1,172 @@
+// Terminal Theme
+// تم ترمینال
+
+[data-theme='terminal'] {
+  --color-primary: #00ff00;
+  --color-secondary: #00cc00;
+  --color-accent: #ffff00;
+  --color-background: #000000;
+  --color-surface: #0a0a0a;
+  --color-text: #00ff00;
+  --color-textSecondary: #00cc00;
+  --color-border: #00ff00;
+  --color-success: #00ff00;
+  --color-warning: #ffff00;
+  --color-error: #ff0000;
+  --color-info: #00ffff;
+
+  // Font
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+
+  // Background
+  background: #000000;
+
+  // Text glow
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+
+  // Inputs
+  input, textarea, select {
+    background-color: #0a0a0a;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+    padding: 6px 8px;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    }
+
+    &::placeholder {
+      color: #00cc00;
+    }
+  }
+
+  // Buttons
+  button {
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    background-color: transparent;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: rgba(0, 255, 0, 0.1);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    }
+
+    &:active {
+      background-color: rgba(0, 255, 0, 0.2);
+    }
+  }
+
+  // Links
+  a {
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+
+    &:hover {
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    background: #000000;
+
+    .calendar-header {
+      border-bottom: 1px solid #00ff00;
+      background: transparent;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      color: #00ff00;
+      padding: 8px;
+      font-weight: bold;
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      transition: all 0.2s;
+      background: transparent;
+      color: #00ff00;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+
+      &:hover {
+        background-color: rgba(0, 255, 0, 0.1);
+        box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
+        border: 1px solid #00ffff;
+      }
+
+      &.selected {
+        background-color: rgba(0, 255, 0, 0.2);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        border: 1px solid #00ff00;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      }
+
+      &.today {
+        border: 1px solid #00ffff;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+    }
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 0;
+
+    &:hover {
+      background: #00ffff;
+    }
+  }
+}
+
+// Terminal animations
+@keyframes terminalBlink {
+  0%, 49%, 100% {
+    opacity: 1;
+  }
+  50%, 99% {
+    opacity: 0;
+  }
+}
+
+[data-theme='terminal'] .terminal-blink {
+  animation: terminalBlink 1s infinite;
+}
+
+@keyframes terminalType {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+[data-theme='terminal'] .terminal-type {
+  animation: terminalType 0.5s steps(40, end);
+  overflow: hidden;
+  white-space: nowrap;
+}

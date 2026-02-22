@@ -1,0 +1,318 @@
+// ============================================
+// Lara Light Blue Theme
+// PrimeNG-inspired theme for Jalali Date Picker
+// ============================================
+
+@use '../base/variables' as *;
+@use '../base/css-variables';
+@use '../base/layers';
+@use '../base/mixins' as *;
+
+// Theme-specific variable overrides
+$primary-500: #3b82f6;
+$primary-600: #2563eb;
+$primary-700: #1d4ed8;
+
+// Apply theme-specific CSS variables
+:root,
+[data-theme="lara-light-blue"] {
+  --jdp-primary-500: #{$primary-500};
+  --jdp-primary-600: #{$primary-600};
+  --jdp-primary-700: #{$primary-700};
+}
+
+// Component styles in the components layer
+@layer jdp-components {
+  
+  // Calendar Component
+  .jdp-calendar {
+    background: var(--jdp-surface-0);
+    border: 1px solid var(--jdp-border-color);
+    border-radius: var(--jdp-border-radius-xl);
+    padding: var(--jdp-calendar-padding);
+    font-family: var(--jdp-font-family);
+    color: var(--jdp-text-color);
+    box-shadow: var(--jdp-shadow-lg);
+    
+    // Header
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--jdp-spacing-md);
+      padding-bottom: var(--jdp-spacing-sm);
+      border-bottom: 1px solid var(--jdp-border-color);
+    }
+    
+    &-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--jdp-spacing-sm);
+    }
+    
+    &-header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--jdp-spacing-sm);
+    }
+    
+    // Title
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: var(--jdp-spacing-xs);
+    }
+    
+    &-month-name {
+      font-size: var(--jdp-font-size-lg);
+      font-weight: var(--jdp-font-weight-semibold);
+      color: var(--jdp-text-color);
+    }
+    
+    &-year-name {
+      font-size: var(--jdp-font-size-lg);
+      color: var(--jdp-text-color-secondary);
+    }
+    
+    // Navigation buttons
+    &-nav-button {
+      @include button-reset;
+      @include transition(background-color, border-color, color);
+      
+      background: var(--jdp-surface-0);
+      border: 1px solid var(--jdp-border-color);
+      border-radius: var(--jdp-border-radius);
+      width: var(--jdp-component-height-sm);
+      height: var(--jdp-component-height-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--jdp-text-color);
+      font-size: var(--jdp-font-size-lg);
+      
+      &:hover:not(:disabled) {
+        background: var(--jdp-primary-50);
+        border-color: var(--jdp-primary-500);
+        color: var(--jdp-primary-600);
+      }
+      
+      &:focus-visible {
+        @include focus-ring;
+      }
+      
+      @include disabled-state;
+    }
+    
+    // Today button
+    &-today-button {
+      @include button-reset;
+      @include transition(background-color, transform);
+      
+      background: var(--jdp-primary-500);
+      color: white;
+      border-radius: var(--jdp-border-radius);
+      padding: var(--jdp-spacing-xs) var(--jdp-spacing-md);
+      font-size: var(--jdp-font-size-sm);
+      font-weight: var(--jdp-font-weight-medium);
+      
+      &:hover:not(:disabled) {
+        background: var(--jdp-primary-600);
+        transform: translateY(-1px);
+      }
+      
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+      
+      &:focus-visible {
+        @include focus-ring;
+      }
+      
+      @include disabled-state;
+    }
+    
+    // Grid
+    &-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--jdp-calendar-cell-gap);
+    }
+    
+    // Day headers
+    &-day-header {
+      @include center-content;
+      @include aspect-ratio(1, 1);
+      
+      font-size: var(--jdp-font-size-sm);
+      font-weight: var(--jdp-font-weight-semibold);
+      color: var(--jdp-text-color-secondary);
+      padding: var(--jdp-spacing-sm);
+      background: var(--jdp-surface-50);
+      border-radius: var(--jdp-border-radius);
+    }
+    
+    // Day cells
+    &-day-cell {
+      @include center-content;
+      @include aspect-ratio(1, 1);
+      @include transition(background-color, border-color, transform, box-shadow);
+      
+      position: relative;
+      border: 1px solid var(--jdp-border-color);
+      border-radius: var(--jdp-border-radius);
+      background: var(--jdp-surface-0);
+      cursor: pointer;
+      font-size: var(--jdp-font-size-base);
+      color: var(--jdp-text-color);
+      
+      &:hover:not(.jdp-calendar-day-cell--disabled):not(.jdp-calendar-day-cell--other-month) {
+        background: var(--jdp-surface-100);
+        transform: translateY(-2px);
+        box-shadow: var(--jdp-shadow-md);
+      }
+      
+      &:focus-visible {
+        @include focus-ring;
+      }
+      
+      // Modifiers
+      &--today {
+        border: 2px solid var(--jdp-primary-500);
+        background: var(--jdp-primary-50);
+        font-weight: var(--jdp-font-weight-semibold);
+      }
+      
+      &--selected {
+        background: var(--jdp-primary-500);
+        color: white;
+        border-color: var(--jdp-primary-500);
+        font-weight: var(--jdp-font-weight-semibold);
+      }
+      
+      &--in-range {
+        background: var(--jdp-primary-100);
+        border-color: var(--jdp-primary-300);
+      }
+      
+      &--range-start,
+      &--range-end {
+        background: var(--jdp-primary-500);
+        color: white;
+        border-color: var(--jdp-primary-500);
+        font-weight: var(--jdp-font-weight-semibold);
+      }
+      
+      &--disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      
+      &--other-month {
+        color: var(--jdp-text-color-muted);
+        background: var(--jdp-surface-50);
+        cursor: default;
+      }
+      
+      &--weekend {
+        background: rgba(239, 68, 68, 0.05);
+        color: var(--jdp-error-color);
+      }
+      
+      &--holiday {
+        background: rgba(245, 158, 11, 0.1);
+        border-color: var(--jdp-warning-color);
+      }
+      
+      &--official-holiday {
+        background: var(--jdp-primary-50);
+        border-color: var(--jdp-primary-300);
+      }
+      
+      &--multiple-selected {
+        background: var(--jdp-primary-100);
+        border-color: var(--jdp-primary-500);
+      }
+    }
+    
+    // Day number
+    &-day-number {
+      font-size: var(--jdp-font-size-base);
+      font-weight: inherit;
+      color: inherit;
+    }
+    
+    // Holiday dot
+    &-holiday-dot {
+      position: absolute;
+      bottom: 4px;
+      width: 4px;
+      height: 4px;
+      background: var(--jdp-warning-color);
+      border-radius: 50%;
+    }
+    
+    // Selection indicator
+    &-selection-indicator {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 6px;
+      height: 6px;
+      background: var(--jdp-primary-500);
+      border-radius: 50%;
+    }
+    
+    // Footer
+    &-footer {
+      margin-top: var(--jdp-spacing-md);
+      padding-top: var(--jdp-spacing-sm);
+      border-top: 1px solid var(--jdp-border-color);
+    }
+    
+    // Responsive
+    @include breakpoint(xs) {
+      padding: var(--jdp-spacing-sm);
+      
+      .jdp-calendar-header {
+        flex-direction: column;
+        gap: var(--jdp-spacing-sm);
+      }
+      
+      .jdp-calendar-month-name,
+      .jdp-calendar-year-name {
+        font-size: var(--jdp-font-size-base);
+      }
+      
+      .jdp-calendar-day-number {
+        font-size: var(--jdp-font-size-sm);
+      }
+    }
+  }
+  
+  // Unstyled mode - remove all visual styles
+  .jdp-calendar.jdp-unstyled {
+    background: none;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    
+    .jdp-calendar-header {
+      border-bottom: none;
+    }
+    
+    .jdp-calendar-day-cell {
+      border: none;
+      background: none;
+      
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+    
+    .jdp-calendar-footer {
+      border-top: none;
+    }
+  }
+}

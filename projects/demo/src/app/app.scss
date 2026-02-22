@@ -1,3 +1,17 @@
+// CSS Variables
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #6366f1;
+  --accent-color: #f59e0b;
+  --background: #ffffff;
+  --background-light: #f9fafb;
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+}
+
 .demo-container {
   max-width: 1200px;
   margin: 0 auto;

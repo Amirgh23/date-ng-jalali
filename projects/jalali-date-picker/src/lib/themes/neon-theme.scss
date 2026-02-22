@@ -1,0 +1,185 @@
+// Neon Theme
+// تم نئون
+
+[data-theme='neon'] {
+  --color-primary: #ff006e;
+  --color-secondary: #00f5ff;
+  --color-accent: #ffbe0b;
+  --color-background: #0a0e27;
+  --color-surface: #16213e;
+  --color-text: #00f5ff;
+  --color-textSecondary: #ffbe0b;
+  --color-border: #ff006e;
+  --color-success: #00ff00;
+  --color-warning: #ffbe0b;
+  --color-error: #ff006e;
+  --color-info: #00f5ff;
+
+  // Font
+  font-family: 'Courier New', monospace;
+
+  // Background
+  background: #0a0e27;
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(255, 0, 110, 0.05) 25%, rgba(255, 0, 110, 0.05) 26%, transparent 27%, transparent 74%, rgba(255, 0, 110, 0.05) 75%, rgba(255, 0, 110, 0.05) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(0, 245, 255, 0.05) 25%, rgba(0, 245, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 245, 255, 0.05) 75%, rgba(0, 245, 255, 0.05) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
+
+  // Text glow
+  color: #00f5ff;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+
+  // Inputs
+  input, textarea, select {
+    background-color: #16213e;
+    border: 2px solid #ff006e;
+    color: #00f5ff;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: #00f5ff;
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.6);
+      text-shadow: 0 0 20px rgba(0, 245, 255, 0.8);
+    }
+
+    &::placeholder {
+      color: #ffbe0b;
+      text-shadow: 0 0 5px rgba(255, 190, 11, 0.3);
+    }
+  }
+
+  // Buttons
+  button {
+    border: 2px solid #ff006e;
+    color: #ff006e;
+    background-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+    font-family: 'Courier New', monospace;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+
+    &:hover {
+      background-color: rgba(255, 0, 110, 0.1);
+      box-shadow: 0 0 30px rgba(255, 0, 110, 0.8);
+      text-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
+      border-color: #00f5ff;
+    }
+
+    &:active {
+      background-color: rgba(255, 0, 110, 0.2);
+    }
+  }
+
+  // Links
+  a {
+    color: #00f5ff;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+
+    &:hover {
+      text-shadow: 0 0 20px rgba(0, 245, 255, 0.8);
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    border: 2px solid #ff006e;
+    box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+    background: #0a0e27;
+
+    .calendar-header {
+      border-bottom: 2px solid #00f5ff;
+      background: linear-gradient(90deg, rgba(255, 0, 110, 0.1), transparent);
+      text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+      color: #ff006e;
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(255, 0, 110, 0.3);
+      transition: all 0.2s;
+      background: transparent;
+
+      &:hover {
+        background-color: rgba(255, 0, 110, 0.1);
+        box-shadow: inset 0 0 10px rgba(255, 0, 110, 0.3);
+        border: 1px solid #00f5ff;
+      }
+
+      &.selected {
+        background-color: rgba(255, 0, 110, 0.2);
+        box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
+        border: 2px solid #ff006e;
+        text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+      }
+
+      &.today {
+        border: 2px solid #00f5ff;
+        box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+      }
+    }
+  }
+
+  // Neon glow effect
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+      0deg,
+      transparent 24%,
+      rgba(255, 0, 110, 0.05) 25%,
+      rgba(255, 0, 110, 0.05) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(255, 0, 110, 0.05) 75%,
+      rgba(255, 0, 110, 0.05) 76%,
+      transparent 77%,
+      transparent
+    );
+    background-size: 100% 4px;
+    animation: neonScanLines 8s linear infinite;
+    z-index: 1;
+  }
+}
+
+// Neon animations
+@keyframes neonScanLines {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes neonFlicker {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
+  }
+}
+
+[data-theme='neon'] .neon-flicker {
+  animation: neonFlicker 0.15s infinite;
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
+  }
+}
+
+[data-theme='neon'] .neon-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}

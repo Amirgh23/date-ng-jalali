@@ -1,0 +1,123 @@
+// ============================================
+// CSS Custom Properties
+// Convert SCSS variables to CSS variables for runtime theming
+// ============================================
+
+@use './variables' as *;
+
+:root {
+  // Primary Colors
+  --jdp-primary-50: #{$primary-50};
+  --jdp-primary-100: #{$primary-100};
+  --jdp-primary-200: #{$primary-200};
+  --jdp-primary-300: #{$primary-300};
+  --jdp-primary-400: #{$primary-400};
+  --jdp-primary-500: #{$primary-500};
+  --jdp-primary-600: #{$primary-600};
+  --jdp-primary-700: #{$primary-700};
+  --jdp-primary-800: #{$primary-800};
+  --jdp-primary-900: #{$primary-900};
+  
+  // Surface Colors
+  --jdp-surface-0: #{$surface-0};
+  --jdp-surface-50: #{$surface-50};
+  --jdp-surface-100: #{$surface-100};
+  --jdp-surface-200: #{$surface-200};
+  --jdp-surface-300: #{$surface-300};
+  --jdp-surface-400: #{$surface-400};
+  --jdp-surface-500: #{$surface-500};
+  --jdp-surface-600: #{$surface-600};
+  --jdp-surface-700: #{$surface-700};
+  --jdp-surface-800: #{$surface-800};
+  --jdp-surface-900: #{$surface-900};
+  
+  // Text Colors
+  --jdp-text-color: #{$text-color};
+  --jdp-text-color-secondary: #{$text-color-secondary};
+  --jdp-text-color-muted: #{$text-color-muted};
+  
+  // Semantic Colors
+  --jdp-success-color: #{$success-color};
+  --jdp-warning-color: #{$warning-color};
+  --jdp-error-color: #{$error-color};
+  --jdp-info-color: #{$info-color};
+  
+  // Border
+  --jdp-border-radius: #{$border-radius};
+  --jdp-border-radius-sm: #{$border-radius-sm};
+  --jdp-border-radius-lg: #{$border-radius-lg};
+  --jdp-border-radius-xl: #{$border-radius-xl};
+  --jdp-border-color: #{$border-color};
+  --jdp-border-color-hover: #{$border-color-hover};
+  
+  // Focus
+  --jdp-focus-ring: #{$focus-ring};
+  --jdp-focus-ring-width: #{$focus-ring-width};
+  --jdp-focus-ring-color: #{$focus-ring-color};
+  
+  // Transition
+  --jdp-transition-duration: #{$transition-duration};
+  --jdp-transition-timing: #{$transition-timing};
+  
+  // Typography
+  --jdp-font-family: #{$font-family};
+  --jdp-font-family-mono: #{$font-family-mono};
+  --jdp-font-size-xs: #{$font-size-xs};
+  --jdp-font-size-sm: #{$font-size-sm};
+  --jdp-font-size-base: #{$font-size-base};
+  --jdp-font-size-lg: #{$font-size-lg};
+  --jdp-font-size-xl: #{$font-size-xl};
+  --jdp-font-size-2xl: #{$font-size-2xl};
+  --jdp-font-weight-light: #{$font-weight-light};
+  --jdp-font-weight-normal: #{$font-weight-normal};
+  --jdp-font-weight-medium: #{$font-weight-medium};
+  --jdp-font-weight-semibold: #{$font-weight-semibold};
+  --jdp-font-weight-bold: #{$font-weight-bold};
+  --jdp-line-height-tight: #{$line-height-tight};
+  --jdp-line-height-normal: #{$line-height-normal};
+  --jdp-line-height-relaxed: #{$line-height-relaxed};
+  
+  // Spacing
+  --jdp-spacing-xs: #{$spacing-xs};
+  --jdp-spacing-sm: #{$spacing-sm};
+  --jdp-spacing-md: #{$spacing-md};
+  --jdp-spacing-lg: #{$spacing-lg};
+  --jdp-spacing-xl: #{$spacing-xl};
+  --jdp-spacing-2xl: #{$spacing-2xl};
+  
+  // Shadows
+  --jdp-shadow-sm: #{$shadow-sm};
+  --jdp-shadow-md: #{$shadow-md};
+  --jdp-shadow-lg: #{$shadow-lg};
+  --jdp-shadow-xl: #{$shadow-xl};
+  --jdp-shadow-2xl: #{$shadow-2xl};
+  
+  // Z-index
+  --jdp-z-index-dropdown: #{$z-index-dropdown};
+  --jdp-z-index-sticky: #{$z-index-sticky};
+  --jdp-z-index-fixed: #{$z-index-fixed};
+  --jdp-z-index-modal-backdrop: #{$z-index-modal-backdrop};
+  --jdp-z-index-modal: #{$z-index-modal};
+  --jdp-z-index-popover: #{$z-index-popover};
+  --jdp-z-index-tooltip: #{$z-index-tooltip};
+  
+  // Component Sizes
+  --jdp-component-height-sm: #{$component-height-sm};
+  --jdp-component-height-md: #{$component-height-md};
+  --jdp-component-height-lg: #{$component-height-lg};
+  
+  // Calendar Specific
+  --jdp-calendar-cell-size: #{$calendar-cell-size};
+  --jdp-calendar-cell-gap: #{$calendar-cell-gap};
+  --jdp-calendar-padding: #{$calendar-padding};
+  
+  // Animation
+  --jdp-animation-duration-fast: #{$animation-duration-fast};
+  --jdp-animation-duration-normal: #{$animation-duration-normal};
+  --jdp-animation-duration-slow: #{$animation-duration-slow};
+  --jdp-animation-easing-linear: #{$animation-easing-linear};
+  --jdp-animation-easing-ease: #{$animation-easing-ease};
+  --jdp-animation-easing-ease-in: #{$animation-easing-ease-in};
+  --jdp-animation-easing-ease-out: #{$animation-easing-ease-out};
+  --jdp-animation-easing-ease-in-out: #{$animation-easing-ease-in-out};
+}

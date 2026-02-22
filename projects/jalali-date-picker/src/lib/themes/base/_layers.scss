@@ -1,0 +1,120 @@
+// ============================================
+// CSS Cascade Layers
+// Define layer order for proper style precedence
+// ============================================
+
+// Define layer order (lower layers have lower priority)
+@layer jdp-reset, jdp-base, jdp-components, jdp-utilities, jdp-overrides;
+
+// Reset layer - browser defaults normalization
+@layer jdp-reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+  }
+  
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button;
+  }
+  
+  button::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+  }
+  
+  button:-moz-focusring,
+  [type="button"]:-moz-focusring,
+  [type="reset"]:-moz-focusring,
+  [type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+  }
+}
+
+// Base layer - typography, colors, base styles
+@layer jdp-base {
+  .jdp-root {
+    font-family: var(--jdp-font-family);
+    font-size: var(--jdp-font-size-base);
+    line-height: var(--jdp-line-height-normal);
+    color: var(--jdp-text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+// Components layer - all component styles will be imported here
+@layer jdp-components {
+  // Component styles will be imported in theme files
+}
+
+// Utilities layer - utility classes
+@layer jdp-utilities {
+  // Text alignment
+  .jdp-text-center { text-align: center !important; }
+  .jdp-text-right { text-align: right !important; }
+  .jdp-text-left { text-align: left !important; }
+  
+  // Display
+  .jdp-hidden { display: none !important; }
+  .jdp-visible { display: block !important; }
+  .jdp-flex { display: flex !important; }
+  .jdp-inline-flex { display: inline-flex !important; }
+  .jdp-grid { display: grid !important; }
+  
+  // Spacing utilities
+  .jdp-m-0 { margin: 0 !important; }
+  .jdp-mt-1 { margin-top: var(--jdp-spacing-xs) !important; }
+  .jdp-mt-2 { margin-top: var(--jdp-spacing-sm) !important; }
+  .jdp-mt-3 { margin-top: var(--jdp-spacing-md) !important; }
+  .jdp-mt-4 { margin-top: var(--jdp-spacing-lg) !important; }
+  .jdp-mt-5 { margin-top: var(--jdp-spacing-xl) !important; }
+  
+  .jdp-mb-1 { margin-bottom: var(--jdp-spacing-xs) !important; }
+  .jdp-mb-2 { margin-bottom: var(--jdp-spacing-sm) !important; }
+  .jdp-mb-3 { margin-bottom: var(--jdp-spacing-md) !important; }
+  .jdp-mb-4 { margin-bottom: var(--jdp-spacing-lg) !important; }
+  .jdp-mb-5 { margin-bottom: var(--jdp-spacing-xl) !important; }
+  
+  .jdp-p-0 { padding: 0 !important; }
+  .jdp-p-1 { padding: var(--jdp-spacing-xs) !important; }
+  .jdp-p-2 { padding: var(--jdp-spacing-sm) !important; }
+  .jdp-p-3 { padding: var(--jdp-spacing-md) !important; }
+  .jdp-p-4 { padding: var(--jdp-spacing-lg) !important; }
+  .jdp-p-5 { padding: var(--jdp-spacing-xl) !important; }
+  
+  // Border radius
+  .jdp-rounded-sm { border-radius: var(--jdp-border-radius-sm) !important; }
+  .jdp-rounded { border-radius: var(--jdp-border-radius) !important; }
+  .jdp-rounded-lg { border-radius: var(--jdp-border-radius-lg) !important; }
+  .jdp-rounded-xl { border-radius: var(--jdp-border-radius-xl) !important; }
+  .jdp-rounded-full { border-radius: 9999px !important; }
+  
+  // Shadow
+  .jdp-shadow-sm { box-shadow: var(--jdp-shadow-sm) !important; }
+  .jdp-shadow { box-shadow: var(--jdp-shadow-md) !important; }
+  .jdp-shadow-lg { box-shadow: var(--jdp-shadow-lg) !important; }
+  .jdp-shadow-xl { box-shadow: var(--jdp-shadow-xl) !important; }
+  .jdp-shadow-none { box-shadow: none !important; }
+}
+
+// Overrides layer - user customizations (highest priority)
+@layer jdp-overrides {
+  // Users can add custom styles here that will override everything
+}

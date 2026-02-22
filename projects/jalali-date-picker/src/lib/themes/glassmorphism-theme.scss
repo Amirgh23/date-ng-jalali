@@ -1,402 +1,158 @@
-/* Glassmorphism Theme for Jalali Date Picker */
+// Glassmorphism Theme
+// تم شیشه‌ای
 
-.glassmorphism-theme {
-  /* Primary colors */
-  --primary-color: #6366f1;
-  --primary-hover: #4f46e5;
-  --secondary-color: #8b5cf6;
-  --accent-color: #ec4899;
-  
-  /* Background and surfaces */
-  --background: rgba(255, 255, 255, 0.1);
-  --background-light: rgba(255, 255, 255, 0.15);
-  --surface: rgba(255, 255, 255, 0.2);
-  --surface-hover: rgba(255, 255, 255, 0.3);
-  
-  /* Text colors */
-  --text-color: #1f2937;
-  --text-muted: #6b7280;
-  --text-light: #9ca3af;
-  
-  /* Border and shadow */
-  --border-color: rgba(255, 255, 255, 0.3);
-  --border-hover: rgba(255, 255, 255, 0.5);
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  
-  /* Error and success */
-  --error-color: #ef4444;
-  --success-color: #10b981;
-  
-  /* Holiday colors */
-  --holiday-color: #f59e0b;
-  --weekend-color: #f87171;
-  
-  /* Transitions */
-  --transition-fast: 0.15s ease-in-out;
-  --transition-normal: 0.25s ease-in-out;
-  --transition-slow: 0.35s ease-in-out;
-}
+[data-theme='glassmorphism'] {
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-accent: #ec4899;
+  --color-background: #f0f4f8;
+  --color-surface: rgba(255, 255, 255, 0.8);
+  --color-text: #1f2937;
+  --color-textSecondary: #4b5563;
+  --color-border: rgba(255, 255, 255, 0.5);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
 
-/* Date picker container */
-.glassmorphism-theme .date-picker-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-width: 300px;
-}
+  // Background
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
 
-/* Date input */
-.glassmorphism-theme .date-input {
-  width: 100%;
-  padding: 12px 40px 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--text-color);
-  font-size: 16px;
-  cursor: pointer;
-  transition: all var(--transition-normal);
+  // Glassmorphism effect
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    background: var(--surface-hover);
-  }
-  
-  &:hover {
-    background: var(--surface-hover);
-    border-color: var(--border-hover);
-  }
-}
 
-/* Date input button */
-.glassmorphism-theme .date-input-btn {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--surface);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: all var(--transition-normal);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &:hover {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    transform: translateY(-50%) scale(1.05);
-  }
-}
+  // Inputs
+  input, textarea, select {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #1f2937;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    transition: all 0.3s ease;
 
-/* Calendar popup */
-.glassmorphism-theme .calendar-popup {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  box-shadow: var(--shadow-xl);
-  z-index: 100;
-  min-width: 320px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px) scale(0.95);
-  transition: all var(--transition-slow);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  
-  &.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-  }
-}
+    &:focus {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.2);
+    }
 
-/* Calendar header */
-.glassmorphism-theme .calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-/* Theme button */
-.glassmorphism-theme .theme-btn {
-  background: var(--surface);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: all var(--transition-normal);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &:hover {
-    background: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-    transform: scale(1.05);
-  }
-}
-
-/* Calendar container */
-.glassmorphism-theme .calendar-container {
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Calendar header */
-.glassmorphism-theme .calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-/* Navigation buttons */
-.glassmorphism-theme .nav-btn {
-  background: var(--surface);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-color);
-  font-size: 16px;
-  transition: all var(--transition-normal);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &:hover {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    transform: scale(1.05);
-  }
-}
-
-/* Current month and year */
-.glassmorphism-theme .current-month {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.glassmorphism-theme .current-year {
-  font-size: 18px;
-  color: var(--text-muted);
-}
-
-/* Today button */
-.glassmorphism-theme .today-btn {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &:hover {
-    background: var(--primary-hover);
-    transform: scale(1.05);
-  }
-}
-
-/* Calendar days grid */
-.glassmorphism-theme .calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-}
-
-/* Calendar day cells */
-.glassmorphism-theme .calendar-day {
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  background: var(--surface);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  position: relative;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &.header {
-    font-weight: 600;
-    color: var(--text-color);
-    background: var(--surface-light);
-    border: none;
-    cursor: default;
-    padding: 8px;
-  }
-  
-  &.other-month {
-    background: var(--surface-light);
-    border: none;
-    cursor: default;
-    color: var(--text-muted);
-  }
-  
-  &.today {
-    border-color: var(--primary-color);
-    background: rgba(99, 102, 241, 0.1);
-    font-weight: 600;
-    transform: scale(1.05);
-  }
-  
-  &.selected {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    transform: scale(1.05);
-  }
-  
-  &.holiday {
-    border-color: var(--holiday-color);
-    background: rgba(245, 158, 11, 0.1);
-  }
-  
-  &.weekend {
-    background: rgba(248, 113, 113, 0.1);
-    border-color: var(--weekend-color);
-  }
-  
-  &.official-holiday {
-    background: rgba(99, 102, 241, 0.15);
-    border-color: var(--primary-color);
-  }
-  
-  &.non-official-holiday {
-    background: rgba(245, 158, 11, 0.1);
-    border-color: var(--holiday-color);
-  }
-  
-  &:hover:not(.header):not(.other-month) {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: var(--shadow-lg);
-    background: var(--surface-hover);
-  }
-}
-
-/* Day number */
-.glassmorphism-theme .day-number {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--text-color);
-  
-  .selected & {
-    color: white;
-  }
-}
-
-/* Holiday dot */
-.glassmorphism-theme .holiday-dot {
-  width: 5px;
-  height: 5px;
-  background: var(--holiday-color);
-  border-radius: 50%;
-  margin-top: 4px;
-}
-
-/* Theme selector panel */
-.glassmorphism-theme .theme-panel {
-  padding: 20px;
-  border-top: 1px solid var(--border-color);
-  max-height: 200px;
-  overflow-y: auto;
-  opacity: 0;
-  visibility: hidden;
-  max-height: 0;
-  transition: all var(--transition-slow);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  &.visible {
-    opacity: 1;
-    visibility: visible;
-    max-height: 200px;
-    padding: 20px;
-  }
-}
-
-/* Responsive design */
-@media (max-width: 600px) {
-  .glassmorphism-theme .date-picker-container {
-    max-width: 100%;
-  }
-  
-  .glassmorphism-theme .calendar-popup {
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px) scale(0.95);
-    min-width: 90vw;
-    max-width: 90vw;
-    
-    &.visible {
-      transform: translateX(-50%) translateY(0) scale(1);
+    &::placeholder {
+      color: rgba(75, 85, 99, 0.5);
     }
   }
-  
-  .glassmorphism-theme .calendar-container {
-    padding: 12px;
+
+  // Buttons
+  button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #1f2937;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    transition: all 0.3s ease;
+    font-weight: 500;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.2);
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.4);
+    }
   }
-  
-  .glassmorphism-theme .calendar-header {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
+
+  // Links
+  a {
+    color: #3b82f6;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #8b5cf6;
+      text-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+    }
   }
-  
-  .glassmorphism-theme .header-left {
-    flex-wrap: wrap;
-    justify-content: center;
+
+  // Calendar specific
+  .jalali-calendar {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+
+    .calendar-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      border-radius: 8px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+      }
+
+      &.selected {
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.5);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      }
+
+      &.today {
+        border: 2px solid #3b82f6;
+        background: rgba(59, 130, 246, 0.1);
+      }
+    }
   }
-  
-  .glassmorphism-theme .current-month,
-  .glassmorphism-theme .current-year {
-    font-size: 16px;
+
+  // Modal
+  .modal {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
   }
-  
-  .glassmorphism-theme .day-number {
-    font-size: 14px;
+
+  // Scrollbar
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
   }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+// Glassmorphism animations
+@keyframes glassShine {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+[data-theme='glassmorphism'] .glass-shine {
+  animation: glassShine 3s infinite;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
 }

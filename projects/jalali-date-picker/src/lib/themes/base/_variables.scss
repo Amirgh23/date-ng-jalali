@@ -1,0 +1,122 @@
+// ============================================
+// Base Variables for Jalali Date Picker
+// PrimeNG-inspired theming system
+// ============================================
+
+// Design Tokens - Primary Colors
+$primary-50: #f0f9ff !default;
+$primary-100: #e0f2fe !default;
+$primary-200: #bae6fd !default;
+$primary-300: #7dd3fc !default;
+$primary-400: #38bdf8 !default;
+$primary-500: #0ea5e9 !default;
+$primary-600: #0284c7 !default;
+$primary-700: #0369a1 !default;
+$primary-800: #075985 !default;
+$primary-900: #0c4a6e !default;
+
+// Surface Colors (Light Mode)
+$surface-0: #ffffff !default;
+$surface-50: #f8fafc !default;
+$surface-100: #f1f5f9 !default;
+$surface-200: #e2e8f0 !default;
+$surface-300: #cbd5e1 !default;
+$surface-400: #94a3b8 !default;
+$surface-500: #64748b !default;
+$surface-600: #475569 !default;
+$surface-700: #334155 !default;
+$surface-800: #1e293b !default;
+$surface-900: #0f172a !default;
+
+// Text Colors
+$text-color: $surface-700 !default;
+$text-color-secondary: $surface-500 !default;
+$text-color-muted: $surface-400 !default;
+
+// Semantic Colors
+$success-color: #10b981 !default;
+$warning-color: #f59e0b !default;
+$error-color: #ef4444 !default;
+$info-color: #3b82f6 !default;
+
+// Component Specific
+$border-radius: 6px !default;
+$border-radius-sm: 4px !default;
+$border-radius-lg: 8px !default;
+$border-radius-xl: 12px !default;
+
+$border-color: $surface-200 !default;
+$border-color-hover: $primary-500 !default;
+
+$focus-ring: 0 0 0 0.2rem rgba($primary-500, 0.2) !default;
+$focus-ring-width: 2px !default;
+$focus-ring-color: rgba($primary-500, 0.2) !default;
+
+$transition-duration: 0.2s !default;
+$transition-timing: ease-in-out !default;
+
+// Typography
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace !default;
+
+$font-size-xs: 0.75rem !default;    // 12px
+$font-size-sm: 0.875rem !default;   // 14px
+$font-size-base: 1rem !default;     // 16px
+$font-size-lg: 1.125rem !default;   // 18px
+$font-size-xl: 1.25rem !default;    // 20px
+$font-size-2xl: 1.5rem !default;    // 24px
+
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold: 700 !default;
+
+$line-height-tight: 1.25 !default;
+$line-height-normal: 1.5 !default;
+$line-height-relaxed: 1.75 !default;
+
+// Spacing
+$spacing-xs: 0.25rem !default;   // 4px
+$spacing-sm: 0.5rem !default;    // 8px
+$spacing-md: 1rem !default;      // 16px
+$spacing-lg: 1.5rem !default;    // 24px
+$spacing-xl: 2rem !default;      // 32px
+$spacing-2xl: 3rem !default;     // 48px
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !default;
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !default;
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !default;
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !default;
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !default;
+
+// Z-index
+$z-index-dropdown: 1000 !default;
+$z-index-sticky: 1020 !default;
+$z-index-fixed: 1030 !default;
+$z-index-modal-backdrop: 1040 !default;
+$z-index-modal: 1050 !default;
+$z-index-popover: 1060 !default;
+$z-index-tooltip: 1070 !default;
+
+// Component Sizes
+$component-height-sm: 2rem !default;    // 32px
+$component-height-md: 2.5rem !default;  // 40px
+$component-height-lg: 3rem !default;    // 48px
+
+// Calendar Specific
+$calendar-cell-size: 2.5rem !default;
+$calendar-cell-gap: 0.25rem !default;
+$calendar-padding: 1rem !default;
+
+// Animation
+$animation-duration-fast: 150ms !default;
+$animation-duration-normal: 200ms !default;
+$animation-duration-slow: 300ms !default;
+
+$animation-easing-linear: linear !default;
+$animation-easing-ease: ease !default;
+$animation-easing-ease-in: ease-in !default;
+$animation-easing-ease-out: ease-out !default;
+$animation-easing-ease-in-out: ease-in-out !default;

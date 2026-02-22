@@ -34,6 +34,7 @@ export interface DayInfo {
   events: string[];
   season: string;
   weekNumber: number;
+  notes?: string;
 }
 
 export type CalendarType = 'jalali' | 'gregorian' | 'hijri';

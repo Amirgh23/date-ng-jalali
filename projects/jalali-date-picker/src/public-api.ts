@@ -15,11 +15,14 @@ export * from './lib/components/day-info-modal/day-info-modal.component';
 // Services
 export * from './lib/core/services/jalali-date.service';
 export * from './lib/core/services/theme.service';
+export * from './lib/core/services/themes-data';
 export * from './lib/core/services/holidays.service';
+export * from './lib/core/services/style-class.service';
 
 // Models
 export * from './lib/core/models/jalali-date.model';
 export * from './lib/core/models/theme.model';
+export * from './lib/core/models/pass-through.model';
 
 // Utilities
 export * from './lib/core/utils/jalali-calendar.utils';

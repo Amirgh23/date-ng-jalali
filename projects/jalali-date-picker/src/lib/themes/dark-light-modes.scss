@@ -1,200 +1,204 @@
-/* Dark and Light mode styles */
+// Dark and Light Mode Styles
+// تنظیمات حالت‌های تاریک و روشن
 
-/* Dark mode */
-[data-theme="dark"] {
-  --primary-color: #60a5fa;
-  --secondary-color: #818cf8;
-  --accent-color: #fbbf24;
-  --background: #1f2937;
-  --background-light: #374151;
-  --text-color: #f3f4f6;
-  --text-muted: #9ca3af;
-  --border-color: #4b5563;
-  
-  .calendar-container,
-  .calendar-popup,
-  .modal-content {
-    background: var(--background);
-    border-color: var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-  
-  .date-input {
-    background: var(--background);
-    border-color: var(--border-color);
-    color: var(--text-color);
-    
-    &:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-    }
-  }
-  
-  .calendar-day {
-    background: var(--background);
-    border-color: var(--border-color);
-    color: var(--text-color);
-    
-    &:hover {
-      background: var(--background-light);
-      border-color: var(--primary-color);
-    }
-  }
-  
-  .theme-btn,
-  .date-input-btn,
-  .nav-btn {
-    background: var(--background);
-    border-color: var(--border-color);
-    color: var(--text-color);
-    
-    &:hover {
-      background: var(--background-light);
-      border-color: var(--primary-color);
-    }
-  }
-  
-  .today-btn {
-    background: var(--primary-color);
-    color: #1f2937;
-    
-    &:hover {
-      background: var(--secondary-color);
-    }
-  }
-  
-  .selected {
-    background: var(--primary-color);
-    color: #1f2937;
-    border-color: var(--primary-color);
-  }
-  
-  .holiday {
-    background: rgba(251, 191, 36, 0.1);
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-  }
-  
-  .official-holiday {
-    background: rgba(96, 165, 250, 0.1);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-  }
-  
-  .modal-overlay {
-    background: rgba(0, 0, 0, 0.7);
-  }
+// Light Mode (Default)
+:root:not(.dark-mode) {
+  --color-primary: #3b82f6;
+  --color-secondary: #6366f1;
+  --color-accent: #f59e0b;
+  --color-background: #ffffff;
+  --color-surface: #f9fafb;
+  --color-text: #1f2937;
+  --color-textSecondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  // Light Mode Specific
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Light mode */
-[data-theme="light"] {
-  --primary-color: #3b82f6;
-  --secondary-color: #6366f1;
-  --accent-color: #f59e0b;
-  --background: #ffffff;
-  --background-light: #f8fafc;
-  --text-color: #1f2937;
-  --text-muted: #6b7280;
-  --border-color: #e5e7eb;
-  
-  .calendar-container,
-  .calendar-popup,
-  .modal-content {
-    background: var(--background);
-    border-color: var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .date-input {
-    background: var(--background);
-    border-color: var(--border-color);
-    color: var(--text-color);
-    
-    &:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-  }
-  
-  .calendar-day {
-    background: var(--background);
-    border-color: var(--border-color);
-    color: var(--text-color);
-    
-    &:hover {
-      background: var(--background-light);
-      border-color: var(--primary-color);
-    }
-  }
-  
-  .theme-btn,
-  .date-input-btn,
-  .nav-btn {
-    background: var(--background);
-    border-color: var(--border-color);
-    color: var(--text-color);
-    
-    &:hover {
-      background: var(--background-light);
-      border-color: var(--primary-color);
-    }
-  }
-  
-  .today-btn {
-    background: var(--primary-color);
-    color: white;
-    
-    &:hover {
-      background: var(--secondary-color);
-    }
-  }
-  
-  .selected {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-  }
-  
-  .holiday {
-    background: rgba(245, 158, 11, 0.1);
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-  }
-  
-  .official-holiday {
-    background: rgba(59, 130, 246, 0.1);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-  }
-  
-  .modal-overlay {
-    background: rgba(0, 0, 0, 0.5);
-  }
+// Dark Mode
+:root.dark-mode {
+  --color-primary: #60a5fa;
+  --color-secondary: #818cf8;
+  --color-accent: #fbbf24;
+  --color-background: #1f2937;
+  --color-surface: #111827;
+  --color-text: #f3f4f6;
+  --color-textSecondary: #d1d5db;
+  --color-border: #374151;
+  --color-success: #34d399;
+  --color-warning: #fcd34d;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+
+  // Dark Mode Specific
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
 }
 
-/* Responsive light/dark mode adjustments */
+// Light Mode Explicit
+:root.light-mode {
+  --color-primary: #3b82f6;
+  --color-secondary: #6366f1;
+  --color-accent: #f59e0b;
+  --color-background: #ffffff;
+  --color-surface: #f9fafb;
+  --color-text: #1f2937;
+  --color-textSecondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+// System Preference
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --primary-color: #60a5fa;
-    --secondary-color: #818cf8;
-    --accent-color: #fbbf24;
-    --background: #1f2937;
-    --background-light: #374151;
-    --text-color: #f3f4f6;
-    --text-muted: #9ca3af;
-    --border-color: #4b5563;
+  :root:not(.light-mode) {
+    --color-primary: #60a5fa;
+    --color-secondary: #818cf8;
+    --color-accent: #fbbf24;
+    --color-background: #1f2937;
+    --color-surface: #111827;
+    --color-text: #f3f4f6;
+    --color-textSecondary: #d1d5db;
+    --color-border: #374151;
+    --color-success: #34d399;
+    --color-warning: #fcd34d;
+    --color-error: #f87171;
+    --color-info: #60a5fa;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
   }
 }
 
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {
-    --primary-color: #3b82f6;
-    --secondary-color: #6366f1;
-    --accent-color: #f59e0b;
-    --background: #ffffff;
-    --background-light: #f8fafc;
-    --text-color: #1f2937;
-    --text-muted: #6b7280;
-    --border-color: #e5e7eb;
+  :root:not(.dark-mode) {
+    --color-primary: #3b82f6;
+    --color-secondary: #6366f1;
+    --color-accent: #f59e0b;
+    --color-background: #ffffff;
+    --color-surface: #f9fafb;
+    --color-text: #1f2937;
+    --color-textSecondary: #6b7280;
+    --color-border: #e5e7eb;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   }
+}
+
+// Dark Mode Specific Styles
+:root.dark-mode {
+  // Scrollbar
+  ::-webkit-scrollbar-track {
+    background: #111827;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #374151;
+
+    &:hover {
+      background: #4b5563;
+    }
+  }
+
+  // Input Styles
+  input, textarea, select {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f3f4f6;
+
+    &:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    }
+  }
+
+  ::placeholder {
+    color: #9ca3af;
+  }
+
+  // Link Styles
+  a {
+    color: #60a5fa;
+
+    &:hover {
+      color: #93c5fd;
+    }
+  }
+}
+
+// Light Mode Specific Styles
+:root:not(.dark-mode) {
+  // Scrollbar
+  ::-webkit-scrollbar-track {
+    background: #f9fafb;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+
+    &:hover {
+      background: #d1d5db;
+    }
+  }
+
+  // Input Styles
+  input, textarea, select {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    color: #1f2937;
+
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  ::placeholder {
+    color: #9ca3af;
+  }
+
+  // Link Styles
+  a {
+    color: #3b82f6;
+
+    &:hover {
+      color: #1d4ed8;
+    }
+  }
+}
+
+// Transition for Mode Changes
+html, body, * {
+  transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal);
+}
+
+// Disable transitions on page load
+html.no-transition * {
+  transition: none !important;
 }

@@ -13,5 +13,8 @@
   ],
   "exclude": [
     "**/*.spec.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "compilationMode": "full"
+  }
 }

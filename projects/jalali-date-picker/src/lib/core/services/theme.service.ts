@@ -1,196 +1,52 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  ALL_THEMES,
-  ColorPalette,
-  DEFAULT_DARK_PALETTE,
-  DEFAULT_PALETTE,
-  DEFAULT_THEME,
-  PRESET_DARK_PALETTES,
-  PRESET_PALETTES,
-  ThemeConfig,
-} from '../models/theme.model';
+﻿import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { ThemeConfig, ColorPalette } from '../models/theme.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+const DEFAULT_PALETTE: ColorPalette = {
+  primary: '#3b82f6', secondary: '#6366f1', accent: '#f59e0b', background: '#ffffff',
+  surface: '#f9fafb', text: '#1f2937', textSecondary: '#6b7280', border: '#e5e7eb',
+  success: '#10b981', warning: '#f59e0b', error: '#ef4444', info: '#3b82f6'
+};
+
+const DEFAULT_DARK_PALETTE: ColorPalette = {
+  primary: '#60a5fa', secondary: '#818cf8', accent: '#fbbf24', background: '#1f2937',
+  surface: '#111827', text: '#f3f4f6', textSecondary: '#d1d5db', border: '#374151',
+  success: '#34d399', warning: '#fcd34d', error: '#f87171', info: '#60a5fa'
+};
+
+const DEFAULT_THEME: ThemeConfig = { name: 'light', displayName: 'تم روشن', isDark: false, colors: DEFAULT_PALETTE };
+const DARK_THEME: ThemeConfig = { name: 'dark', displayName: 'تم تاریک', isDark: true, colors: DEFAULT_DARK_PALETTE };
+const ALL_THEMES: ThemeConfig[] = [DEFAULT_THEME, DARK_THEME];
+
+@Injectable({ providedIn: 'root' })
 export class ThemeService {
   private currentTheme = new BehaviorSubject<ThemeConfig>(DEFAULT_THEME);
   private colorPalette = new BehaviorSubject<ColorPalette>(DEFAULT_PALETTE);
+  currentTheme$ = this.currentTheme.asObservable();
+  colorPalette$ = this.colorPalette.asObservable();
 
-  currentTheme$: Observable<ThemeConfig> = this.currentTheme.asObservable();
-  colorPalette$: Observable<ColorPalette> = this.colorPalette.asObservable();
+  constructor() { this.loadThemeFromStorage(); }
 
-  constructor() {
-    this.loadSavedSettings();
+  private loadThemeFromStorage(): void {
+    if (typeof localStorage === 'undefined') return;
+    const saved = localStorage.getItem('jalali-theme');
+    if (saved) { const theme = ALL_THEMES.find(t => t.name === saved); if (theme) this.currentTheme.next(theme); }
   }
 
-  /**
-   * بارگذاری تنظیمات از localStorage
-   */
-  loadSavedSettings() {
-    if (typeof localStorage === 'undefined') {
-      return;
-    }
-
-    const savedTheme = localStorage.getItem('jalali-datepicker-theme');
-    const savedPalette = localStorage.getItem('jalali-datepicker-palette');
-
-    // Theme is persisted primarily by name (string). We also accept the older JSON form.
-    if (savedTheme) {
-      try {
-        let themeName: string | null = null;
-        if (savedTheme.trim().startsWith('{')) {
-          const parsed = JSON.parse(savedTheme) as Partial<ThemeConfig>;
-          themeName = typeof parsed?.name === 'string' ? parsed.name : null;
-        } else {
-          themeName = savedTheme;
-        }
-
-        if (themeName) {
-          const found = ALL_THEMES.find(t => t.name === themeName);
-          if (found) {
-            this.currentTheme.next(found);
-          }
-        }
-      } catch {
-        // If localStorage is corrupted, ignore and keep defaults.
-      }
-    }
-
-    if (savedPalette) {
-      try {
-        const parsed = JSON.parse(savedPalette) as ColorPalette;
-        if (parsed && typeof parsed.primary === 'string') {
-          this.colorPalette.next(parsed);
-        }
-      } catch {
-        // ignore
-      }
-    } else {
-      // Ensure palette follows the theme by default.
-      this.colorPalette.next(this.currentTheme.value.colors);
-    }
+  getCurrentTheme(): ThemeConfig { return this.currentTheme.value; }
+  setTheme(name: string): void {
+    const theme = ALL_THEMES.find(t => t.name === name);
+    if (theme) { this.currentTheme.next(theme); this.colorPalette.next(theme.colors); localStorage.setItem('jalali-theme', name); }
   }
-
-  /**
-   * تنظیم تم
-   */
-  setTheme(theme: ThemeConfig) {
-    this.currentTheme.next(theme);
-    this.colorPalette.next(theme.colors);
-
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('jalali-datepicker-theme', theme.name);
-      localStorage.setItem('jalali-datepicker-palette', JSON.stringify(theme.colors));
-    }
-  }
-
-  /**
-   * تنظیم پالت رنگی
-   */
-  setPalette(palette: ColorPalette) {
-    this.colorPalette.next(palette);
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('jalali-datepicker-palette', JSON.stringify(palette));
-    }
-  }
-
-  /**
-   * دریافت تم فعلی
-   */
-  getCurrentTheme(): ThemeConfig {
-    return this.currentTheme.value;
-  }
-
-  /**
-   * دریافت پالت رنگ فعلی
-   */
-  getCurrentPalette(): ColorPalette {
-    return this.colorPalette.value;
-  }
-
-  /**
-   * دریافت لیست تم‌های پیشرفته
-   */
-  getThemes(): ThemeConfig[] {
-    return ALL_THEMES;
-  }
-
-  /**
-   * دریافت لیست پالت‌های رنگی
-   */
+  getCurrentPalette(): ColorPalette { return this.colorPalette.value; }
+  setPalette(palette: ColorPalette): void { this.colorPalette.next(palette); }
+  getThemes(): ThemeConfig[] { return ALL_THEMES; }
   getPresetPalettes(isDark = false): ColorPalette[] {
-    return isDark ? PRESET_DARK_PALETTES : PRESET_PALETTES;
+    return [isDark ? DEFAULT_DARK_PALETTE : DEFAULT_PALETTE,
+      { primary: isDark ? '#34d399' : '#10b981', secondary: isDark ? '#10b981' : '#059669', accent: isDark ? '#fcd34d' : '#f59e0b', background: isDark ? '#1f2937' : '#ffffff', surface: isDark ? '#111827' : '#f9fafb', text: isDark ? '#f3f4f6' : '#1f2937', textSecondary: isDark ? '#d1d5db' : '#6b7280', border: isDark ? '#374151' : '#e5e7eb', success: isDark ? '#34d399' : '#10b981', warning: isDark ? '#fcd34d' : '#f59e0b', error: isDark ? '#f87171' : '#ef4444', info: isDark ? '#60a5fa' : '#3b82f6' },
+      { primary: isDark ? '#f87171' : '#ef4444', secondary: isDark ? '#ef4444' : '#dc2626', accent: isDark ? '#fcd34d' : '#f59e0b', background: isDark ? '#1f2937' : '#ffffff', surface: isDark ? '#111827' : '#f9fafb', text: isDark ? '#f3f4f6' : '#1f2937', textSecondary: isDark ? '#d1d5db' : '#6b7280', border: isDark ? '#374151' : '#e5e7eb', success: isDark ? '#34d399' : '#10b981', warning: isDark ? '#fcd34d' : '#f59e0b', error: isDark ? '#f87171' : '#ef4444', info: isDark ? '#60a5fa' : '#3b82f6' }
+    ];
   }
-
-  /**
-   * تغییر تم روشن/تاریک
-   */
-  toggleDarkMode(): void {
-    const current = this.getCurrentTheme();
-    if (current.isDark) {
-      // تغییر به تم روشن
-      const lightTheme = ALL_THEMES.find(t => t.name === 'light') || DEFAULT_THEME;
-      this.setTheme(lightTheme);
-    } else {
-      // تغییر به تم تاریک
-      const darkTheme = ALL_THEMES.find(t => t.name === 'dark') || {
-        ...DEFAULT_THEME,
-        name: 'dark',
-        displayName: 'تم تاریک',
-        isDark: true,
-        colors: DEFAULT_DARK_PALETTE
-      };
-      this.setTheme(darkTheme);
-    }
-  }
-
-  /**
-   * تنظیم رنگ اصلی
-   */
-  setPrimaryColor(color: string) {
-    const currentPalette = this.getCurrentPalette();
-    this.setPalette({
-      ...currentPalette,
-      primary: color
-    });
-  }
-
-  /**
-   * تنظیم رنگ ثانویه
-   */
-  setSecondaryColor(color: string) {
-    const currentPalette = this.getCurrentPalette();
-    this.setPalette({
-      ...currentPalette,
-      secondary: color
-    });
-  }
-
-  /**
-   * تنظیم رنگ تأکیدی
-   */
-  setAccentColor(color: string) {
-    const currentPalette = this.getCurrentPalette();
-    this.setPalette({
-      ...currentPalette,
-      accent: color
-    });
-  }
-
-  /**
-   * دریافت پالت رنگ پیش‌فرض
-   */
-  getDefaultPalette(isDark = false): ColorPalette {
-    return isDark ? DEFAULT_DARK_PALETTE : DEFAULT_PALETTE;
-  }
-
-  /**
-   * ریست تنظیمات تم
-   */
-  resetTheme(): void {
-    this.setTheme(DEFAULT_THEME);
-    this.setPalette(DEFAULT_PALETTE);
-  }
+  toggleDarkMode(): void { const current = this.getCurrentTheme(); this.setTheme(current.isDark ? 'light' : 'dark'); }
+  resetTheme(): void { this.setTheme('light'); this.setPalette(DEFAULT_PALETTE); }
 }

@@ -1,0 +1,202 @@
+// Monochrome Theme
+// تم تک‌رنگ
+
+[data-theme='monochrome'] {
+  --color-primary: #333333;
+  --color-secondary: #666666;
+  --color-accent: #999999;
+  --color-background: #ffffff;
+  --color-surface: #f0f0f0;
+  --color-text: #000000;
+  --color-textSecondary: #666666;
+  --color-border: #cccccc;
+  --color-success: #333333;
+  --color-warning: #666666;
+  --color-error: #000000;
+  --color-info: #333333;
+
+  // Background
+  background: #ffffff;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    color: #000000;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 0;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #333333;
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #999999;
+    }
+  }
+
+  // Buttons
+  button {
+    background: #ffffff;
+    border: 1px solid #333333;
+    color: #000000;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #333333;
+      color: #ffffff;
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+
+    &:focus {
+      outline: 2px solid #333333;
+      outline-offset: 2px;
+    }
+  }
+
+  // Links
+  a {
+    color: #000000;
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    box-shadow: none;
+
+    .calendar-header {
+      border-bottom: 1px solid #cccccc;
+      background: #f0f0f0;
+      padding: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      color: #000000;
+    }
+
+    .calendar-day {
+      border: 1px solid #e5e5e5;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      border-radius: 0;
+      padding: 8px;
+      font-size: 14px;
+      color: #000000;
+
+      &:hover {
+        background: #f0f0f0;
+        border: 1px solid #cccccc;
+      }
+
+      &.selected {
+        background: #333333;
+        color: #ffffff;
+        border: 1px solid #000000;
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #000000;
+        font-weight: 600;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // Typography
+  strong, b {
+    font-weight: 600;
+  }
+
+  em, i {
+    font-style: italic;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #000000;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  h5 {
+    font-size: 14px;
+  }
+
+  h6 {
+    font-size: 12px;
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 0;
+
+    &:hover {
+      background: #999999;
+    }
+  }
+}
+
+// Monochrome animations (minimal)
+@keyframes monochromeInvert {
+  0%, 100% {
+    filter: invert(0);
+  }
+  50% {
+    filter: invert(0.05);
+  }
+}
+
+[data-theme='monochrome'] .monochrome-invert {
+  animation: monochromeInvert 2s ease-in-out infinite;
+}

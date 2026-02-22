@@ -1,0 +1,179 @@
+// Midnight Theme
+// تم نیمه‌شب
+
+[data-theme='midnight'] {
+  --color-primary: #1a237e;
+  --color-secondary: #283593;
+  --color-accent: #3f51b5;
+  --color-background: #0d0d2b;
+  --color-surface: #1a1a3e;
+  --color-text: #e0e0ff;
+  --color-textSecondary: #b0b0ff;
+  --color-border: #3f51b5;
+  --color-success: #66bb6a;
+  --color-warning: #ffa726;
+  --color-error: #ef5350;
+  --color-info: #42a5f5;
+
+  // Background
+  background: linear-gradient(135deg, #0d0d2b 0%, #1a1a3e 50%, #0f0f25 100%);
+  background-attachment: fixed;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #1a1a3e;
+    border: 1px solid #3f51b5;
+    color: #e0e0ff;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(63, 81, 181, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #5c6bc0;
+      box-shadow: 0 2px 12px rgba(92, 107, 192, 0.2);
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #7986cb;
+    }
+  }
+
+  // Buttons
+  button {
+    background: linear-gradient(135deg, #1a237e 0%, #3f51b5 100%);
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(26, 35, 126, 0.2);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(63, 81, 181, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      outline: 2px solid #5c6bc0;
+      outline-offset: 2px;
+    }
+  }
+
+  // Links
+  a {
+    color: #3f51b5;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #5c6bc0;
+      text-decoration: underline;
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: linear-gradient(135deg, #1a1a3e 0%, #0f0f25 100%);
+    border: 1px solid #3f51b5;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(63, 81, 181, 0.15);
+
+    .calendar-header {
+      background: linear-gradient(135deg, #1a237e 0%, #3f51b5 100%);
+      color: #ffffff;
+      border-bottom: 2px solid #283593;
+      padding: 12px;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(63, 81, 181, 0.2);
+      background: rgba(26, 26, 62, 0.5);
+      transition: all 0.2s ease;
+      border-radius: 6px;
+      padding: 8px;
+      color: #e0e0ff;
+
+      &:hover {
+        background: rgba(63, 81, 181, 0.1);
+        border: 1px solid #3f51b5;
+        box-shadow: 0 2px 8px rgba(63, 81, 181, 0.2);
+      }
+
+      &.selected {
+        background: linear-gradient(135deg, #1a237e 0%, #3f51b5 100%);
+        color: #ffffff;
+        border: 1px solid #283593;
+        box-shadow: 0 2px 12px rgba(63, 81, 181, 0.3);
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #5c6bc0;
+        box-shadow: 0 0 10px rgba(92, 107, 192, 0.2);
+      }
+    }
+  }
+
+  // Stars effect
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 50%, rgba(63, 81, 181, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(92, 107, 192, 0.1) 0%, transparent 50%);
+    z-index: -1;
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0d0d2b;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3f51b5;
+    border-radius: 4px;
+
+    &:hover {
+      background: #5c6bc0;
+    }
+  }
+}
+
+// Midnight animations
+@keyframes midnightTwinkle {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+[data-theme='midnight'] .twinkle {
+  animation: midnightTwinkle 3s ease-in-out infinite;
+}

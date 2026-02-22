@@ -1,289 +1,183 @@
-/* Gradient theme with vibrant color transitions */
+// Gradient Theme
+// تم گرادیان
 
-[data-theme="gradient"] {
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
-  --accent-color: #f093fb;
-  --background: #ffffff;
-  --background-light: #f8f9fa;
-  --text-color: #2c3e50;
-  --text-muted: #7f8c8d;
-  --border-color: #dee2e6;
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-  
-  /* Gradient background */
-  .calendar-container {
-    background: var(--gradient-background);
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-primary);
-    }
-  }
-  
-  .calendar-popup {
-    background: var(--gradient-background);
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-primary);
-    }
-  }
-  
-  /* Gradient input design */
-  .date-input {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    color: var(--text-color);
-    font-size: 16px;
-    padding: 12px 40px 12px 16px;
-    transition: all 0.3s ease;
-    
-    &:focus {
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.95);
-    }
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.95);
-      border-color: rgba(255, 255, 255, 0.5);
-    }
-  }
-  
-  .date-input-btn {
-    background: var(--gradient-primary);
-    border: none;
+[data-theme='gradient'] {
+  --color-primary: #667eea;
+  --color-secondary: #764ba2;
+  --color-accent: #f093fb;
+  --color-background: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-text: #2d3748;
+  --color-textSecondary: #718096;
+  --color-border: #e2e8f0;
+  --color-success: #48bb78;
+  --color-warning: #ed8936;
+  --color-error: #f56565;
+  --color-info: #4299e1;
+
+  // Background with gradient
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-attachment: fixed;
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #2d3748;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
     border-radius: 8px;
-    color: white;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #667eea;
+      box-shadow: 0 2px 12px rgba(102, 126, 234, 0.2);
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+  }
+
+  // Buttons
+  button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+
     &:hover {
-      background: var(--gradient-accent);
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      outline: 2px solid #667eea;
+      outline-offset: 2px;
     }
   }
-  
-  /* Gradient calendar days */
-  .calendar-day {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    color: white;
+
+  // Links
+  a {
+    color: #667eea;
+    text-decoration: none;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(240, 147, 251, 0.3), transparent);
-      transition: left 0.5s ease;
-    }
-    
+
     &:hover {
-      background: rgba(240, 147, 251, 0.3);
-      border-color: rgba(240, 147, 251, 0.5);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
-      
-      &::before {
-        left: 100%;
-      }
+      color: #764ba2;
+      text-decoration: underline;
     }
-    
-    &.today {
-      border-color: rgba(240, 147, 251, 0.5);
-      background: rgba(240, 147, 251, 0.3);
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+
+    .calendar-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      border-bottom: 2px solid #f093fb;
+      padding: 12px;
       font-weight: 600;
-      
-      &::after {
-        content: 'Today';
-        position: absolute;
-        top: -8px;
-        right: 8px;
-        background: var(--gradient-primary);
-        color: white;
-        font-size: 10px;
-        padding: 2px 6px;
-        border-radius: 4px;
-        transform: rotate(45deg);
-      }
+      border-radius: 12px 12px 0 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
-    
-    &.selected {
-      background: var(--gradient-primary);
-      color: white;
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 20px rgba(240, 147, 251, 0.4);
-      
-      &::before {
-        display: none;
-      }
-    }
-    
-    &.holiday {
-      background: rgba(240, 147, 251, 0.2);
-      border-color: rgba(240, 147, 251, 0.5);
-      color: #f093fb;
-    }
-    
-    &.official-holiday {
-      background: rgba(102, 126, 234, 0.2);
-      border-color: rgba(102, 126, 234, 0.5);
-      color: #667eea;
-    }
-  }
-  
-  /* Gradient buttons */
-  .theme-btn,
-  .nav-btn,
-  .today-btn {
-    background: var(--gradient-primary);
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background: var(--gradient-accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
-    }
-  }
-  
-  .today-btn {
-    background: var(--gradient-accent);
-    
-    &:hover {
-      background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
-    }
-  }
-  
-  /* Gradient typography */
-  .current-month,
-  .current-year {
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-    font-weight: 600;
-    color: white;
-  }
-  
-  .day-number {
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-    font-weight: 500;
-  }
-  
-  /* Gradient animations */
-  @keyframes gradient-shift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  .calendar-container,
-  .calendar-popup {
-    background-size: 200% 200%;
-    animation: gradient-shift 10s ease infinite;
-  }
-  
-  /* Gradient scrollbar */
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-  }
-  
-  /* Gradient hover effects */
-  .calendar-day {
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, transparent 30%, rgba(240, 147, 251, 0.2) 50%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    &:hover::after {
-      opacity: 1;
-    }
-  }
-  
-  /* Responsive design */
-  @media (max-width: 600px) {
-    .calendar-container,
-    .calendar-popup {
-      border-radius: 12px;
-      
-      &::before {
-        height: 3px;
-      }
-    }
-    
+
     .calendar-day {
+      border: 1px solid #e2e8f0;
+      background: #f7fafc;
+      transition: all 0.2s ease;
       border-radius: 8px;
-    }
-    
-    .today-btn,
-    .theme-btn,
-    .nav-btn {
-      border-radius: 8px;
+      padding: 8px;
+      color: #2d3748;
+
+      &:hover {
+        background: #edf2f7;
+        border: 1px solid #cbd5e0;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+      }
+
+      &.selected {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+        border: 1px solid #667eea;
+        box-shadow: 0 2px 12px rgba(102, 126, 234, 0.3);
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #f093fb;
+        box-shadow: 0 0 10px rgba(240, 147, 251, 0.2);
+      }
     }
   }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f5f7fa;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+
+    &:hover {
+      background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
+    }
+  }
+}
+
+// Gradient animations
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+[data-theme='gradient'] {
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(240, 147, 251, 0.5);
+  }
+}
+
+[data-theme='gradient'] .gradient-pulse {
+  animation: gradientPulse 3s ease-in-out infinite;
 }

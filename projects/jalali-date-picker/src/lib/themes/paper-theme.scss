@@ -1,0 +1,174 @@
+// Paper Theme
+// تم کاغذی
+
+[data-theme='paper'] {
+  --color-primary: #8b7355;
+  --color-secondary: #a0826d;
+  --color-accent: #c9a961;
+  --color-background: #fef9f3;
+  --color-surface: #faf6f1;
+  --color-text: #3e2723;
+  --color-textSecondary: #5d4037;
+  --color-border: #d7ccc8;
+  --color-success: #558b2f;
+  --color-warning: #f57f17;
+  --color-error: #c62828;
+  --color-info: #01579b;
+
+  // Background
+  background: linear-gradient(135deg, #fef9f3 0%, #faf6f1 50%, #f5f1eb 100%);
+  background-attachment: fixed;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #faf6f1;
+    border: 1px solid #d7ccc8;
+    color: #3e2723;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(62, 39, 35, 0.05);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #8b7355;
+      box-shadow: 0 2px 8px rgba(139, 115, 85, 0.1);
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #a1887f;
+    }
+  }
+
+  // Buttons
+  button {
+    background: #8b7355;
+    border: 1px solid #8b7355;
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(62, 39, 35, 0.1);
+
+    &:hover {
+      background: #6d5344;
+      border-color: #6d5344;
+      box-shadow: 0 4px 8px rgba(62, 39, 35, 0.15);
+    }
+
+    &:active {
+      opacity: 0.9;
+    }
+
+    &:focus {
+      outline: 2px solid #a0826d;
+      outline-offset: 2px;
+    }
+  }
+
+  // Links
+  a {
+    color: #8b7355;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      border-bottom: 1px solid #8b7355;
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: linear-gradient(135deg, #faf6f1 0%, #f5f1eb 100%);
+    border: 1px solid #d7ccc8;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(62, 39, 35, 0.08);
+
+    .calendar-header {
+      background: #8b7355;
+      color: #ffffff;
+      border-bottom: 1px solid #d7ccc8;
+      padding: 12px;
+      font-weight: 600;
+      border-radius: 4px 4px 0 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      font-family: 'Georgia', serif;
+    }
+
+    .calendar-day {
+      border: 1px solid #e0d7d3;
+      background: rgba(250, 246, 241, 0.5);
+      transition: all 0.2s ease;
+      border-radius: 2px;
+      padding: 8px;
+      color: #3e2723;
+      font-family: 'Georgia', serif;
+
+      &:hover {
+        background: rgba(139, 115, 85, 0.05);
+        border: 1px solid #d7ccc8;
+        box-shadow: 0 2px 4px rgba(62, 39, 35, 0.05);
+      }
+
+      &.selected {
+        background: #8b7355;
+        color: #ffffff;
+        border: 1px solid #6d5344;
+        box-shadow: 0 2px 4px rgba(62, 39, 35, 0.1);
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #a0826d;
+        box-shadow: 0 0 8px rgba(160, 130, 109, 0.15);
+      }
+    }
+  }
+
+  // Typography
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', serif;
+    color: #3e2723;
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fef9f3;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #d7ccc8;
+    border-radius: 4px;
+
+    &:hover {
+      background: #a0826d;
+    }
+  }
+}
+
+// Paper animations
+@keyframes paperFold {
+  0%, 100% {
+    transform: perspective(1000px) rotateX(0deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(1deg);
+  }
+}
+
+[data-theme='paper'] .paper-fold {
+  animation: paperFold 3s ease-in-out infinite;
+}

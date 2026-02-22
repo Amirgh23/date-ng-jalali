@@ -51,8 +51,7 @@
               }
             ],
             "styles": [
-              "projects/demo/src/styles.css",
-              "projects/jalali-date-picker/src/lib/themes/global-styles.scss"
+              "projects/demo/src/styles.css"
             ]
           },
           "configurations": {

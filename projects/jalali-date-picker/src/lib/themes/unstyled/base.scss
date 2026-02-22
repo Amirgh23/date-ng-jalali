@@ -1,0 +1,130 @@
+// ============================================
+// Unstyled Base Styles
+// Minimal structural styles only
+// ============================================
+
+// Calendar Component - Structural Only
+.jdp-calendar {
+  display: block;
+  box-sizing: border-box;
+  
+  &-header {
+    display: flex;
+  }
+  
+  &-header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  &-header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  &-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  
+  &-day-header,
+  &-day-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &-day-cell {
+    position: relative;
+    cursor: pointer;
+    
+    &--disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    &--other-month {
+      cursor: default;
+    }
+  }
+  
+  &-holiday-dot,
+  &-selection-indicator {
+    position: absolute;
+  }
+}
+
+// Date Picker Component - Structural Only
+.jdp-date-picker {
+  position: relative;
+  display: inline-block;
+  
+  &-input-container {
+    position: relative;
+  }
+  
+  &-input {
+    width: 100%;
+  }
+  
+  &-button {
+    position: absolute;
+  }
+  
+  &-panel {
+    position: absolute;
+    z-index: 1000;
+    
+    &--visible {
+      display: block;
+    }
+    
+    &:not(&--visible) {
+      display: none;
+    }
+  }
+  
+  &-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+// Reset browser defaults
+.jdp-calendar *,
+.jdp-date-picker * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Button reset
+.jdp-calendar button,
+.jdp-date-picker button {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+// Input reset
+.jdp-date-picker input {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}

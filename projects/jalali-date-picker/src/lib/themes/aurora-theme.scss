@@ -1,0 +1,197 @@
+// Aurora Theme (Northern Lights)
+// تم شفق قطبی
+
+[data-theme='aurora'] {
+  --color-primary: #00d084;
+  --color-secondary: #00b8a9;
+  --color-accent: #8338ec;
+  --color-background: #0a1428;
+  --color-surface: #1a2332;
+  --color-text: #e0f7fa;
+  --color-textSecondary: #b3e5fc;
+  --color-border: #00d084;
+  --color-success: #00d084;
+  --color-warning: #ffd60a;
+  --color-error: #ff006e;
+  --color-info: #00b8a9;
+
+  // Background with gradient
+  background: linear-gradient(135deg, #0a1428 0%, #1a2332 50%, #0f1f2e 100%);
+  background-attachment: fixed;
+
+  // Inputs
+  input, textarea, select {
+    background-color: #1a2332;
+    border: 1px solid #00d084;
+    color: #e0f7fa;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 208, 132, 0.2);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #00b8a9;
+      box-shadow: 0 0 20px rgba(0, 184, 169, 0.4);
+      padding: 7px 11px;
+    }
+
+    &::placeholder {
+      color: #80deea;
+    }
+  }
+
+  // Buttons
+  button {
+    background: linear-gradient(135deg, #00d084 0%, #00b8a9 100%);
+    border: none;
+    color: #0a1428;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 208, 132, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 208, 132, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      outline: 2px solid #8338ec;
+      outline-offset: 2px;
+    }
+  }
+
+  // Links
+  a {
+    color: #00d084;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(0, 208, 132, 0.3);
+
+    &:hover {
+      color: #00b8a9;
+      text-shadow: 0 0 20px rgba(0, 184, 169, 0.5);
+    }
+  }
+
+  // Calendar specific
+  .jalali-calendar {
+    background: linear-gradient(135deg, #1a2332 0%, #0f1f2e 100%);
+    border: 1px solid #00d084;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 208, 132, 0.2);
+
+    .calendar-header {
+      background: linear-gradient(135deg, #00d084 0%, #00b8a9 100%);
+      color: #0a1428;
+      border-bottom: 2px solid #8338ec;
+      padding: 12px;
+      font-weight: 600;
+      border-radius: 12px 12px 0 0;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .calendar-day {
+      border: 1px solid rgba(0, 208, 132, 0.2);
+      background: rgba(26, 35, 50, 0.5);
+      transition: all 0.2s ease;
+      border-radius: 8px;
+      padding: 8px;
+      color: #e0f7fa;
+
+      &:hover {
+        background: rgba(0, 208, 132, 0.1);
+        border: 1px solid #00d084;
+        box-shadow: 0 0 15px rgba(0, 208, 132, 0.3);
+      }
+
+      &.selected {
+        background: linear-gradient(135deg, #00d084 0%, #00b8a9 100%);
+        color: #0a1428;
+        border: 1px solid #8338ec;
+        box-shadow: 0 0 20px rgba(0, 208, 132, 0.5);
+        font-weight: 600;
+      }
+
+      &.today {
+        border: 2px solid #8338ec;
+        box-shadow: 0 0 15px rgba(131, 56, 236, 0.4);
+      }
+    }
+  }
+
+  // Aurora glow effect
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 50%, rgba(0, 208, 132, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(131, 56, 236, 0.1) 0%, transparent 50%);
+    z-index: -1;
+  }
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a2332;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #00d084 0%, #00b8a9 100%);
+    border-radius: 4px;
+
+    &:hover {
+      background: linear-gradient(135deg, #00b8a9 0%, #00d084 100%);
+    }
+  }
+}
+
+// Aurora animations
+@keyframes auroraGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 208, 132, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 208, 132, 0.6);
+  }
+}
+
+@keyframes auroraWave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+[data-theme='aurora'] .aurora-glow {
+  animation: auroraGlow 3s ease-in-out infinite;
+}
+
+[data-theme='aurora'] .aurora-wave {
+  animation: auroraWave 4s ease-in-out infinite;
+  background-size: 200% 200%;
+}

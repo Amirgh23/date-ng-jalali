@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, it } from 'vitest';
 import { JalaliDatePickerComponent } from './components/date-picker/jalali-date-picker.component';
 import { JalaliDateService } from './core/services/jalali-date.service';
 import { ThemeService } from './core/services/theme.service';
