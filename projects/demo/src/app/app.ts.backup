@@ -1,0 +1,633 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { JalaliDatePickerComponent, LocaleService, SupportedLocale } from '../../../jalali-date-picker/src/public-api';
+
+interface DemoTexts {
+  title: string;
+  subtitle: string;
+  installTitle: string;
+  usageTitle: string;
+  example1Title: string;
+  example1Desc: string;
+  example1Code: string;
+  example2Title: string;
+  example2Desc: string;
+  example2Code: string;
+  example3Title: string;
+  example3Desc: string;
+  example3Code: string;
+  example4Title: string;
+  example4Desc: string;
+  example4Code: string;
+  selectModeTitle: string;
+  singleMode: string;
+  rangeMode: string;
+  multipleMode: string;
+  demoTitle: string;
+  resultsTitle: string;
+  selectedDate: string;
+  selectedRange: string;
+  selectedDates: string;
+  noRangeSelected: string;
+  noDatesSelected: string;
+  calendarsTitle: string;
+  jalaliCalendar: string;
+  gregorianCalendar: string;
+  hijriCalendar: string;
+  calendarsDesc: string;
+  themesTitle: string;
+  theme1: string;
+  theme2: string;
+  theme3: string;
+  themesDesc: string;
+  languagesTitle: string;
+  persianLang: string;
+  englishLang: string;
+  arabicLang: string;
+  kurdishLang: string;
+  languagesDesc: string;
+  accessibilityTitle: string;
+  keyboardNav: string;
+  screenReader: string;
+  accessibilityDesc: string;
+  performanceTitle: string;
+  changeDetection: string;
+  caching: string;
+  lazyLoading: string;
+  performanceDesc: string;
+  selectionModesTitle: string;
+  singleSelection: string;
+  rangeSelection: string;
+  multipleSelection: string;
+  selectionModesDesc: string;
+  footerText: string;
+  version: string;
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, FormsModule, JalaliDatePickerComponent],
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss']
+})
+export class AppComponent {
+  title = 'تقویم جلالی';
+  selectedDate: Date = new Date();
+  selectionMode: 'single' | 'range' | 'multiple' = 'single';
+  selectedRange: { start: Date | null; end: Date | null } = { start: null, end: null };
+  selectedDates: Date[] = [];
+  currentLocale: SupportedLocale = 'fa';
+
+  private texts: { [key in SupportedLocale]: DemoTexts } = {
+    fa: {
+      title: '📚 راهنمای استفاده از تقویم جلالی',
+      subtitle: 'کامپوننت Angular برای تقویم فارسی با 21 تم و 4 زبان',
+      installTitle: '📦 نصب کتابخانه',
+      usageTitle: '💻 نحوه استفاده در پروژه',
+      example1Title: '1️⃣ استفاده ساده (انتخاب تک تاریخ)',
+      example1Desc: 'ساده‌ترین حالت استفاده برای انتخاب یک تاریخ:',
+      example1Code: `import { JalaliDatePickerComponent } from 'jalali-date-picker';
+
+@Component({
+  selector: 'app-my-component',
+  standalone: true,
+  imports: [JalaliDatePickerComponent],
+  template: \`
+    <jalali-date-picker
+      [selectedDate]="selectedDate"
+      (dateSelect)="onDateSelect($event)">
+    </jalali-date-picker>
+  \`
+})
+export class MyComponent {
+  selectedDate = new Date();
+  
+  onDateSelect(date: Date) {
+    console.log('تاریخ انتخاب شده:', date);
+  }
+}`,
+      example2Title: '2️⃣ انتخاب محدوده تاریخ',
+      example2Desc: 'برای انتخاب دو تاریخ (از - تا):',
+      example2Code: `<jalali-date-picker
+  selectionMode="range"
+  [selectedRange]="selectedRange"
+  (rangeSelect)="onRangeSelect($event)">
+</jalali-date-picker>
+
+// در کامپوننت:
+selectedRange = { start: null, end: null };
+
+onRangeSelect(range: { start: Date; end: Date }) {
+  console.log('از:', range.start);
+  console.log('تا:', range.end);
+}`,
+      example3Title: '3️⃣ انتخاب چند تاریخ',
+      example3Desc: 'برای انتخاب چندین تاریخ مختلف:',
+      example3Code: `<jalali-date-picker
+  selectionMode="multiple"
+  [selectedDates]="selectedDates"
+  (multipleSelect)="onMultipleSelect($event)">
+</jalali-date-picker>
+
+// در کامپوننت:
+selectedDates: Date[] = [];
+
+onMultipleSelect(dates: Date[]) {
+  console.log('تاریخ‌های انتخاب شده:', dates);
+}`,
+      example4Title: '4️⃣ تنظیمات پیشرفته',
+      example4Desc: 'استفاده با تنظیمات کامل (زبان، تم، محدودیت تاریخ):',
+      example4Code: `<jalali-date-picker
+  [selectedDate]="selectedDate"
+  [locale]="'fa'"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [disabled]="false"
+  [placeholder]="'تاریخ را انتخاب کنید'"
+  (dateSelect)="onDateSelect($event)"
+  (localeChange)="onLocaleChange($event)">
+</jalali-date-picker>
+
+// در کامپوننت:
+minDate = new Date(2020, 0, 1);
+maxDate = new Date(2030, 11, 31);
+
+onLocaleChange(locale: string) {
+  console.log('زبان تغییر کرد:', locale);
+}`,
+      selectModeTitle: '🎯 انتخاب حالت برای تست:',
+      singleMode: 'تک تاریخ',
+      rangeMode: 'محدوده',
+      multipleMode: 'چند تاریخ',
+      demoTitle: '🎨 تست تعاملی',
+      resultsTitle: '📊 نتیجه',
+      selectedDate: 'تاریخ انتخاب شده:',
+      selectedRange: 'محدوده انتخاب شده:',
+      selectedDates: 'تاریخ‌های انتخاب شده',
+      noRangeSelected: 'لطفاً دو تاریخ را برای محدوده انتخاب کنید',
+      noDatesSelected: 'هنوز تاریخی انتخاب نشده است',
+      calendarsTitle: '📅 سه نوع تقویم',
+      jalaliCalendar: 'تقویم جلالی (شمسی)',
+      gregorianCalendar: 'تقویم میلادی',
+      hijriCalendar: 'تقویم قمری (هجری)',
+      calendarsDesc: 'تبدیل خودکار بین تقویم‌ها',
+      themesTitle: '🎨 21 تم زیبا',
+      theme1: 'تم‌های کلاسیک',
+      theme2: 'تم‌های خاص',
+      theme3: 'تم‌های رنگی',
+      themesDesc: 'انتخاب تم از داخل کامپوننت',
+      languagesTitle: '🌍 چهار زبان',
+      persianLang: 'فارسی',
+      englishLang: 'انگلیسی',
+      arabicLang: 'عربی',
+      kurdishLang: 'کوردی',
+      languagesDesc: 'تغییر خودکار جهت متن (RTL/LTR)',
+      accessibilityTitle: '♿ دسترسی‌پذیری',
+      keyboardNav: 'کنترل با کیبورد',
+      screenReader: 'سازگار با صفحه‌خوان',
+      accessibilityDesc: 'استانداردهای WCAG',
+      performanceTitle: '⚡ عملکرد بهینه',
+      changeDetection: 'OnPush',
+      caching: 'کش هوشمند',
+      lazyLoading: 'بارگذاری تنبل',
+      performanceDesc: 'بهترین روش‌های Angular',
+      selectionModesTitle: '🎯 سه حالت انتخاب',
+      singleSelection: 'تک تاریخ',
+      rangeSelection: 'محدوده تاریخ',
+      multipleSelection: 'چند تاریخ',
+      selectionModesDesc: 'انعطاف‌پذیری کامل',
+      footerText: '💚 ساخته شده برای برنامه‌نویسان ایرانی',
+      version: 'نسخه 1.0.0 - Angular 21+'
+    },
+    en: {
+      title: '📚 Jalali Date Picker Usage Guide',
+      subtitle: 'Angular Component for Persian Calendar with 21 Themes and 4 Languages',
+      installTitle: '📦 Installation',
+      usageTitle: '💻 How to Use in Your Project',
+      example1Title: '1️⃣ Basic Usage (Single Date Selection)',
+      example1Desc: 'The simplest way to use for selecting a single date:',
+      example1Code: `import { JalaliDatePickerComponent } from 'jalali-date-picker';
+
+@Component({
+  selector: 'app-my-component',
+  standalone: true,
+  imports: [JalaliDatePickerComponent],
+  template: \`
+    <jalali-date-picker
+      [selectedDate]="selectedDate"
+      (dateSelect)="onDateSelect($event)">
+    </jalali-date-picker>
+  \`
+})
+export class MyComponent {
+  selectedDate = new Date();
+  
+  onDateSelect(date: Date) {
+    console.log('Selected date:', date);
+  }
+}`,
+      example2Title: '2️⃣ Date Range Selection',
+      example2Desc: 'For selecting two dates (from - to):',
+      example2Code: `<jalali-date-picker
+  selectionMode="range"
+  [selectedRange]="selectedRange"
+  (rangeSelect)="onRangeSelect($event)">
+</jalali-date-picker>
+
+// In component:
+selectedRange = { start: null, end: null };
+
+onRangeSelect(range: { start: Date; end: Date }) {
+  console.log('From:', range.start);
+  console.log('To:', range.end);
+}`,
+      example3Title: '3️⃣ Multiple Date Selection',
+      example3Desc: 'For selecting multiple different dates:',
+      example3Code: `<jalali-date-picker
+  selectionMode="multiple"
+  [selectedDates]="selectedDates"
+  (multipleSelect)="onMultipleSelect($event)">
+</jalali-date-picker>
+
+// In component:
+selectedDates: Date[] = [];
+
+onMultipleSelect(dates: Date[]) {
+  console.log('Selected dates:', dates);
+}`,
+      example4Title: '4️⃣ Advanced Configuration',
+      example4Desc: 'Usage with full configuration (language, theme, date restrictions):',
+      example4Code: `<jalali-date-picker
+  [selectedDate]="selectedDate"
+  [locale]="'en'"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [disabled]="false"
+  [placeholder]="'Select a date'"
+  (dateSelect)="onDateSelect($event)"
+  (localeChange)="onLocaleChange($event)">
+</jalali-date-picker>
+
+// In component:
+minDate = new Date(2020, 0, 1);
+maxDate = new Date(2030, 11, 31);
+
+onLocaleChange(locale: string) {
+  console.log('Language changed:', locale);
+}`,
+      selectModeTitle: '🎯 Select Mode for Testing:',
+      singleMode: 'Single Date',
+      rangeMode: 'Range',
+      multipleMode: 'Multiple',
+      demoTitle: '🎨 Interactive Test',
+      resultsTitle: '📊 Result',
+      selectedDate: 'Selected Date:',
+      selectedRange: 'Selected Range:',
+      selectedDates: 'Selected Dates',
+      noRangeSelected: 'Please select two dates for the range',
+      noDatesSelected: 'No dates selected yet',
+      calendarsTitle: '📅 Three Calendar Types',
+      jalaliCalendar: 'Jalali (Persian)',
+      gregorianCalendar: 'Gregorian',
+      hijriCalendar: 'Hijri (Islamic)',
+      calendarsDesc: 'Automatic conversion between calendars',
+      themesTitle: '🎨 21 Beautiful Themes',
+      theme1: 'Classic themes',
+      theme2: 'Special themes',
+      theme3: 'Colorful themes',
+      themesDesc: 'Select theme from within component',
+      languagesTitle: '🌍 Four Languages',
+      persianLang: 'Persian',
+      englishLang: 'English',
+      arabicLang: 'Arabic',
+      kurdishLang: 'Kurdish',
+      languagesDesc: 'Automatic text direction (RTL/LTR)',
+      accessibilityTitle: '♿ Accessibility',
+      keyboardNav: 'Keyboard control',
+      screenReader: 'Screen reader compatible',
+      accessibilityDesc: 'WCAG standards',
+      performanceTitle: '⚡ Optimized Performance',
+      changeDetection: 'OnPush',
+      caching: 'Smart caching',
+      lazyLoading: 'Lazy loading',
+      performanceDesc: 'Angular best practices',
+      selectionModesTitle: '🎯 Three Selection Modes',
+      singleSelection: 'Single date',
+      rangeSelection: 'Date range',
+      multipleSelection: 'Multiple dates',
+      selectionModesDesc: 'Complete flexibility',
+      footerText: '💚 Made for Iranian developers',
+      version: 'Version 1.0.0 - Angular 21+'
+    },
+    ar: {
+      title: '🗓️ تقويم جلالي أنجولار',
+      subtitle: 'مكون التقويم الفارسي مع 21 موضوعًا جميلاً ودعم 4 لغات',
+      instructionsTitle: '📖 كيفية الاستخدام',
+      step1Title: 'اختر نوع التقويم',
+      step1Desc: 'انقر على أيقونة التقويم واختر نوع التقويم (جلالي، ميلادي، هجري)',
+      step2Title: 'تغيير اللغة',
+      step2Desc: 'انقر على زر اللغة (فا/EN) لتغيير لغة العرض',
+      step3Title: 'اختر الموضوع',
+      step3Desc: 'انقر على أيقونة اللون (🎨) واختر من بين 21 موضوعًا مختلفًا',
+      step4Title: 'اختر التاريخ',
+      step4Desc: 'انقر على اليوم المطلوب. في وضع النطاق، اختر تاريخين',
+      selectModeTitle: '🎯 اختر وضع الاختيار:',
+      singleMode: 'تاريخ واحد',
+      rangeMode: 'نطاق التاريخ',
+      multipleMode: 'تواريخ متعددة',
+      demoTitle: '🎨 تقويم تفاعلي',
+      resultsTitle: '📊 نتائج اختيارك',
+      selectedDate: 'التاريخ المحدد:',
+      selectedRange: 'النطاق المحدد:',
+      selectedDates: 'التواريخ المحددة',
+      noRangeSelected: 'يرجى اختيار تاريخين للنطاق',
+      noDatesSelected: 'لم يتم اختيار تواريخ بعد',
+      calendarsTitle: '📅 ثلاثة أنواع من التقاويم',
+      jalaliCalendar: 'التقويم الجلالي (الفارسي)',
+      gregorianCalendar: 'التقويم الميلادي',
+      hijriCalendar: 'التقويم الهجري (الإسلامي)',
+      calendarsDesc: 'التحويل التلقائي بين التقاويم بخوارزمية دقيقة',
+      themesTitle: '🎨 21 موضوعًا جميلاً',
+      theme1: 'مواضيع كلاسيكية (فاتح، داكن)',
+      theme2: 'مواضيع خاصة (Sci-Fi، HUD، Neon)',
+      theme3: 'مواضيع ملونة (Gradient، Ocean، Sunset)',
+      themesDesc: 'كل موضوع مع رسوم متحركة وتأثيرات بصرية فريدة',
+      languagesTitle: '🌍 أربع لغات',
+      persianLang: 'الفارسية (افتراضي)',
+      englishLang: 'الإنجليزية',
+      arabicLang: 'العربية',
+      kurdishLang: 'الكردية',
+      languagesDesc: 'اتجاه النص التلقائي (RTL/LTR) والترجمة الكاملة',
+      accessibilityTitle: '♿ إمكانية الوصول الكاملة',
+      keyboardNav: 'التحكم بلوحة المفاتيح',
+      screenReader: 'متوافق مع قارئ الشاشة',
+      accessibilityDesc: 'مصمم لجميع المستخدمين بمعايير WCAG',
+      performanceTitle: '⚡ أداء محسّن',
+      changeDetection: 'كشف التغيير',
+      caching: 'التخزين المؤقت الذكي',
+      lazyLoading: 'التحميل الكسول',
+      performanceDesc: 'سريع وخفيف مع أفضل ممارسات Angular',
+      selectionModesTitle: '🎯 ثلاثة أوضاع اختيار',
+      singleSelection: 'اختيار تاريخ واحد',
+      rangeSelection: 'اختيار نطاق التاريخ',
+      multipleSelection: 'اختيار تواريخ متعددة',
+      selectionModesDesc: 'مرونة كاملة لأي متطلبات',
+      footerText: '💚 صنع بحب للمجتمع الإيراني للمطورين',
+      version: 'الإصدار 1.0.0 - Angular 21+'
+    },
+    ku: {
+      title: '🗓️ ڕۆژژمێری جەلالی ئەنگیولار',
+      subtitle: 'پێکهاتەی ڕۆژژمێری فارسی بە 21 شێوەی جوان و پشتگیری 4 زمان',
+      instructionsTitle: '📖 چۆنیەتی بەکارهێنان',
+      step1Title: 'جۆری ڕۆژژمێر هەڵبژێرە',
+      step1Desc: 'کرتە بکە لەسەر ئایکۆنی ڕۆژژمێر و جۆری ڕۆژژمێر هەڵبژێرە (جەلالی، میلادی، قەمەری)',
+      step2Title: 'زمان بگۆڕە',
+      step2Desc: 'کرتە بکە لەسەر دوگمەی زمان (فا/EN) بۆ گۆڕینی زمانی پیشاندان',
+      step3Title: 'شێوە هەڵبژێرە',
+      step3Desc: 'کرتە بکە لەسەر ئایکۆنی ڕەنگ (🎨) و لە 21 شێوەی جیاواز یەکێک هەڵبژێرە',
+      step4Title: 'بەروار هەڵبژێرە',
+      step4Desc: 'کرتە بکە لەسەر ڕۆژی دڵخواز. لە دۆخی مەودا، دوو بەروار هەڵبژێرە',
+      selectModeTitle: '🎯 دۆخی هەڵبژاردن دیاری بکە:',
+      singleMode: 'بەرواری تاک',
+      rangeMode: 'مەودای بەروار',
+      multipleMode: 'چەند بەروار',
+      demoTitle: '🎨 ڕۆژژمێری کارلێککەر',
+      resultsTitle: '📊 ئەنجامی هەڵبژاردنەکەت',
+      selectedDate: 'بەرواری هەڵبژێردراو:',
+      selectedRange: 'مەودای هەڵبژێردراو:',
+      selectedDates: 'بەروارە هەڵبژێردراوەکان',
+      noRangeSelected: 'تکایە دوو بەروار بۆ مەودا هەڵبژێرە',
+      noDatesSelected: 'هێشتا هیچ بەروارێک هەڵنەبژێردراوە',
+      calendarsTitle: '📅 سێ جۆر ڕۆژژمێر',
+      jalaliCalendar: 'ڕۆژژمێری جەلالی (فارسی)',
+      gregorianCalendar: 'ڕۆژژمێری میلادی',
+      hijriCalendar: 'ڕۆژژمێری قەمەری (ئیسلامی)',
+      calendarsDesc: 'گۆڕینی خۆکار لە نێوان ڕۆژژمێرەکان بە ئەلگۆریتمی ورد',
+      themesTitle: '🎨 21 شێوەی جوان',
+      theme1: 'شێوە کلاسیکییەکان (ڕووناک، تاریک)',
+      theme2: 'شێوە تایبەتەکان (Sci-Fi، HUD، Neon)',
+      theme3: 'شێوە ڕەنگاوڕەنگەکان (Gradient، Ocean، Sunset)',
+      themesDesc: 'هەر شێوەیەک بە ئەنیمەیشن و کاریگەری بینراوی تایبەت',
+      languagesTitle: '🌍 چوار زمان',
+      persianLang: 'فارسی (بنەڕەت)',
+      englishLang: 'ئینگلیزی',
+      arabicLang: 'عەرەبی',
+      kurdishLang: 'کوردی',
+      languagesDesc: 'ئاراستەی دەقی خۆکار (RTL/LTR) و وەرگێڕانی تەواو',
+      accessibilityTitle: '♿ دەستڕاگەیشتنی تەواو',
+      keyboardNav: 'کۆنترۆڵ بە تەختەکلیل',
+      screenReader: 'گونجاو لەگەڵ خوێنەرەوەی شاشە',
+      accessibilityDesc: 'دیزاین کراوە بۆ هەموو بەکارهێنەران بە ستانداردەکانی WCAG',
+      performanceTitle: '⚡ کارایی باشکراو',
+      changeDetection: 'دۆزینەوەی گۆڕانکاری',
+      caching: 'کاشکردنی زیرەک',
+      lazyLoading: 'بارکردنی تەمبەڵ',
+      performanceDesc: 'خێرا و سووک بە باشترین ڕێگاکانی Angular',
+      selectionModesTitle: '🎯 سێ دۆخی هەڵبژاردن',
+      singleSelection: 'هەڵبژاردنی بەرواری تاک',
+      rangeSelection: 'هەڵبژاردنی مەودای بەروار',
+      multipleSelection: 'هەڵبژاردنی چەند بەروار',
+      selectionModesDesc: 'نەرمی تەواو بۆ هەر پێداویستییەک',
+      footerText: '💚 دروستکراوە بە خۆشەویستی بۆ کۆمەڵگای گەشەپێدەرانی ئێرانی',
+      version: 'وەشانی 1.0.0 - Angular 21+'
+    }
+  };
+
+  constructor(private localeService: LocaleService) {}
+
+  get currentTexts(): DemoTexts {
+    return this.texts[this.currentLocale];
+  }
+
+  onDateSelect(date: Date) {
+    this.selectedDate = date;
+    console.log('Selected date:', date);
+  }
+
+  onRangeSelect(range: { start: Date; end: Date }) {
+    this.selectedRange = range;
+    console.log('Selected range:', range);
+  }
+
+  onMultipleSelect(dates: Date[]) {
+    this.selectedDates = dates;
+    console.log('Selected dates:', dates);
+  }
+
+  switchMode(mode: 'single' | 'range' | 'multiple') {
+    this.selectionMode = mode;
+    this.selectedDate = new Date();
+    this.selectedRange = { start: null, end: null };
+    this.selectedDates = [];
+  }
+
+  switchLocale(locale: SupportedLocale) {
+    this.currentLocale = locale;
+    this.localeService.setLocale(locale);
+  }
+
+  onLocaleChange(locale: SupportedLocale) {
+    this.currentLocale = locale;
+  }
+}
+    ar: {
+      title: '📚 دليل استخدام منتقي التاريخ الجلالي',
+      subtitle: 'مكون Angular للتقويم الفارسي مع 21 موضوعًا و 4 لغات',
+      installTitle: '📦 التثبيت',
+      usageTitle: '💻 كيفية الاستخدام في مشروعك',
+      example1Title: '1️⃣ الاستخدام الأساسي',
+      example1Desc: 'أبسط طريقة للاستخدام:',
+      example1Code: `import { JalaliDatePickerComponent } from 'jalali-date-picker';
+
+<jalali-date-picker
+  [selectedDate]="selectedDate"
+  (dateSelect)="onDateSelect($event)">
+</jalali-date-picker>`,
+      example2Title: '2️⃣ اختيار نطاق التاريخ',
+      example2Desc: 'لاختيار تاريخين:',
+      example2Code: `<jalali-date-picker
+  selectionMode="range"
+  [selectedRange]="selectedRange"
+  (rangeSelect)="onRangeSelect($event)">
+</jalali-date-picker>`,
+      example3Title: '3️⃣ اختيار تواريخ متعددة',
+      example3Desc: 'لاختيار عدة تواريخ:',
+      example3Code: `<jalali-date-picker
+  selectionMode="multiple"
+  [selectedDates]="selectedDates"
+  (multipleSelect)="onMultipleSelect($event)">
+</jalali-date-picker>`,
+      example4Title: '4️⃣ التكوين المتقدم',
+      example4Desc: 'مع التكوين الكامل:',
+      example4Code: `<jalali-date-picker
+  [selectedDate]="selectedDate"
+  [locale]="'ar'"
+  [minDate]="minDate"
+  [maxDate]="maxDate">
+</jalali-date-picker>`,
+      selectModeTitle: '🎯 اختر الوضع:',
+      singleMode: 'تاريخ واحد',
+      rangeMode: 'نطاق',
+      multipleMode: 'متعدد',
+      demoTitle: '🎨 اختبار',
+      resultsTitle: '📊 النتيجة',
+      selectedDate: 'التاريخ:',
+      selectedRange: 'النطاق:',
+      selectedDates: 'التواريخ',
+      noRangeSelected: 'اختر تاريخين',
+      noDatesSelected: 'لا تواريخ',
+      calendarsTitle: '📅 ثلاثة تقاويم',
+      jalaliCalendar: 'جلالي',
+      gregorianCalendar: 'ميلادي',
+      hijriCalendar: 'هجري',
+      calendarsDesc: 'تحويل تلقائي',
+      themesTitle: '🎨 21 موضوعًا',
+      theme1: 'كلاسيكية',
+      theme2: 'خاصة',
+      theme3: 'ملونة',
+      themesDesc: 'اختر الموضوع',
+      languagesTitle: '🌍 أربع لغات',
+      persianLang: 'فارسية',
+      englishLang: 'إنجليزية',
+      arabicLang: 'عربية',
+      kurdishLang: 'كردية',
+      languagesDesc: 'RTL/LTR تلقائي',
+      accessibilityTitle: '♿ إمكانية الوصول',
+      keyboardNav: 'لوحة المفاتيح',
+      screenReader: 'قارئ الشاشة',
+      accessibilityDesc: 'معايير WCAG',
+      performanceTitle: '⚡ أداء',
+      changeDetection: 'OnPush',
+      caching: 'تخزين مؤقت',
+      lazyLoading: 'تحميل كسول',
+      performanceDesc: 'Angular',
+      selectionModesTitle: '🎯 ثلاثة أوضاع',
+      singleSelection: 'تاريخ واحد',
+      rangeSelection: 'نطاق',
+      multipleSelection: 'متعدد',
+      selectionModesDesc: 'مرونة كاملة',
+      footerText: '💚 للمطورين الإيرانيين',
+      version: 'الإصدار 1.0.0'
+    },
+    ku: {
+      title: '📚 ڕێنمای بەکارهێنان',
+      subtitle: 'پێکهاتەی Angular بۆ ڕۆژژمێری فارسی',
+      installTitle: '📦 دامەزراندن',
+      usageTitle: '💻 چۆنیەتی بەکارهێنان',
+      example1Title: '1️⃣ بەکارهێنانی بنەڕەتی',
+      example1Desc: 'ساکارترین ڕێگا:',
+      example1Code: `import { JalaliDatePickerComponent } from 'jalali-date-picker';
+
+<jalali-date-picker
+  [selectedDate]="selectedDate"
+  (dateSelect)="onDateSelect($event)">
+</jalali-date-picker>`,
+      example2Title: '2️⃣ مەودای بەروار',
+      example2Desc: 'بۆ دوو بەروار:',
+      example2Code: `<jalali-date-picker
+  selectionMode="range"
+  [selectedRange]="selectedRange"
+  (rangeSelect)="onRangeSelect($event)">
+</jalali-date-picker>`,
+      example3Title: '3️⃣ چەند بەروار',
+      example3Desc: 'بۆ چەندین بەروار:',
+      example3Code: `<jalali-date-picker
+  selectionMode="multiple"
+  [selectedDates]="selectedDates"
+  (multipleSelect)="onMultipleSelect($event)">
+</jalali-date-picker>`,
+      example4Title: '4️⃣ ڕێکخستنی پێشکەوتوو',
+      example4Desc: 'بە ڕێکخستنی تەواو:',
+      example4Code: `<jalali-date-picker
+  [selectedDate]="selectedDate"
+  [locale]="'ku'"
+  [minDate]="minDate"
+  [maxDate]="maxDate">
+</jalali-date-picker>`,
+      selectModeTitle: '🎯 دۆخ هەڵبژێرە:',
+      singleMode: 'تاک',
+      rangeMode: 'مەودا',
+      multipleMode: 'چەندین',
+      demoTitle: '🎨 تاقیکردنەوە',
+      resultsTitle: '📊 ئەنجام',
+      selectedDate: 'بەروار:',
+      selectedRange: 'مەودا:',
+      selectedDates: 'بەروارەکان',
+      noRangeSelected: 'دوو بەروار هەڵبژێرە',
+      noDatesSelected: 'هیچ بەروارێک نییە',
+      calendarsTitle: '📅 سێ ڕۆژژمێر',
+      jalaliCalendar: 'جەلالی',
+      gregorianCalendar: 'میلادی',
+      hijriCalendar: 'قەمەری',
+      calendarsDesc: 'گۆڕینی خۆکار',
+      themesTitle: '🎨 21 شێوە',
+      theme1: 'کلاسیکی',
+      theme2: 'تایبەت',
+      theme3: 'ڕەنگاوڕەنگ',
+      themesDesc: 'شێوە هەڵبژێرە',
+      languagesTitle: '🌍 چوار زمان',
+      persianLang: 'فارسی',
+      englishLang: 'ئینگلیزی',
+      arabicLang: 'عەرەبی',
+      kurdishLang: 'کوردی',
+      languagesDesc: 'RTL/LTR خۆکار',
+      accessibilityTitle: '♿ دەستڕاگەیشتن',
+      keyboardNav: 'تەختەکلیل',
+      screenReader: 'خوێنەرەوەی شاشە',
+      accessibilityDesc: 'WCAG',
+      performanceTitle: '⚡ کارایی',
+      changeDetection: 'OnPush',
+      caching: 'کاش',
+      lazyLoading: 'بارکردن',
+      performanceDesc: 'Angular',
+      selectionModesTitle: '🎯 سێ دۆخ',
+      singleSelection: 'تاک',
+      rangeSelection: 'مەودا',
+      multipleSelection: 'چەندین',
+      selectionModesDesc: 'نەرمی تەواو',
+      footerText: '💚 بۆ گەشەپێدەرانی ئێرانی',
+      version: 'وەشانی 1.0.0'
+    }
+  };

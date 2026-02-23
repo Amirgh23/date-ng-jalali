@@ -1,6 +1,31 @@
 {
-  "name": "jalali-date-picker",
-  "version": "0.0.1",
+  "name": "@your-org/jalali-date-picker",
+  "version": "1.0.0",
+  "description": "A comprehensive Angular date picker component supporting Jalali (Persian), Gregorian, and Hijri calendars with 21 beautiful themes and full RTL support",
+  "keywords": [
+    "angular",
+    "date-picker",
+    "jalali",
+    "persian",
+    "hijri",
+    "gregorian",
+    "calendar",
+    "datepicker",
+    "shamsi",
+    "rtl",
+    "i18n",
+    "angular21"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/jalali-date-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/jalali-date-picker/issues"
+  },
+  "homepage": "https://github.com/your-username/jalali-date-picker#readme",
   "peerDependencies": {
     "@angular/common": "^21.1.0",
     "@angular/core": "^21.1.0"
@@ -8,7 +33,5 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": [
-    "**/*.ts"
-  ]
+  "sideEffects": false
 }

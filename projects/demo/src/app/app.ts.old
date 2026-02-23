@@ -80,10 +80,10 @@ export class AppComponent {
   selectedDates: Date[] = [];
   currentLocale: SupportedLocale = 'fa';
 
-  private texts: { [key: string]: DemoTexts } = {
+  private texts: { [key in SupportedLocale]: DemoTexts } = {
     fa: {
       title: '📚 راهنمای استفاده از تقویم جلالی',
-      subtitle: 'کامپوننت Angular برای تقویم فارسی با 21 تم',
+      subtitle: 'کامپوننت Angular برای تقویم فارسی با 21 تم و 4 زبان',
       installTitle: '📦 نصب کتابخانه',
       usageTitle: '💻 نحوه استفاده در پروژه',
       example1Title: '1️⃣ استفاده ساده',
@@ -119,12 +119,12 @@ export class AppComponent {
       theme2: 'خاص',
       theme3: 'رنگی',
       themesDesc: 'انتخاب تم',
-      languagesTitle: '🌍 دو زبانه',
+      languagesTitle: '🌍 چهار زبان',
       persianLang: 'فارسی',
       englishLang: 'انگلیسی',
-      arabicLang: '',
-      kurdishLang: '',
-      languagesDesc: 'پشتیبانی از فارسی و انگلیسی با RTL/LTR خودکار',
+      arabicLang: 'عربی',
+      kurdishLang: 'کوردی',
+      languagesDesc: 'RTL/LTR خودکار',
       accessibilityTitle: '♿ دسترسی‌پذیری',
       keyboardNav: 'کیبورد',
       screenReader: 'صفحه‌خوان',
@@ -144,7 +144,7 @@ export class AppComponent {
     },
     en: {
       title: '📚 Usage Guide',
-      subtitle: 'Angular Component for Persian Calendar with 21 Themes',
+      subtitle: 'Angular Component for Persian Calendar',
       installTitle: '📦 Installation',
       usageTitle: '💻 How to Use',
       example1Title: '1️⃣ Basic Usage',
@@ -180,12 +180,12 @@ export class AppComponent {
       theme2: 'Special',
       theme3: 'Colorful',
       themesDesc: 'Select theme',
-      languagesTitle: '🌍 Bilingual',
+      languagesTitle: '🌍 Four Languages',
       persianLang: 'Persian',
       englishLang: 'English',
-      arabicLang: '',
-      kurdishLang: '',
-      languagesDesc: 'Supports Persian and English with auto RTL/LTR',
+      arabicLang: 'Arabic',
+      kurdishLang: 'Kurdish',
+      languagesDesc: 'Auto RTL/LTR',
       accessibilityTitle: '♿ Accessibility',
       keyboardNav: 'Keyboard',
       screenReader: 'Screen reader',
@@ -203,7 +203,128 @@ export class AppComponent {
       footerText: '💚 For Iranian developers',
       version: 'Version 1.0.0'
     },
-
+    ar: {
+      title: '📚 دليل الاستخدام',
+      subtitle: 'مكون Angular',
+      installTitle: '📦 التثبيت',
+      usageTitle: '💻 كيفية الاستخدام',
+      example1Title: '1️⃣ استخدام بسيط',
+      example1Desc: 'أبسط طريقة:',
+      example1Code: '<jalali-date-picker [selectedDate]="selectedDate"></jalali-date-picker>',
+      example2Title: '2️⃣ نطاق',
+      example2Desc: 'لتاريخين:',
+      example2Code: '<jalali-date-picker selectionMode="range"></jalali-date-picker>',
+      example3Title: '3️⃣ متعدد',
+      example3Desc: 'لعدة تواريخ:',
+      example3Code: '<jalali-date-picker selectionMode="multiple"></jalali-date-picker>',
+      example4Title: '4️⃣ متقدم',
+      example4Desc: 'مع التكوين:',
+      example4Code: '<jalali-date-picker [locale]="ar"></jalali-date-picker>',
+      selectModeTitle: '🎯 الوضع:',
+      singleMode: 'واحد',
+      rangeMode: 'نطاق',
+      multipleMode: 'متعدد',
+      demoTitle: '🎨 اختبار',
+      resultsTitle: '📊 النتيجة',
+      selectedDate: 'التاريخ:',
+      selectedRange: 'النطاق:',
+      selectedDates: 'التواريخ',
+      noRangeSelected: 'اختر تاريخين',
+      noDatesSelected: 'لا تواريخ',
+      calendarsTitle: '📅 ثلاثة تقاويم',
+      jalaliCalendar: 'جلالي',
+      gregorianCalendar: 'ميلادي',
+      hijriCalendar: 'هجري',
+      calendarsDesc: 'تحويل',
+      themesTitle: '🎨 21 موضوع',
+      theme1: 'كلاسيكي',
+      theme2: 'خاص',
+      theme3: 'ملون',
+      themesDesc: 'اختر',
+      languagesTitle: '🌍 أربع لغات',
+      persianLang: 'فارسية',
+      englishLang: 'إنجليزية',
+      arabicLang: 'عربية',
+      kurdishLang: 'كردية',
+      languagesDesc: 'RTL/LTR',
+      accessibilityTitle: '♿ إمكانية الوصول',
+      keyboardNav: 'لوحة',
+      screenReader: 'قارئ',
+      accessibilityDesc: 'WCAG',
+      performanceTitle: '⚡ أداء',
+      changeDetection: 'OnPush',
+      caching: 'تخزين',
+      lazyLoading: 'تحميل',
+      performanceDesc: 'Angular',
+      selectionModesTitle: '🎯 ثلاثة أوضاع',
+      singleSelection: 'واحد',
+      rangeSelection: 'نطاق',
+      multipleSelection: 'متعدد',
+      selectionModesDesc: 'مرن',
+      footerText: '💚 للمطورين',
+      version: 'الإصدار 1.0.0'
+    },
+    ku: {
+      title: '📚 ڕێنما',
+      subtitle: 'پێکهاتەی Angular',
+      installTitle: '📦 دامەزراندن',
+      usageTitle: '💻 بەکارهێنان',
+      example1Title: '1️⃣ بنەڕەتی',
+      example1Desc: 'ساکارترین:',
+      example1Code: '<jalali-date-picker [selectedDate]="selectedDate"></jalali-date-picker>',
+      example2Title: '2️⃣ مەودا',
+      example2Desc: 'بۆ دوو:',
+      example2Code: '<jalali-date-picker selectionMode="range"></jalali-date-picker>',
+      example3Title: '3️⃣ چەندین',
+      example3Desc: 'بۆ چەندین:',
+      example3Code: '<jalali-date-picker selectionMode="multiple"></jalali-date-picker>',
+      example4Title: '4️⃣ پێشکەوتوو',
+      example4Desc: 'بە ڕێکخستن:',
+      example4Code: '<jalali-date-picker [locale]="ku"></jalali-date-picker>',
+      selectModeTitle: '🎯 دۆخ:',
+      singleMode: 'تاک',
+      rangeMode: 'مەودا',
+      multipleMode: 'چەندین',
+      demoTitle: '🎨 تاقی',
+      resultsTitle: '📊 ئەنجام',
+      selectedDate: 'بەروار:',
+      selectedRange: 'مەودا:',
+      selectedDates: 'بەروارەکان',
+      noRangeSelected: 'دوو هەڵبژێرە',
+      noDatesSelected: 'هیچ',
+      calendarsTitle: '📅 سێ ڕۆژژمێر',
+      jalaliCalendar: 'جەلالی',
+      gregorianCalendar: 'میلادی',
+      hijriCalendar: 'قەمەری',
+      calendarsDesc: 'گۆڕین',
+      themesTitle: '🎨 21 شێوە',
+      theme1: 'کلاسیکی',
+      theme2: 'تایبەت',
+      theme3: 'ڕەنگ',
+      themesDesc: 'هەڵبژێرە',
+      languagesTitle: '🌍 چوار زمان',
+      persianLang: 'فارسی',
+      englishLang: 'ئینگلیزی',
+      arabicLang: 'عەرەبی',
+      kurdishLang: 'کوردی',
+      languagesDesc: 'RTL/LTR',
+      accessibilityTitle: '♿ دەستڕاگەیشتن',
+      keyboardNav: 'تەختە',
+      screenReader: 'خوێنەرەوە',
+      accessibilityDesc: 'WCAG',
+      performanceTitle: '⚡ کارایی',
+      changeDetection: 'OnPush',
+      caching: 'کاش',
+      lazyLoading: 'بارکردن',
+      performanceDesc: 'Angular',
+      selectionModesTitle: '🎯 سێ دۆخ',
+      singleSelection: 'تاک',
+      rangeSelection: 'مەودا',
+      multipleSelection: 'چەندین',
+      selectionModesDesc: 'نەرم',
+      footerText: '💚 بۆ گەشەپێدەران',
+      version: 'وەشانی 1.0.0'
+    }
   };
 
   constructor(private localeService: LocaleService) {}
@@ -214,65 +335,6 @@ export class AppComponent {
 
   onDateSelect(date: Date) {
     this.selectedDate = date;
-  }
-
-  // تبدیل تاریخ میلادی به جلالی برای نمایش
-  getJalaliDate(date: Date): string {
-    if (!date) return '';
-    
-    const gy = date.getFullYear();
-    const gm = date.getMonth() + 1;
-    const gd = date.getDate();
-
-    const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-    
-    let jy: number;
-    let gy2 = gy;
-    if (gy2 > 1600) {
-      jy = 979;
-      gy2 -= 1600;
-    } else {
-      jy = 0;
-      gy2 -= 621;
-    }
-
-    const gy3 = (gm > 2) ? (gy2 + 1) : gy2;
-    let days = (365 * gy2) + (Math.floor((gy3 + 3) / 4)) - (Math.floor((gy3 + 99) / 100)) + 
-               (Math.floor((gy3 + 399) / 400)) - 80 + gd + g_d_m[gm - 1];
-    
-    jy += 33 * Math.floor(days / 12053);
-    days %= 12053;
-    jy += 4 * Math.floor(days / 1461);
-    days %= 1461;
-
-    if (days > 365) {
-      jy += Math.floor((days - 1) / 365);
-      days = (days - 1) % 365;
-    }
-
-    let jm: number;
-    let jd: number;
-    
-    if (days < 186) {
-      jm = 1 + Math.floor(days / 31);
-      jd = 1 + (days % 31);
-    } else {
-      jm = 7 + Math.floor((days - 186) / 30);
-      jd = 1 + ((days - 186) % 30);
-    }
-
-    const jalaliMonths = [
-      'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-      'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
-    ];
-
-    const monthName = jalaliMonths[jm - 1];
-    
-    if (this.currentLocale === 'fa') {
-      return `${jd} ${monthName} ${jy}`;
-    } else {
-      return `${monthName} ${jd}, ${jy}`;
-    }
   }
 
   onRangeSelect(range: { start: Date; end: Date }) {

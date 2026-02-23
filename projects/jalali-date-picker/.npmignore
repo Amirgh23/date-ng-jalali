@@ -1,0 +1,22 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Config files
+tsconfig*.json
+ng-package.json
+karma.conf.js
+
+# Test files
+*.spec.ts
+*.spec.js
+
+# Development files
+.editorconfig
+.gitignore
+
+# Documentation (except README)
+*.md
+!README.md
+!LICENSE

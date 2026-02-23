@@ -18,6 +18,7 @@ export * from './lib/core/services/theme.service';
 export * from './lib/core/services/themes-data';
 export * from './lib/core/services/holidays.service';
 export * from './lib/core/services/style-class.service';
+export * from './lib/core/services/locale.service';
 
 // Models
 export * from './lib/core/models/jalali-date.model';

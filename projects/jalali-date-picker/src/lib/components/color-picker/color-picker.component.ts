@@ -2,6 +2,7 @@ import { Component, DestroyRef, EventEmitter, Output, Input, inject, ChangeDetec
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../core/services/theme.service';
+import { LocaleService } from '../../core/services/locale.service';
 import { ColorPalette } from '../../core/models/theme.model';
 import { ColorPickerPassThroughOptions, PassThroughMethodOptions } from '../../core/models/pass-through.model';
 import { StyleClassService } from '../../core/services/style-class.service';
@@ -13,20 +14,20 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   template: `
-    <div [class]="getRootClasses()" [ngStyle]="getRootStyles()" role="region" aria-label="انتخاب کننده رنگ">
+    <div [class]="getRootClasses()" [ngStyle]="getRootStyles()" role="region" [attr.aria-label]="localeService.translate('color_palette')">
       <div [class]="getLabelClasses()" [ngStyle]="getLabelStyles()">
-        <h4 id="color-picker-title">پالت رنگی</h4>
+        <h4 id="color-picker-title">{{ localeService.translate('color_palette') }}</h4>
       </div>
       
       <div [class]="getColorGridClasses()" [ngStyle]="getColorGridStyles()" role="group" aria-labelledby="color-picker-title">
         <div [class]="getColorSwatchClasses('primary')" [ngStyle]="getColorSwatchStyles('primary')">
-          <label for="primary-color">اصلی</label>
+          <label for="primary-color">{{ localeService.translate('primary_color') }}</label>
           <input 
             id="primary-color"
             type="color" 
             [value]="currentPalette.primary"
             (input)="updateColor('primary', $event)"
-            aria-label="رنگ اصلی"
+            [attr.aria-label]="localeService.translate('primary_color')"
             [class]="getCustomInputClasses()"
             [ngStyle]="getCustomInputStyles()"
             (keydown.enter)="updateColor('primary', $event)"
@@ -34,13 +35,13 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
         </div>
         
         <div [class]="getColorSwatchClasses('secondary')" [ngStyle]="getColorSwatchStyles('secondary')">
-          <label for="secondary-color">ثانویه</label>
+          <label for="secondary-color">{{ localeService.translate('secondary_color') }}</label>
           <input 
             id="secondary-color"
             type="color" 
             [value]="currentPalette.secondary"
             (input)="updateColor('secondary', $event)"
-            aria-label="رنگ ثانویه"
+            [attr.aria-label]="localeService.translate('secondary_color')"
             [class]="getCustomInputClasses()"
             [ngStyle]="getCustomInputStyles()"
             (keydown.enter)="updateColor('secondary', $event)"
@@ -48,13 +49,13 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
         </div>
         
         <div [class]="getColorSwatchClasses('accent')" [ngStyle]="getColorSwatchStyles('accent')">
-          <label for="accent-color">تاکیدی</label>
+          <label for="accent-color">{{ localeService.translate('accent_color') }}</label>
           <input 
             id="accent-color"
             type="color" 
             [value]="currentPalette.accent"
             (input)="updateColor('accent', $event)"
-            aria-label="رنگ تاکیدی"
+            [attr.aria-label]="localeService.translate('accent_color')"
             [class]="getCustomInputClasses()"
             [ngStyle]="getCustomInputStyles()"
             (keydown.enter)="updateColor('accent', $event)"
@@ -63,33 +64,36 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
       </div>
       
       <div [class]="getPresetSectionClasses()" [ngStyle]="getPresetSectionStyles()">
-        <h5 id="preset-palettes-title" [class]="getPresetLabelClasses()" [ngStyle]="getPresetLabelStyles()">پالت‌های پیشفرض</h5>
+        <h5 id="preset-palettes-title" [class]="getPresetLabelClasses()" [ngStyle]="getPresetLabelStyles()">{{ localeService.translate('preset_palettes') }}</h5>
         <div class="palette-grid" role="group" aria-labelledby="preset-palettes-title">
-          <button 
-            *ngFor="let palette of presetPalettes; let idx = index"
-            class="palette-btn"
-            [attr.aria-label]="'پالت پیشفرض ' + (idx + 1)"
-            (click)="applyPalette(palette)"
-            (keydown.enter)="applyPalette(palette)"
-            (keydown.space)="applyPalette(palette)"
-            tabindex="0">
-            <span 
-              *ngFor="let color of [palette.primary, palette.secondary, palette.accent]"
-              class="palette-preview"
-              [style.background]="color"
-              aria-hidden="true">
-            </span>
-          </button>
+          @for (palette of presetPalettes; track $index; let idx = $index) {
+            <button 
+              class="palette-btn"
+              [attr.aria-label]="localeService.translate('preset_palette') + ' ' + (idx + 1)"
+              (click)="applyPalette(palette)"
+              (keydown.enter)="applyPalette(palette)"
+              (keydown.space)="applyPalette(palette)"
+              tabindex="0">
+              @for (color of [palette.primary, palette.secondary, palette.accent]; track color) {
+                <span 
+                  class="palette-preview"
+                  [style.background]="color"
+                  aria-hidden="true">
+                </span>
+              }
+            </button>
+          }
         </div>
       </div>
     </div>
   `,
   styles: [`
     .color-picker {
-      background: var(--background);
+      background: var(--background, #ffffff);
       border-radius: 8px;
       padding: 12px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      color: var(--text-color, #1f2937);
     }
     
     .color-picker-header {
@@ -98,7 +102,7 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
     
     .color-picker-header h4 {
       margin: 0;
-      color: var(--text-color);
+      color: var(--text-color, #1f2937);
       font-size: 14px;
       font-weight: 600;
     }
@@ -119,7 +123,7 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
     
     .color-item label {
       font-size: 12px;
-      color: var(--text-color);
+      color: var(--text-color, #1f2937);
       font-weight: 500;
     }
     
@@ -133,13 +137,13 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
     }
     
     .preset-palettes {
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border-color, #e5e7eb);
       padding-top: 12px;
     }
     
     .preset-palettes h5 {
       margin: 0 0 8px 0;
-      color: var(--text-color);
+      color: var(--text-color, #1f2937);
       font-size: 12px;
       font-weight: 600;
     }
@@ -155,13 +159,13 @@ import { GlobalPTConfigService } from '../../core/services/global-pt-config.serv
       gap: 2px;
       padding: 3px;
       border: 2px solid transparent;
-      background: var(--background);
+      background: var(--background, #ffffff);
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.2s;
       
       &:hover {
-        border-color: var(--primary-color);
+        border-color: var(--primary-color, #3b82f6);
       }
       
       &:active {
@@ -189,6 +193,7 @@ export class ColorPickerComponent {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly styleClassService = inject(StyleClassService);
   private readonly globalPTConfig = inject(GlobalPTConfigService);
+  readonly localeService = inject(LocaleService);
 
   constructor() {
     this.currentPalette = this.themeService.getCurrentPalette();

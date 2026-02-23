@@ -1,20 +1,109 @@
 # JalaliDatePicker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+A comprehensive Angular date picker component supporting Jalali (Persian), Gregorian, and Hijri calendars with 21 beautiful themes and full RTL support.
 
-## Code scaffolding
+## Features
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- 📅 Three calendar systems: Jalali, Gregorian, Hijri
+- 🎨 21 pre-built themes
+- 🌍 Bilingual support (Persian & English)
+- ♿ Full accessibility (ARIA labels, keyboard navigation)
+- ⚡ High performance (OnPush change detection, caching)
+- 🎯 Multiple selection modes (single, range, multiple)
+- 🔧 Highly customizable
+
+## Installation
 
 ```bash
-ng generate component component-name
+npm install @your-org/jalali-date-picker
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Basic Usage
 
-```bash
-ng generate --help
+```typescript
+import { JalaliDatePickerComponent } from '@your-org/jalali-date-picker';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [JalaliDatePickerComponent],
+  template: `
+    <jalali-date-picker
+      [(selectedDate)]="selectedDate"
+      [locale]="'fa'"
+      (dateSelect)="onDateSelect($event)">
+    </jalali-date-picker>
+  `
+})
+export class AppComponent {
+  selectedDate = new Date();
+  
+  onDateSelect(date: Date) {
+    console.log('Selected date:', date);
+  }
+}
 ```
+
+## Advanced Configuration
+
+### Custom Z-Index
+
+If you need to adjust the z-index of the calendar panel (useful when working with modals or other overlays):
+
+```html
+<jalali-date-picker
+  [selectedDate]="selectedDate"
+  [zIndex]="10000">
+</jalali-date-picker>
+```
+
+Default z-index is `9999`. You can customize it based on your application's needs.
+
+### Range Selection
+
+```html
+<jalali-date-picker
+  selectionMode="range"
+  [selectedRange]="dateRange"
+  (rangeSelect)="onRangeSelect($event)">
+</jalali-date-picker>
+```
+
+### Multiple Date Selection
+
+```html
+<jalali-date-picker
+  selectionMode="multiple"
+  [selectedDates]="dates"
+  (multipleSelect)="onMultipleSelect($event)">
+</jalali-date-picker>
+```
+
+## API Reference
+
+### Inputs
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `selectedDate` | `Date` | `new Date()` | Currently selected date |
+| `selectionMode` | `'single' \| 'range' \| 'multiple'` | `'single'` | Date selection mode |
+| `selectedRange` | `DateRange` | `null` | Selected date range |
+| `selectedDates` | `Date[]` | `[]` | Selected dates (multiple mode) |
+| `minDate` | `Date` | `null` | Minimum selectable date |
+| `maxDate` | `Date` | `null` | Maximum selectable date |
+| `locale` | `'fa' \| 'en' \| 'ar' \| 'ku'` | `'fa'` | Display language |
+| `disabled` | `boolean` | `false` | Disable the component |
+| `placeholder` | `string` | `''` | Input placeholder text |
+| `zIndex` | `number` | `9999` | Z-index for calendar panel |
+
+### Outputs
+
+| Event | Type | Description |
+|-------|------|-------------|
+| `dateSelect` | `EventEmitter<Date>` | Emitted when a date is selected |
+| `rangeSelect` | `EventEmitter<DateRange>` | Emitted when a range is selected |
+| `multipleSelect` | `EventEmitter<Date[]>` | Emitted when multiple dates are selected |
+| `localeChange` | `EventEmitter<SupportedLocale>` | Emitted when locale changes |
 
 ## Building
 
@@ -48,15 +137,9 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ng test
 ```
 
-## Running end-to-end tests
+## License
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+MIT
 
 ## Additional Resources
 

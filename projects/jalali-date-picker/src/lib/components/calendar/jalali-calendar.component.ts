@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, OnInit, SimpleChange
 import { CommonModule } from '@angular/common';
 import { JalaliDateService } from '../../core/services/jalali-date.service';
 import { HolidaysService } from '../../core/services/holidays.service';
+import { LocaleService, SupportedLocale } from '../../core/services/locale.service';
 import { JalaliCalendarUtils } from '../../core/utils/jalali-calendar.utils';
 import { DateRange, SelectionMode } from '../../core/models/jalali-date.model';
 import { CalendarPassThroughOptions, PassThroughMethodOptions } from '../../core/models/pass-through.model';
@@ -35,7 +36,7 @@ import { StyleClassService } from '../../core/services/style-class.service';
             [ngStyle]="getPreviousButtonStyles()"
             (click)="previousMonth()"
             [disabled]="false"
-            [attr.aria-label]="'ماه قبلی'">
+            [attr.aria-label]="localeService.translate('previous_month')">
             ‹
           </button>
           
@@ -66,7 +67,7 @@ import { StyleClassService } from '../../core/services/style-class.service';
             [ngStyle]="getNextButtonStyles()"
             (click)="nextMonth()"
             [disabled]="false"
-            [attr.aria-label]="'ماه بعدی'">
+            [attr.aria-label]="localeService.translate('next_month')">
             ›
           </button>
         </div>
@@ -82,8 +83,8 @@ import { StyleClassService } from '../../core/services/style-class.service';
             [class]="getTodayButtonClasses()"
             [ngStyle]="getTodayButtonStyles()"
             (click)="goToToday()"
-            [attr.aria-label]="'امروز'">
-            امروز
+            [attr.aria-label]="localeService.translate('today')">
+            {{ localeService.translate('today') }}
           </button>
         </div>
       </div>
@@ -562,6 +563,7 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
   @Input() minDate: Date | null = null;
   @Input() maxDate: Date | null = null;
   @Input() disabledDates: Date[] = [];
+  @Input() locale: SupportedLocale = 'fa';
   
   // Pass Through & Styling
   @Input() unstyled: boolean = false;
@@ -578,7 +580,7 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
   currentYear: number;
   currentMonth: number;
   currentMonthName: string;
-  weekDays: string[] = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+  weekDays: string[] = [];
 
   currentMonthDates: Date[] = [];
   previousMonthEmptyDays: number[] = [];
@@ -592,11 +594,22 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
   constructor(
     private jalaliDateService: JalaliDateService,
     private holidaysService: HolidaysService,
-    private styleClassService: StyleClassService
+    private styleClassService: StyleClassService,
+    public localeService: LocaleService
   ) { }
 
   ngOnInit() {
-    this.goToDate(this.selectedDate || this.jalaliDateService.today());
+    // Set locale
+    if (this.locale) {
+      this.localeService.setLocale(this.locale);
+    }
+    
+    // Set week days based on locale
+    this.weekDays = this.localeService.getWeekDaysShort();
+    
+    const initDate = this.selectedDate || this.jalaliDateService.today();
+    console.log('🔍 ngOnInit - initDate:', initDate);
+    this.goToDate(initDate);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -606,18 +619,30 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
     if (changes['selectedDate'] && !changes['selectedDate'].firstChange) {
       this.goToDate(this.selectedDate || this.jalaliDateService.today());
     }
+    if (changes['locale'] && !changes['locale'].firstChange) {
+      this.localeService.setLocale(this.locale);
+      this.weekDays = this.localeService.getWeekDaysShort();
+      this.updateCalendar();
+    }
   }
 
   goToToday() {
-    this.goToDate(this.jalaliDateService.today());
+    const today = this.jalaliDateService.today();
+    this.goToDate(today);
+    this.selectDate(today);
   }
 
   goToDate(date: Date) {
     const target = date;
+    console.log('🔍 goToDate - input date:', target);
+    console.log('🔍 goToDate - calendarType:', this.calendarType);
+    
     if (this.calendarType === 'jalali') {
       const jalaliDate = this.jalaliDateService.gregorianToJalali(target);
+      console.log('🔍 goToDate - jalaliDate:', jalaliDate);
       this.currentYear = jalaliDate.year;
       this.currentMonth = jalaliDate.month;
+      console.log('🔍 goToDate - set currentYear:', this.currentYear, 'currentMonth:', this.currentMonth);
     } else if (this.calendarType === 'gregorian') {
       this.currentYear = target.getFullYear();
       this.currentMonth = target.getMonth() + 1;
@@ -660,17 +685,17 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
   }
 
   updateCalendar() {
+    console.log('🔍 updateCalendar - START - currentYear:', this.currentYear, 'currentMonth:', this.currentMonth, 'calendarType:', this.calendarType);
+    
     if (this.calendarType === 'jalali') {
-      this.currentMonthName = this.jalaliDateService.getJalaliMonthName(this.currentMonth);
+      this.currentMonthName = this.localeService.getJalaliMonthName(this.currentMonth);
+      console.log('🔍 updateCalendar - currentMonthName:', this.currentMonthName);
       this.generateJalaliDates();
     } else if (this.calendarType === 'gregorian') {
-      this.currentMonthName = [
-        'ژانویه', 'فوریه', 'مارس', 'آوریل', 'مه', 'ژوئن',
-        'ژوئیه', 'اوت', 'سپتامبر', 'اکتبر', 'نوامبر', 'دسامبر'
-      ][this.currentMonth - 1];
+      this.currentMonthName = this.localeService.getGregorianMonthName(this.currentMonth);
       this.generateGregorianDates();
     } else {
-      this.currentMonthName = JalaliCalendarUtils.hijriMonths[this.currentMonth - 1];
+      this.currentMonthName = this.localeService.getHijriMonthName(this.currentMonth);
       this.generateHijriDates();
     }
     this.monthChange.emit({ year: this.currentYear, month: this.currentMonth });
@@ -694,16 +719,27 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
   }
 
   generateJalaliDates() {
+    console.log('🔍 generateJalaliDates - currentYear:', this.currentYear, 'currentMonth:', this.currentMonth);
     const daysInMonth = this.jalaliDateService.getDaysInJalaliMonth(this.currentYear, this.currentMonth);
     const firstDay = this.jalaliDateService.getFirstDayOfJalaliMonth(this.currentYear, this.currentMonth);
+
+    console.log('🔍 generateJalaliDates - daysInMonth:', daysInMonth, 'firstDay:', firstDay);
 
     this.previousMonthEmptyDays = Array(firstDay).fill(0);
     this.currentMonthDates = [];
 
     for (let day = 1; day <= daysInMonth; day++) {
       const gregorianDate = this.jalaliDateService.jalaliToGregorian(this.currentYear, this.currentMonth, day);
-      this.currentMonthDates.push(new Date(gregorianDate.year, gregorianDate.month - 1, gregorianDate.day));
+      if (day === 1 || day === 30) {
+        console.log(`🔍 Day ${day} - Jalali: ${this.currentYear}/${this.currentMonth}/${day} → Gregorian:`, gregorianDate);
+      }
+      // Create date at noon to avoid timezone issues
+      const date = new Date(gregorianDate.year, gregorianDate.month - 1, gregorianDate.day, 12, 0, 0, 0);
+      this.currentMonthDates.push(date);
     }
+
+    console.log('🔍 First date in calendar:', this.currentMonthDates[0]);
+    console.log('🔍 Last date in calendar:', this.currentMonthDates[this.currentMonthDates.length - 1]);
 
     const totalDays = firstDay + daysInMonth;
     const nextMonthDays = totalDays % 7 === 0 ? 0 : 7 - (totalDays % 7);
@@ -718,7 +754,9 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
     this.currentMonthDates = [];
 
     for (let day = 1; day <= daysInMonth; day++) {
-      this.currentMonthDates.push(new Date(this.currentYear, this.currentMonth - 1, day));
+      // Create date at noon to avoid timezone issues
+      const date = new Date(this.currentYear, this.currentMonth - 1, day, 12, 0, 0, 0);
+      this.currentMonthDates.push(date);
     }
 
     const totalDays = (firstDay + 1) % 7 + daysInMonth;
@@ -730,6 +768,14 @@ export class JalaliCalendarComponent implements OnInit, OnChanges {
     if (this.isDisabled(date)) {
       return;
     }
+    console.log('📅 Selected date:', date);
+    console.log('📅 Date details:', {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+      hours: date.getHours(),
+      iso: date.toISOString()
+    });
     this.dateSelect.emit(date);
   }
 

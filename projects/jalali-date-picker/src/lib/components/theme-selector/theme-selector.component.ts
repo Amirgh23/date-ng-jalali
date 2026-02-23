@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, DestroyRef, inject, Vie
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../core/services/theme.service';
+import { LocaleService } from '../../core/services/locale.service';
 import { ThemeConfig } from '../../core/models/theme.model';
 
 @Component({
@@ -10,46 +11,48 @@ import { ThemeConfig } from '../../core/models/theme.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   template: `
-    <div class="theme-selector" role="region" aria-label="انتخاب کننده تم">
+    <div class="theme-selector" role="region" [attr.aria-label]="localeService.translate('select_theme')">
       <div class="theme-selector-header">
-        <h3 id="theme-selector-title">انتخاب تم</h3>
-        <button 
-          *ngIf="showCloseButton" 
-          class="close-btn" 
-          (click)="close()" 
-          aria-label="بستن انتخاب کننده تم"
-          (keydown.enter)="close()"
-          (keydown.space)="close()">×</button>
+        <h3 id="theme-selector-title">{{ localeService.translate('select_theme') }}</h3>
+        @if (showCloseButton) {
+          <button 
+            class="close-btn" 
+            (click)="close()" 
+            [attr.aria-label]="localeService.translate('close')"
+            (keydown.enter)="close()"
+            (keydown.space)="close()">×</button>
+        }
       </div>
       
-      <div class="theme-grid" role="grid" aria-labelledby="theme-selector-title" aria-label="شبکه تم‌ها">
-        <div 
-          class="theme-card"
-          *ngFor="let theme of themes; let idx = index"
-          [class.active]="currentTheme.name === theme.name"
-          (click)="selectTheme(theme)"
-          [attr.aria-label]="'انتخاب تم ' + theme.displayName + (currentTheme.name === theme.name ? ' (انتخاب شده)' : '')"
-          [attr.aria-selected]="currentTheme.name === theme.name"
-          role="gridcell"
-          tabindex="0"
-          (keydown.enter)="selectTheme(theme)"
-          (keydown.space)="selectTheme(theme)"
-          (keydown.arrowright)="focusNextTheme(idx)"
-          (keydown.arrowleft)="focusPreviousTheme(idx)"
-          [attr.id]="'theme-' + idx"
-          #themeCard>
-          <div class="theme-preview" [class.dark]="theme.isDark" aria-hidden="true">
-            <div class="preview-header" [style.background]="theme.colors.primary"></div>
-            <div class="preview-content">
-              <div class="preview-item" [style.background]="theme.colors.secondary"></div>
-              <div class="preview-item" [style.background]="theme.colors.accent"></div>
+      <div class="theme-grid" role="grid" aria-labelledby="theme-selector-title" [attr.aria-label]="localeService.translate('select_theme')">
+        @for (theme of themes; track theme.name; let idx = $index) {
+          <div 
+            class="theme-card"
+            [class.active]="currentTheme.name === theme.name"
+            (click)="selectTheme(theme)"
+            [attr.aria-label]="localeService.translate('select_theme') + ' ' + theme.displayName + (currentTheme.name === theme.name ? ' (' + localeService.translate('selected') + ')' : '')"
+            [attr.aria-selected]="currentTheme.name === theme.name"
+            role="gridcell"
+            tabindex="0"
+            (keydown.enter)="selectTheme(theme)"
+            (keydown.space)="selectTheme(theme)"
+            (keydown.arrowright)="focusNextTheme(idx)"
+            (keydown.arrowleft)="focusPreviousTheme(idx)"
+            [attr.id]="'theme-' + idx"
+            #themeCard>
+            <div class="theme-preview" [class.dark]="theme.isDark" aria-hidden="true">
+              <div class="preview-header" [style.background]="theme.colors.primary"></div>
+              <div class="preview-content">
+                <div class="preview-item" [style.background]="theme.colors.secondary"></div>
+                <div class="preview-item" [style.background]="theme.colors.accent"></div>
+              </div>
+            </div>
+            <div class="theme-info">
+              <span class="theme-name">{{ theme.displayName }}</span>
+              <span class="theme-type" [attr.aria-label]="localeService.translate('theme_type')">{{ theme.isDark ? localeService.translate('dark_theme') : localeService.translate('light_theme') }}</span>
             </div>
           </div>
-          <div class="theme-info">
-            <span class="theme-name">{{ theme.displayName }}</span>
-            <span class="theme-type" aria-label="نوع تم">{{ theme.isDark ? 'تم تاریک' : 'تم روشن' }}</span>
-          </div>
-        </div>
+        }
       </div>
       
       <div class="theme-actions">
@@ -57,30 +60,31 @@ import { ThemeConfig } from '../../core/models/theme.model';
           class="action-btn secondary" 
           (click)="toggleDarkMode()" 
           [attr.aria-pressed]="currentTheme.isDark"
-          aria-label="تغییر بین تم روشن و تاریک"
+          [attr.aria-label]="localeService.translate('theme')"
           (keydown.enter)="toggleDarkMode()"
           (keydown.space)="toggleDarkMode()">
-          {{ currentTheme.isDark ? '☀️ تم روشن' : '🌙 تم تاریک' }}
+          {{ currentTheme.isDark ? '☀️ ' + localeService.translate('light_theme') : '🌙 ' + localeService.translate('dark_theme') }}
         </button>
         <button 
           class="action-btn" 
           (click)="resetTheme()"
-          aria-label="بازنشانی تم به پیشفرض"
+          [attr.aria-label]="localeService.translate('reset_default')"
           (keydown.enter)="resetTheme()"
           (keydown.space)="resetTheme()">
-          ↻ بازنشانی پیشفرض
+          ↻ {{ localeService.translate('reset_default') }}
         </button>
       </div>
     </div>
   `,
   styles: [`
     .theme-selector {
-      background: var(--color-background);
+      background: var(--color-background, #ffffff);
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       max-width: 500px;
       margin: auto;
+      color: var(--color-text, #1f2937);
     }
     
     .theme-selector-header {
@@ -88,12 +92,13 @@ import { ThemeConfig } from '../../core/models/theme.model';
       justify-content: space-between;
       align-items: center;
       padding: 16px 20px;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border, #e5e7eb);
+      background: var(--color-surface, #f9fafb);
     }
     
     .theme-selector-header h3 {
       margin: 0;
-      color: var(--color-text);
+      color: var(--color-text, #1f2937);
       font-size: 18px;
       font-weight: 600;
     }
@@ -103,7 +108,7 @@ import { ThemeConfig } from '../../core/models/theme.model';
       border: none;
       font-size: 24px;
       cursor: pointer;
-      color: var(--color-text);
+      color: var(--color-text, #1f2937);
       width: 32px;
       height: 32px;
       display: flex;
@@ -113,12 +118,12 @@ import { ThemeConfig } from '../../core/models/theme.model';
       transition: background 0.2s;
       
       &:hover {
-        background: var(--color-secondary);
-        color: white;
+        background: var(--color-secondary, #6366f1);
+        color: var(--color-background, white);
       }
       
       &:focus {
-        outline: 2px solid var(--color-primary);
+        outline: 2px solid var(--color-primary, #3b82f6);
         outline-offset: 2px;
       }
     }
@@ -130,28 +135,29 @@ import { ThemeConfig } from '../../core/models/theme.model';
       padding: 16px;
       max-height: 250px;
       overflow-y: auto;
+      background: var(--color-surface, #f9fafb);
       
       /* Custom Scrollbar */
       scrollbar-width: thin;
-      scrollbar-color: var(--color-primary) var(--color-background);
+      scrollbar-color: var(--color-primary, #3b82f6) var(--color-background, #ffffff);
       
       &::-webkit-scrollbar {
         width: 8px;
       }
       
       &::-webkit-scrollbar-track {
-        background: var(--color-background);
+        background: var(--color-background, #ffffff);
         border-radius: 4px;
       }
       
       &::-webkit-scrollbar-thumb {
-        background: var(--color-primary);
+        background: var(--color-primary, #3b82f6);
         border-radius: 4px;
         transition: background 0.2s;
       }
       
       &::-webkit-scrollbar-thumb:hover {
-        background: var(--color-secondary);
+        background: var(--color-secondary, #6366f1);
       }
     }
     
@@ -161,6 +167,7 @@ import { ThemeConfig } from '../../core/models/theme.model';
       border-radius: 8px;
       overflow: hidden;
       border: 2px solid transparent;
+      background: var(--color-background, #ffffff);
       
       &:hover {
         transform: translateY(-2px);
@@ -168,12 +175,12 @@ import { ThemeConfig } from '../../core/models/theme.model';
       }
       
       &:focus {
-        outline: 2px solid var(--color-primary);
+        outline: 2px solid var(--color-primary, #3b82f6);
         outline-offset: 2px;
       }
       
       &.active {
-        border-color: var(--color-primary);
+        border-color: var(--color-primary, #3b82f6);
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
       }
     }
@@ -213,27 +220,29 @@ import { ThemeConfig } from '../../core/models/theme.model';
     
     .theme-info {
       padding: 0 6px 6px;
+      background: var(--color-background, #ffffff);
     }
     
     .theme-name {
       display: block;
       font-size: 12px;
       font-weight: 500;
-      color: var(--color-text);
+      color: var(--color-text, #1f2937);
       margin-bottom: 2px;
     }
     
     .theme-type {
       display: block;
       font-size: 10px;
-      color: var(--color-textSecondary);
+      color: var(--color-textSecondary, #6b7280);
     }
     
     .theme-actions {
       display: flex;
       gap: 8px;
       padding: 12px 16px;
-      border-top: 1px solid var(--color-border);
+      border-top: 1px solid var(--color-border, #e5e7eb);
+      background: var(--color-surface, #f9fafb);
     }
     
     .action-btn {
@@ -247,13 +256,13 @@ import { ThemeConfig } from '../../core/models/theme.model';
       transition: all 0.2s;
       
       &:not(.secondary) {
-        background: var(--color-primary);
-        color: white;
+        background: var(--color-primary, #3b82f6);
+        color: var(--color-background, white);
       }
       
       &.secondary {
-        background: var(--color-secondary);
-        color: white;
+        background: var(--color-secondary, #6366f1);
+        color: var(--color-background, white);
       }
       
       &:hover {
@@ -262,7 +271,7 @@ import { ThemeConfig } from '../../core/models/theme.model';
       }
       
       &:focus {
-        outline: 2px solid var(--color-primary);
+        outline: 2px solid var(--color-primary, #3b82f6);
         outline-offset: 2px;
       }
       
@@ -281,6 +290,7 @@ export class ThemeSelectorComponent implements OnInit {
   currentTheme: ThemeConfig;
 
   private readonly destroyRef = inject(DestroyRef);
+  readonly localeService = inject(LocaleService);
 
   constructor(private themeService: ThemeService, private cdr: ChangeDetectorRef) {
     this.currentTheme = this.themeService.getCurrentTheme();
@@ -297,6 +307,8 @@ export class ThemeSelectorComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(theme => {
         this.currentTheme = theme;
+        // Force re-fetch themes to ensure colors are fresh
+        this.themes = this.themeService.getThemes();
         this.cdr.markForCheck();
       });
   }

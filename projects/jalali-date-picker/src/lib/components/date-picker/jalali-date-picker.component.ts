@@ -10,6 +10,8 @@ import {
   inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -18,7 +20,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   DatePickerValue,
   DateRange,
-  DayInfo,
   SelectionMode,
 } from '../../core/models/jalali-date.model';
 import { ColorPalette, ThemeConfig } from '../../core/models/theme.model';
@@ -26,11 +27,11 @@ import { DatePickerPassThroughOptions, PassThroughMethodOptions, CalendarPassThr
 import { JalaliDateService } from '../../core/services/jalali-date.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { StyleClassService } from '../../core/services/style-class.service';
+import { LocaleService, SupportedLocale } from '../../core/services/locale.service';
 
 import { JalaliCalendarComponent } from '../calendar/jalali-calendar.component';
 import { CalendarSwitchComponent } from '../calendar-switch/calendar-switch.component';
 import { ColorPickerComponent } from '../color-picker/color-picker.component';
-import { DayInfoModalComponent } from '../day-info-modal/day-info-modal.component';
 import { ThemeSelectorComponent } from '../theme-selector/theme-selector.component';
 
 @Component({
@@ -50,7 +51,6 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
     ColorPickerComponent,
     ThemeSelectorComponent,
     JalaliCalendarComponent,
-    DayInfoModalComponent,
   ],
   template: `
     <div
@@ -64,12 +64,24 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
       [style.--text-color]="currentPalette?.text"
       [style.--border-color]="currentPalette?.border"
       [style.--background-light]="backgroundLight"
-      [style.--text-muted]="textMuted">
+      [style.--text-muted]="textMuted"
+      [style.--color-primary]="currentPalette?.primary"
+      [style.--color-secondary]="currentPalette?.secondary"
+      [style.--color-accent]="currentPalette?.accent"
+      [style.--color-background]="currentPalette?.background"
+      [style.--color-surface]="currentPalette?.surface"
+      [style.--color-text]="currentPalette?.text"
+      [style.--color-textSecondary]="currentPalette?.textSecondary"
+      [style.--color-border]="currentPalette?.border"
+      [style.--color-success]="currentPalette?.success"
+      [style.--color-warning]="currentPalette?.warning"
+      [style.--color-error]="currentPalette?.error"
+      [style.--color-info]="currentPalette?.info">
       
       <!-- Input Container -->
       <div class="jdp-date-picker-input-container">
         <label [attr.id]="'date-picker-label'" class="sr-only">
-          انتخاب تاریخ
+          {{ localeService.translate('select_date') }}
         </label>
         
         <!-- Input Field -->
@@ -85,14 +97,14 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
           (keydown)="handleInputKeydown($event)"
           [disabled]="disabled || isDisabled"
           readonly
-          [attr.aria-label]="'انتخاب تاریخ'"
+          [attr.aria-label]="localeService.translate('select_date')"
           [attr.aria-labelledby]="'date-picker-label'"
           [attr.aria-expanded]="isCalendarVisible"
           [attr.aria-controls]="isCalendarVisible ? 'calendar-popup' : null"
           [attr.aria-describedby]="'date-picker-help'" />
         
         <span id="date-picker-help" class="sr-only">
-          برای انتخاب تاریخ، روی دکمه کلیک کنید یا Enter را فشار دهید
+          {{ localeService.translate('press_enter_to_select') }}
         </span>
         
         <!-- Calendar Button -->
@@ -104,7 +116,7 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
           (keydown.enter)="toggleCalendar()"
           (keydown.space)="toggleCalendar()"
           [disabled]="disabled || isDisabled"
-          [attr.aria-label]="'باز کردن تقویم'"
+          [attr.aria-label]="localeService.translate('open_calendar')"
           [attr.aria-pressed]="isCalendarVisible">
           📅
         </button>
@@ -114,9 +126,10 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
       <div 
         [class]="getPanelClasses()"
         [ngStyle]="getPanelStyles()"
+        [style.z-index]="zIndex"
         [attr.id]="'calendar-popup'"
         role="dialog"
-        [attr.aria-label]="'تقویم تاریخ'"
+        [attr.aria-label]="localeService.translate('date_calendar')"
         [attr.aria-modal]="isCalendarVisible">
         
         <!-- Calendar Header -->
@@ -124,19 +137,32 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
           <jalali-calendar-switch
             [calendarType]="calendarType"
             (calendarChange)="onCalendarChange($event)"
-            [attr.aria-label]="'انتخاب نوع تقویم'">
+            [attr.aria-label]="localeService.translate('select_calendar_type')">
           </jalali-calendar-switch>
 
-          <button 
-            type="button"
-            class="jdp-date-picker-theme-button"
-            (click)="toggleThemeSelector()"
-            (keydown.enter)="toggleThemeSelector()"
-            (keydown.space)="toggleThemeSelector()"
-            [attr.aria-label]="'انتخاب تم'"
-            [attr.aria-pressed]="isThemeSelectorVisible">
-            🎨
-          </button>
+          <div class="jdp-date-picker-header-actions">
+            <button 
+              type="button"
+              class="jdp-date-picker-lang-button"
+              (click)="toggleLanguage()"
+              (keydown.enter)="toggleLanguage()"
+              (keydown.space)="toggleLanguage(); $event.preventDefault()"
+              [attr.aria-label]="getLanguageLabel()"
+              [title]="getLanguageLabel()">
+              <span class="jdp-lang-text">{{ getLanguageShortName() }}</span>
+            </button>
+            
+            <button 
+              type="button"
+              class="jdp-date-picker-theme-button"
+              (click)="toggleThemeSelector()"
+              (keydown.enter)="toggleThemeSelector()"
+              (keydown.space)="toggleThemeSelector(); $event.preventDefault()"
+              [attr.aria-label]="localeService.translate('select_theme')"
+              [attr.aria-pressed]="isThemeSelectorVisible">
+              🎨
+            </button>
+          </div>
         </div>
 
         <!-- Theme Panel -->
@@ -144,9 +170,13 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
           <div 
             class="jdp-date-picker-theme-panel"
             role="region"
-            [attr.aria-label]="'انتخاب تم و رنگ'">
-            <jalali-theme-selector></jalali-theme-selector>
-            <jalali-color-picker></jalali-color-picker>
+            [attr.aria-label]="localeService.translate('select_theme_color')">
+            <div class="jdp-theme-section">
+              <jalali-theme-selector></jalali-theme-selector>
+            </div>
+            <div class="jdp-color-section">
+              <jalali-color-picker></jalali-color-picker>
+            </div>
           </div>
         }
 
@@ -159,23 +189,14 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
           [selectedDates]="selectedDates"
           [minDate]="minDate"
           [maxDate]="maxDate"
+          [locale]="locale"
           [pt]="getCalendarPT()"
           [unstyled]="unstyled"
           (dateSelect)="onDateSelect($event)"
           (monthChange)="onMonthChange($event)"
           role="grid"
-          [attr.aria-label]="'تقویم'">
+          [attr.aria-label]="localeService.translate('calendar')">
         </jalali-calendar>
-
-        <!-- Day Info Modal -->
-        @if (selectedDayInfo) {
-          <jalali-day-info-modal
-            [dayInfo]="selectedDayInfo"
-            (closed)="selectedDayInfo = null"
-            role="dialog"
-            [attr.aria-label]="'اطلاعات روز'">
-          </jalali-day-info-modal>
-        }
       </div>
     </div>
   `,
@@ -282,7 +303,7 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
         border: 1px solid var(--border-color, #e5e7eb);
         border-radius: 12px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
+        /* z-index is set via [style.z-index] binding */
         min-width: 400px;
         opacity: 0;
         visibility: hidden;
@@ -307,8 +328,9 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
         border-bottom: 1px solid var(--border-color, #e5e7eb);
       }
 
-      /* Theme Button */
-      .jdp-date-picker-theme-button {
+      /* Theme Button & Language Button */
+      .jdp-date-picker-theme-button,
+      .jdp-date-picker-lang-button {
         background: var(--background-light, #f9fafb);
         border: 1px solid var(--border-color, #e5e7eb);
         border-radius: 6px;
@@ -323,15 +345,29 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
         font-size: 18px;
       }
 
-      .jdp-date-picker-theme-button:hover {
+      .jdp-date-picker-theme-button:hover,
+      .jdp-date-picker-lang-button:hover {
         background: var(--secondary-color, #6366f1);
         color: var(--background, white);
         border-color: var(--secondary-color, #6366f1);
       }
 
-      .jdp-date-picker-theme-button:focus {
+      .jdp-date-picker-theme-button:focus,
+      .jdp-date-picker-lang-button:focus {
         outline: 2px solid var(--primary-color, #3b82f6);
         outline-offset: 2px;
+      }
+      
+      .jdp-date-picker-header-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      
+      .jdp-lang-text {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
       }
 
       /* Theme Panel */
@@ -347,6 +383,15 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
         /* Custom Scrollbar */
         scrollbar-width: thin;
         scrollbar-color: var(--primary-color, #3b82f6) var(--background-light, #f9fafb);
+      }
+      
+      .jdp-theme-section {
+        margin-bottom: 16px;
+      }
+      
+      .jdp-color-section {
+        padding-top: 16px;
+        border-top: 1px solid var(--border-color, #e5e7eb);
       }
       
       .jdp-date-picker-theme-panel::-webkit-scrollbar {
@@ -524,7 +569,7 @@ import { ThemeSelectorComponent } from '../theme-selector/theme-selector.compone
     `,
   ],
 })
-export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
+export class JalaliDatePickerComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() selectedDate: Date;
   @Input() selectionMode: SelectionMode = 'single';
   @Input() selectedRange: DateRange | null = null;
@@ -532,10 +577,11 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
   @Input() minDate: Date | null = null;
   @Input() maxDate: Date | null = null;
   @Input() disabled: boolean = false;
-  @Input() placeholder: string = 'تاریخ را انتخاب کنید';
+  @Input() placeholder: string = '';
   @Input() format: string = 'YYYY/MM/DD';
-  @Input() locale: string = 'fa';
+  @Input() locale: SupportedLocale = 'fa';
   @Input() readonly: boolean = false;
+  @Input() zIndex: number = 9999; // Default z-index for calendar panel
   
   // Pass Through & Styling
   @Input() unstyled: boolean = false;
@@ -547,6 +593,7 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
   @Output() rangeSelect = new EventEmitter<DateRange>();
   @Output() multipleSelect = new EventEmitter<Date[]>();
   @Output() calendarTypeChange = new EventEmitter<'jalali' | 'gregorian' | 'hijri'>();
+  @Output() localeChange = new EventEmitter<SupportedLocale>();
   @Output() blur = new EventEmitter<void>();
   @Output() focus = new EventEmitter<void>();
   @Output() change = new EventEmitter<Date | Date[] | DateRange>();
@@ -554,7 +601,6 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
   isCalendarVisible = false;
   isThemeSelectorVisible = false;
   calendarType: 'jalali' | 'gregorian' | 'hijri' = 'jalali';
-  selectedDayInfo: DayInfo;
 
   isDisabled = false;
 
@@ -569,6 +615,7 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
     private jalaliDateService: JalaliDateService,
     private themeService: ThemeService,
     private styleClassService: StyleClassService,
+    public localeService: LocaleService,
     private cdr: ChangeDetectorRef
   ) {
     this.currentTheme = this.themeService.getCurrentTheme();
@@ -608,6 +655,25 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
 
     if (this.selectionMode === 'multiple' && !this.selectedDates) {
       this.selectedDates = [];
+    }
+
+    // Set locale
+    if (this.locale) {
+      this.localeService.setLocale(this.locale);
+    }
+
+    // Set placeholder if not provided
+    if (!this.placeholder) {
+      this.placeholder = this.localeService.translate('select_date');
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['locale'] && !changes['locale'].firstChange) {
+      this.localeService.setLocale(this.locale);
+      // Always update placeholder when locale changes
+      this.placeholder = this.localeService.translate('select_date');
+      this.cdr.markForCheck();
     }
   }
 
@@ -698,7 +764,7 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
         return `${this.formatForCurrentCalendar(start)} - ${this.formatForCurrentCalendar(end)}`;
       }
       if (start) {
-        return `از ${this.formatForCurrentCalendar(start)} ...`;
+        return `${this.localeService.translate('from')} ${this.formatForCurrentCalendar(start)} ...`;
       }
       return '';
     }
@@ -707,7 +773,7 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
       const count = (this.selectedDates || []).length;
       if (count === 0) return '';
       if (count === 1) return this.formatForCurrentCalendar(this.selectedDates[0]);
-      return `${count} تاریخ انتخاب شده`;
+      return `${count} ${this.localeService.translate('dates_selected')}`;
     }
 
     if (!this.selectedDate) return '';
@@ -723,7 +789,8 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
       return this.jalaliDateService.gregorianToHijri(date).formatted;
     }
 
-    return date.toLocaleDateString('fa-IR');
+    // Gregorian calendar
+    return this.jalaliDateService.formatGregorianDate(date);
   }
 
   toggleCalendar() {
@@ -746,6 +813,39 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
     if (this.isDisabled) return;
     this.isThemeSelectorVisible = !this.isThemeSelectorVisible;
     this.cdr.markForCheck();
+  }
+
+  toggleLanguage() {
+    if (this.isDisabled) return;
+    // Toggle between Persian and English (most common use case)
+    const locales: SupportedLocale[] = ['fa', 'en'];
+    const currentIndex = locales.indexOf(this.locale);
+    const nextIndex = (currentIndex + 1) % locales.length;
+    this.locale = locales[nextIndex];
+    this.localeService.setLocale(this.locale);
+    this.placeholder = this.localeService.translate('select_date');
+    this.localeChange.emit(this.locale);
+    this.cdr.markForCheck();
+  }
+
+  getLanguageShortName(): string {
+    const names: Record<SupportedLocale, string> = {
+      'fa': 'فا',
+      'en': 'EN',
+      'ar': 'عر',
+      'ku': 'کو'
+    };
+    return names[this.locale] || 'EN';
+  }
+
+  getLanguageLabel(): string {
+    const labels: Record<SupportedLocale, string> = {
+      'fa': 'فارسی',
+      'en': 'English',
+      'ar': 'العربية',
+      'ku': 'کوردی'
+    };
+    return labels[this.locale] || 'Language';
   }
 
   onCalendarChange(type: 'jalali' | 'gregorian' | 'hijri') {
@@ -789,7 +889,6 @@ export class JalaliDatePickerComponent implements OnInit, ControlValueAccessor {
     }
 
     this.selectedDate = date;
-    this.selectedDayInfo = this.jalaliDateService.getDayInfo(date);
     this.dateSelect.emit(date);
     this.onChange(date);
     this.onTouched();

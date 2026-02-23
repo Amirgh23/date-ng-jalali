@@ -1,135 +1,275 @@
-<div style="padding: 40px; max-width: 1200px; margin: 0 auto;">
-  <h1 style="text-align: center; color: #333; margin-bottom: 10px;">🗓️ تقویم جلالی انگولار</h1>
-  <p style="text-align: center; color: #666; margin-bottom: 40px;">Jalali Date Picker - تقویم فارسی با 21 تم مختلف</p>
+<div class="container"></div>
+<div style="padding: 40px; max-width: 1400px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative; z-index: 1;">
+  <!-- Header -->
+  <div style="text-align: center; margin-bottom: 40px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+    <h1 style="color: #ffffff; margin-bottom: 10px; font-size: 2.5rem; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">{{ currentTexts.title }}</h1>
+    <p style="color: #e0e0e0; font-size: 1.1rem; margin-bottom: 20px; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);">{{ currentTexts.subtitle }}</p>
+    
+    <!-- Language Switcher -->
+    <div style="margin-top: 20px;">
+      <button 
+        (click)="switchLocale('fa')"
+        [style.background]="currentLocale === 'fa' ? 'rgba(16, 185, 129, 0.8)' : 'rgba(255, 255, 255, 0.15)'"
+        [style.color]="'white'"
+        [style.border]="currentLocale === 'fa' ? '2px solid rgba(16, 185, 129, 1)' : '2px solid rgba(255, 255, 255, 0.3)'"
+        style="padding: 10px 20px; margin: 0 5px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+        🇮🇷 فارسی
+      </button>
+      <button 
+        (click)="switchLocale('en')"
+        [style.background]="currentLocale === 'en' ? 'rgba(16, 185, 129, 0.8)' : 'rgba(255, 255, 255, 0.15)'"
+        [style.color]="'white'"
+        [style.border]="currentLocale === 'en' ? '2px solid rgba(16, 185, 129, 1)' : '2px solid rgba(255, 255, 255, 0.3)'"
+        style="padding: 10px 20px; margin: 0 5px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+        🇬🇧 English
+      </button>
+    </div>
+  </div>
+
+  <!-- Installation Guide -->
+  <div style="background: rgba(102, 126, 234, 0.2); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; margin-bottom: 40px; color: white; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2);">
+    <h2 style="margin-top: 0; font-size: 1.8rem; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">{{ currentTexts.installTitle }}</h2>
+    <div style="background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; margin-top: 20px; font-family: 'Courier New', monospace; border: 1px solid rgba(255, 255, 255, 0.1);">
+      <code style="color: #fff; font-size: 14px;">npm install @your-org/jalali-date-picker</code>
+    </div>
+  </div>
+
+  <!-- Usage Examples -->
+  <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; margin-bottom: 40px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2);">
+    <h2 style="color: #ffffff; margin-top: 0; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">{{ currentTexts.usageTitle }}</h2>
+    
+    <!-- Example 1: Basic Usage -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="color: #60a5fa; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.example1Title }}</h3>
+      <p style="color: #e0e0e0; margin-bottom: 15px;">{{ currentTexts.example1Desc }}</p>
+      <div style="background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6; overflow-x: auto; border: 1px solid rgba(59, 130, 246, 0.3);">
+        <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #e0e0e0;"><code>{{ currentTexts.example1Code }}</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: Range Selection -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="color: #a78bfa; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.example2Title }}</h3>
+      <p style="color: #e0e0e0; margin-bottom: 15px;">{{ currentTexts.example2Desc }}</p>
+      <div style="background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border-left: 4px solid #8b5cf6; overflow-x: auto; border: 1px solid rgba(139, 92, 246, 0.3);">
+        <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #e0e0e0;"><code>{{ currentTexts.example2Code }}</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: Multiple Selection -->
+    <div style="margin-bottom: 30px;">
+      <h3 style="color: #f472b6; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.example3Title }}</h3>
+      <p style="color: #e0e0e0; margin-bottom: 15px;">{{ currentTexts.example3Desc }}</p>
+      <div style="background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border-left: 4px solid #ec4899; overflow-x: auto; border: 1px solid rgba(236, 72, 153, 0.3);">
+        <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #e0e0e0;"><code>{{ currentTexts.example3Code }}</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: With Theme -->
+    <div>
+      <h3 style="color: #34d399; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.example4Title }}</h3>
+      <p style="color: #e0e0e0; margin-bottom: 15px;">{{ currentTexts.example4Desc }}</p>
+      <div style="background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border-left: 4px solid #10b981; overflow-x: auto; border: 1px solid rgba(16, 185, 129, 0.3);">
+        <pre style="margin: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #e0e0e0;"><code>{{ currentTexts.example4Code }}</code></pre>
+      </div>
+    </div>
+  </div>
 
   <!-- Mode Selection -->
-  <div style="text-align: center; margin-bottom: 30px;">
+  <div style="text-align: center; margin-bottom: 40px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
+    <h3 style="color: #ffffff; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">{{ currentTexts.selectModeTitle }}</h3>
     <button 
       (click)="switchMode('single')"
-      [style.background]="selectionMode === 'single' ? '#3b82f6' : '#e5e7eb'"
-      [style.color]="selectionMode === 'single' ? 'white' : '#333'"
-      style="padding: 10px 20px; margin: 0 5px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
-      تک تاریخ
+      [style.background]="selectionMode === 'single' ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.15)'"
+      [style.color]="'white'"
+      [style.border]="selectionMode === 'single' ? '2px solid rgba(59, 130, 246, 1)' : '2px solid rgba(255, 255, 255, 0.3)'"
+      style="padding: 12px 24px; margin: 0 8px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: all 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+      📅 {{ currentTexts.singleMode }}
     </button>
     <button 
       (click)="switchMode('range')"
-      [style.background]="selectionMode === 'range' ? '#3b82f6' : '#e5e7eb'"
-      [style.color]="selectionMode === 'range' ? 'white' : '#333'"
-      style="padding: 10px 20px; margin: 0 5px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
-      محدوده تاریخ
+      [style.background]="selectionMode === 'range' ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.15)'"
+      [style.color]="'white'"
+      [style.border]="selectionMode === 'range' ? '2px solid rgba(59, 130, 246, 1)' : '2px solid rgba(255, 255, 255, 0.3)'"
+      style="padding: 12px 24px; margin: 0 8px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: all 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+      📆 {{ currentTexts.rangeMode }}
     </button>
     <button 
       (click)="switchMode('multiple')"
-      [style.background]="selectionMode === 'multiple' ? '#3b82f6' : '#e5e7eb'"
-      [style.color]="selectionMode === 'multiple' ? 'white' : '#333'"
-      style="padding: 10px 20px; margin: 0 5px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
-      چند تاریخ
+      [style.background]="selectionMode === 'multiple' ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.15)'"
+      [style.color]="'white'"
+      [style.border]="selectionMode === 'multiple' ? '2px solid rgba(59, 130, 246, 1)' : '2px solid rgba(255, 255, 255, 0.3)'"
+      style="padding: 12px 24px; margin: 0 8px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: all 0.3s; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+      🗓️ {{ currentTexts.multipleMode }}
     </button>
   </div>
 
-  <!-- Date Picker -->
-  <div style="display: flex; justify-content: center; margin-bottom: 40px;">
-    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 400px; width: 100%;">
+  <!-- Date Picker Demo -->
+  <div style="display: flex; justify-content: center; margin-bottom: 40px; position: relative; z-index: 1;">
+    <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); max-width: 500px; width: 100%; border: 1px solid rgba(255, 255, 255, 0.25);">
+      <h3 style="text-align: center; color: #ffffff; margin-top: 0; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">{{ currentTexts.demoTitle }}</h3>
       <jalali-date-picker
         [selectionMode]="selectionMode"
         [selectedDate]="selectedDate"
         [selectedRange]="selectedRange"
         [selectedDates]="selectedDates"
+        [locale]="currentLocale"
         (dateSelect)="onDateSelect($event)"
         (rangeSelect)="onRangeSelect($event)"
-        (multipleSelect)="onMultipleSelect($event)">
+        (multipleSelect)="onMultipleSelect($event)"
+        (localeChange)="onLocaleChange($event)">
       </jalali-date-picker>
     </div>
   </div>
 
   <!-- Results -->
-  <div style="background: #f8fafc; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0;">
-    <h2 style="color: #333; margin-top: 0;">📊 نتایج انتخاب:</h2>
+  <div style="background: rgba(14, 165, 233, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 40px; border-radius: 20px; border: 1px solid rgba(186, 230, 253, 0.3); margin-bottom: 40px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
+    <h2 style="color: #ffffff; margin-top: 0; text-align: center; font-size: 1.8rem; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);">{{ currentTexts.resultsTitle }}</h2>
     
     @if (selectionMode === 'single') {
-      <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-        <p style="margin: 0; color: #666;"><strong>تاریخ انتخاب شده:</strong></p>
-        <p style="margin: 10px 0 0 0; font-size: 18px; color: #3b82f6; font-weight: bold;">
+      <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2);">
+        <p style="margin: 0; color: #e0e0e0; font-weight: 600;">{{ currentTexts.selectedDate }}</p>
+        
+        <!-- تاریخ جلالی -->
+        <p style="margin: 15px 0 0 0; font-size: 1.8rem; color: #60a5fa; font-weight: bold; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">
+          📅 {{ getJalaliDate(selectedDate) }}
+        </p>
+        
+        <!-- تاریخ میلادی -->
+        <p style="margin: 10px 0 0 0; color: #d0d0d0; font-size: 1.1rem;">
+          🌍 {{ selectedDate | date: 'fullDate' }}
+        </p>
+        <p style="margin: 5px 0 0 0; color: #a0a0a0; font-size: 0.95rem;">
           {{ selectedDate | date: 'yyyy-MM-dd' }}
         </p>
       </div>
     }
 
     @if (selectionMode === 'range') {
-      <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-        <p style="margin: 0; color: #666;"><strong>محدوده انتخاب شده:</strong></p>
-        <p style="margin: 10px 0 0 0; font-size: 16px; color: #3b82f6;">
-          @if (selectedRange.start) {
-            <span>{{ selectedRange.start | date: 'yyyy-MM-dd' }}</span>
-          }
-          @if (selectedRange.start && selectedRange.end) {
-            <span> تا </span>
-          }
-          @if (selectedRange.end) {
-            <span>{{ selectedRange.end | date: 'yyyy-MM-dd' }}</span>
-          }
-          @if (!selectedRange.start && !selectedRange.end) {
-            <span>هنوز انتخاب نشده</span>
-          }
-        </p>
+      <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2);">
+        <p style="margin: 0; color: #e0e0e0; font-weight: 600;">{{ currentTexts.selectedRange }}</p>
+        @if (selectedRange.start && selectedRange.end) {
+          <div style="margin-top: 15px;">
+            <!-- تاریخ شروع -->
+            <div style="display: inline-block; background: rgba(14, 165, 233, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 15px 20px; border-radius: 12px; margin-right: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2); vertical-align: top;">
+              <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 5px;">📅 {{ getJalaliDate(selectedRange.start) }}</div>
+              <div style="font-size: 0.9rem; opacity: 0.9;">{{ selectedRange.start | date: 'yyyy-MM-dd' }}</div>
+            </div>
+            
+            <span style="color: #e0e0e0; font-weight: bold; font-size: 1.5rem; margin: 0 10px;">→</span>
+            
+            <!-- تاریخ پایان -->
+            <div style="display: inline-block; background: rgba(14, 165, 233, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 15px 20px; border-radius: 12px; margin-left: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2); vertical-align: top;">
+              <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 5px;">📅 {{ getJalaliDate(selectedRange.end) }}</div>
+              <div style="font-size: 0.9rem; opacity: 0.9;">{{ selectedRange.end | date: 'yyyy-MM-dd' }}</div>
+            </div>
+          </div>
+        } @else {
+          <p style="margin: 15px 0 0 0; color: #d0d0d0; font-style: italic;">{{ currentTexts.noRangeSelected }}</p>
+        }
       </div>
     }
 
     @if (selectionMode === 'multiple') {
-      <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-        <p style="margin: 0; color: #666;"><strong>تاریخ‌های انتخاب شده:</strong></p>
+      <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2);">
+        <p style="margin: 0; color: #e0e0e0; font-weight: 600;">{{ currentTexts.selectedDates }} ({{ selectedDates.length }})</p>
         @if (selectedDates.length > 0) {
-          <div style="margin-top: 10px;">
+          <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;">
             @for (date of selectedDates; track date) {
-              <span style="display: inline-block; background: #3b82f6; color: white; padding: 6px 12px; border-radius: 6px; margin-right: 8px; margin-bottom: 8px;">
-                {{ date | date: 'yyyy-MM-dd' }}
-              </span>
+              <div style="background: rgba(14, 165, 233, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 12px 18px; border-radius: 12px; font-weight: 500; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2);">
+                <div style="font-size: 1.1rem; margin-bottom: 3px;">📅 {{ getJalaliDate(date) }}</div>
+                <div style="font-size: 0.85rem; opacity: 0.9;">{{ date | date: 'yyyy-MM-dd' }}</div>
+              </div>
             }
           </div>
-        }
-        @if (selectedDates.length === 0) {
-          <p style="margin: 10px 0 0 0; color: #999;">هنوز تاریخی انتخاب نشده</p>
+        } @else {
+          <p style="margin: 15px 0 0 0; color: #d0d0d0; font-style: italic;">{{ currentTexts.noDatesSelected }}</p>
         }
       </div>
     }
   </div>
 
-  <!-- Features -->
-  <div style="margin-top: 40px; padding: 30px; background: #f0f9ff; border-radius: 12px; border: 1px solid #bfdbfe;">
-    <h2 style="color: #1e40af; margin-top: 0;">✨ ویژگی‌های اصلی:</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-      <div>
-        <h3 style="color: #1e40af; margin-top: 0;">📅 تقویم‌های مختلف</h3>
-        <ul style="color: #333; margin: 0; padding-left: 20px;">
-          <li>جلالی (Persian)</li>
-          <li>میلادی (Gregorian)</li>
-          <li>قمری (Hijri)</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="color: #1e40af; margin-top: 0;">🎨 21 تم مختلف</h3>
-        <ul style="color: #333; margin: 0; padding-left: 20px;">
-          <li>تم‌های روشن و تاریک</li>
-          <li>تم‌های خاص (Sci-Fi, HUD)</li>
-          <li>تم‌های رنگی (Gradient, Neon)</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="color: #1e40af; margin-top: 0;">♿ دسترسی‌پذیری</h3>
-        <ul style="color: #333; margin: 0; padding-left: 20px;">
-          <li>ARIA labels</li>
-          <li>Keyboard navigation</li>
-          <li>Screen reader support</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="color: #1e40af; margin-top: 0;">⚡ بهینه‌سازی</h3>
-        <ul style="color: #333; margin: 0; padding-left: 20px;">
-          <li>OnPush change detection</li>
-          <li>Lazy loading ready</li>
-          <li>Virtual scrolling</li>
-        </ul>
-      </div>
+  <!-- Features Grid -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px;">
+    <!-- Calendars -->
+    <div style="background: rgba(139, 92, 246, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(139, 92, 246, 0.3); border-top: 4px solid #8b5cf6;">
+      <div style="font-size: 2.5rem; margin-bottom: 15px;">📅</div>
+      <h3 style="color: #a78bfa; margin: 0 0 15px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.calendarsTitle }}</h3>
+      <ul style="color: #e0e0e0; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li><strong>{{ currentTexts.jalaliCalendar }}</strong></li>
+        <li><strong>{{ currentTexts.gregorianCalendar }}</strong></li>
+        <li><strong>{{ currentTexts.hijriCalendar }}</strong></li>
+      </ul>
+      <p style="margin-top: 15px; color: #d0d0d0; font-size: 0.9rem;">{{ currentTexts.calendarsDesc }}</p>
     </div>
+
+    <!-- Themes -->
+    <div style="background: rgba(236, 72, 153, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(236, 72, 153, 0.3); border-top: 4px solid #ec4899;">
+      <div style="font-size: 2.5rem; margin-bottom: 15px;">🎨</div>
+      <h3 style="color: #f472b6; margin: 0 0 15px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.themesTitle }}</h3>
+      <ul style="color: #e0e0e0; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>{{ currentTexts.theme1 }}</li>
+        <li>{{ currentTexts.theme2 }}</li>
+        <li>{{ currentTexts.theme3 }}</li>
+      </ul>
+      <p style="margin-top: 15px; color: #d0d0d0; font-size: 0.9rem;">{{ currentTexts.themesDesc }}</p>
+    </div>
+
+    <!-- Languages -->
+    <div style="background: rgba(16, 185, 129, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(16, 185, 129, 0.3); border-top: 4px solid #10b981;">
+      <div style="font-size: 2.5rem; margin-bottom: 15px;">🌍</div>
+      <h3 style="color: #34d399; margin: 0 0 15px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.languagesTitle }}</h3>
+      <ul style="color: #e0e0e0; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>🇮🇷 {{ currentTexts.persianLang }}</li>
+        <li>🇬🇧 {{ currentTexts.englishLang }}</li>
+      </ul>
+      <p style="margin-top: 15px; color: #d0d0d0; font-size: 0.9rem;">{{ currentTexts.languagesDesc }}</p>
+    </div>
+
+    <!-- Accessibility -->
+    <div style="background: rgba(245, 158, 11, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(245, 158, 11, 0.3); border-top: 4px solid #f59e0b;">
+      <div style="font-size: 2.5rem; margin-bottom: 15px;">♿</div>
+      <h3 style="color: #fbbf24; margin: 0 0 15px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.accessibilityTitle }}</h3>
+      <ul style="color: #e0e0e0; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>ARIA labels</li>
+        <li>{{ currentTexts.keyboardNav }}</li>
+        <li>{{ currentTexts.screenReader }}</li>
+      </ul>
+      <p style="margin-top: 15px; color: #d0d0d0; font-size: 0.9rem;">{{ currentTexts.accessibilityDesc }}</p>
+    </div>
+
+    <!-- Performance -->
+    <div style="background: rgba(6, 182, 212, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(6, 182, 212, 0.3); border-top: 4px solid #06b6d4;">
+      <div style="font-size: 2.5rem; margin-bottom: 15px;">⚡</div>
+      <h3 style="color: #22d3ee; margin: 0 0 15px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.performanceTitle }}</h3>
+      <ul style="color: #e0e0e0; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>OnPush {{ currentTexts.changeDetection }}</li>
+        <li>{{ currentTexts.caching }}</li>
+        <li>{{ currentTexts.lazyLoading }}</li>
+      </ul>
+      <p style="margin-top: 15px; color: #d0d0d0; font-size: 0.9rem;">{{ currentTexts.performanceDesc }}</p>
+    </div>
+
+    <!-- Selection Modes -->
+    <div style="background: rgba(239, 68, 68, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-top: 4px solid #ef4444;">
+      <div style="font-size: 2.5rem; margin-bottom: 15px;">🎯</div>
+      <h3 style="color: #f87171; margin: 0 0 15px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">{{ currentTexts.selectionModesTitle }}</h3>
+      <ul style="color: #e0e0e0; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>{{ currentTexts.singleSelection }}</li>
+        <li>{{ currentTexts.rangeSelection }}</li>
+        <li>{{ currentTexts.multipleSelection }}</li>
+      </ul>
+      <p style="margin-top: 15px; color: #d0d0d0; font-size: 0.9rem;">{{ currentTexts.selectionModesDesc }}</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 20px; margin-top: 40px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
+    <p style="color: #e0e0e0; margin: 0; font-size: 1.1rem; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">
+      {{ currentTexts.footerText }}
+    </p>
+    <p style="color: #d0d0d0; margin: 10px 0 0 0;">
+      {{ currentTexts.version }}
+    </p>
   </div>
 </div>

@@ -2,18 +2,22 @@ import { Injectable } from '@angular/core';
 import { JalaliCalendarUtils } from '../utils/jalali-calendar.utils';
 import { JalaliDate, GregorianDate, HijriDate, DayInfo } from '../models/jalali-date.model';
 import { CacheService } from './cache.service';
+import { LocaleService } from './locale.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JalaliDateService {
-  constructor(private cacheService: CacheService) {}
+  constructor(
+    private cacheService: CacheService,
+    private localeService: LocaleService
+  ) {}
 
   /**
    * تبدیل تاریخ میلادی به جلالی
    */
   gregorianToJalali(gregorianDate: Date): JalaliDate {
-    const cacheKey = `g2j_${gregorianDate.getTime()}`;
+    const cacheKey = `g2j_${gregorianDate.getTime()}_${this.localeService.getLocale()}`;
     const cached = this.cacheService.get<JalaliDate>(cacheKey);
     
     if (cached) {
@@ -21,13 +25,16 @@ export class JalaliDateService {
     }
 
     const jalaliDate = JalaliCalendarUtils.gregorianToJalali(gregorianDate);
+    const monthName = this.localeService.getJalaliMonthName(jalaliDate.month);
+    const formatted = this.formatJalaliDate(jalaliDate);
+    
     const result: JalaliDate = {
       year: jalaliDate.year,
       month: jalaliDate.month,
       day: jalaliDate.day,
-      monthName: JalaliCalendarUtils.getJalaliMonthName(jalaliDate.month),
+      monthName: monthName,
       dayName: JalaliCalendarUtils.getJalaliDayName(gregorianDate.getDay()),
-      formatted: JalaliCalendarUtils.formatJalaliDate(jalaliDate)
+      formatted: formatted
     };
 
     this.cacheService.set(cacheKey, result);
@@ -63,7 +70,7 @@ export class JalaliDateService {
    * تبدیل میلادی به قمری
    */
   gregorianToHijri(gregorianDate: Date): HijriDate {
-    const cacheKey = `g2h_${gregorianDate.getTime()}`;
+    const cacheKey = `g2h_${gregorianDate.getTime()}_${this.localeService.getLocale()}`;
     const cached = this.cacheService.get<HijriDate>(cacheKey);
     
     if (cached) {
@@ -71,13 +78,16 @@ export class JalaliDateService {
     }
 
     const hijriDate = JalaliCalendarUtils.gregorianToHijri(gregorianDate);
+    const monthName = this.localeService.getHijriMonthName(hijriDate.month);
+    const formatted = this.formatHijriDate(hijriDate);
+    
     const result: HijriDate = {
       year: hijriDate.year,
       month: hijriDate.month,
       day: hijriDate.day,
-      monthName: JalaliCalendarUtils.hijriMonths[hijriDate.month - 1],
+      monthName: monthName,
       dayName: JalaliCalendarUtils.getJalaliDayName(gregorianDate.getDay()),
-      formatted: JalaliCalendarUtils.formatHijriDate(hijriDate)
+      formatted: formatted
     };
 
     this.cacheService.set(cacheKey, result);
@@ -185,7 +195,9 @@ export class JalaliDateService {
    * دریافت تاریخ امروز
    */
   today(): Date {
-    return new Date();
+    const now = new Date();
+    // Return date at noon to avoid timezone issues
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0);
   }
 
   /**
@@ -242,7 +254,12 @@ export class JalaliDateService {
    * بررسی تاریخ برابر
    */
   isSameDay(date1: Date, date2: Date): boolean {
-    return date1.toDateString() === date2.toDateString();
+    if (!date1 || !date2) return false;
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   }
 
   /**
@@ -343,5 +360,49 @@ export class JalaliDateService {
    */
   clearCache(): void {
     this.cacheService.clear();
+  }
+
+  /**
+   * فرمت تاریخ جلالی با پشتیبانی چندزبانه
+   */
+  formatJalaliDate(date: { year: number; month: number; day: number }): string {
+    const monthName = this.localeService.getJalaliMonthName(date.month);
+    const locale = this.localeService.getLocale();
+    
+    // Format based on locale direction
+    if (locale === 'en') {
+      return `${monthName} ${date.day}, ${date.year}`;
+    }
+    return `${date.day} ${monthName} ${date.year}`;
+  }
+
+  /**
+   * فرمت تاریخ میلادی با پشتیبانی چندزبانه
+   */
+  formatGregorianDate(date: Date): string {
+    const monthName = this.localeService.getGregorianMonthName(date.getMonth() + 1);
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const locale = this.localeService.getLocale();
+    
+    // Format based on locale direction
+    if (locale === 'en') {
+      return `${monthName} ${day}, ${year}`;
+    }
+    return `${day} ${monthName} ${year}`;
+  }
+
+  /**
+   * فرمت تاریخ قمری با پشتیبانی چندزبانه
+   */
+  formatHijriDate(date: { year: number; month: number; day: number }): string {
+    const monthName = this.localeService.getHijriMonthName(date.month);
+    const locale = this.localeService.getLocale();
+    
+    // Format based on locale direction
+    if (locale === 'en') {
+      return `${monthName} ${date.day}, ${date.year}`;
+    }
+    return `${date.day} ${monthName} ${date.year}`;
   }
 }
