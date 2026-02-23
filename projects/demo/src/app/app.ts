@@ -88,7 +88,7 @@ export class AppComponent {
       usageTitle: '💻 نحوه استفاده در پروژه',
       example1Title: '1️⃣ استفاده ساده',
       example1Desc: 'ساده‌ترین حالت استفاده:',
-      example1Code: 'import { JalaliDatePickerComponent } from "jalali-date-picker";\n\n<jalali-date-picker [selectedDate]="selectedDate" (dateSelect)="onDateSelect($event)"></jalali-date-picker>',
+      example1Code: 'npm install @lomineuro/jalali-date-picker\n\nimport { JalaliDatePickerComponent } from "@lomineuro/jalali-date-picker";\n\n<jalali-date-picker [selectedDate]="selectedDate" (dateSelect)="onDateSelect($event)"></jalali-date-picker>',
       example2Title: '2️⃣ انتخاب محدوده',
       example2Desc: 'برای انتخاب دو تاریخ:',
       example2Code: '<jalali-date-picker selectionMode="range" [selectedRange]="selectedRange" (rangeSelect)="onRangeSelect($event)"></jalali-date-picker>',
@@ -139,8 +139,8 @@ export class AppComponent {
       rangeSelection: 'محدوده',
       multipleSelection: 'چند',
       selectionModesDesc: 'انعطاف‌پذیر',
-      footerText: '💚 برای برنامه‌نویسان ایرانی',
-      version: 'نسخه 1.0.0'
+      footerText: '💚 ساخته شده توسط امیررضا غفاریان',
+      version: 'نسخه 1.0.0 | @lomineuro/jalali-date-picker'
     },
     en: {
       title: '📚 Usage Guide',
@@ -149,7 +149,7 @@ export class AppComponent {
       usageTitle: '💻 How to Use',
       example1Title: '1️⃣ Basic Usage',
       example1Desc: 'Simplest way:',
-      example1Code: 'import { JalaliDatePickerComponent } from "jalali-date-picker";\n\n<jalali-date-picker [selectedDate]="selectedDate" (dateSelect)="onDateSelect($event)"></jalali-date-picker>',
+      example1Code: 'npm install @lomineuro/jalali-date-picker\n\nimport { JalaliDatePickerComponent } from "@lomineuro/jalali-date-picker";\n\n<jalali-date-picker [selectedDate]="selectedDate" (dateSelect)="onDateSelect($event)"></jalali-date-picker>',
       example2Title: '2️⃣ Date Range',
       example2Desc: 'For two dates:',
       example2Code: '<jalali-date-picker selectionMode="range" [selectedRange]="selectedRange"></jalali-date-picker>',
@@ -200,8 +200,8 @@ export class AppComponent {
       rangeSelection: 'Range',
       multipleSelection: 'Multiple',
       selectionModesDesc: 'Flexible',
-      footerText: '💚 For Iranian developers',
-      version: 'Version 1.0.0'
+      footerText: '💚 Made by Amirreza Ghafarian',
+      version: 'Version 1.0.0 | @lomineuro/jalali-date-picker'
     },
 
   };
