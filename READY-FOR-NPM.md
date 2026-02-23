@@ -5,7 +5,7 @@
 ### 1. تنظیمات پکیج
 ```json
 {
-  "name": "@your-org/jalali-date-picker",
+  "name": "@lomineuro/jalali-date-picker",
   "version": "1.0.0",
   "license": "MIT"
 }
@@ -18,7 +18,7 @@
 
 ### 3. فایل‌های پکیج
 ```
-📦 @your-org/jalali-date-picker@1.0.0
+📦 @lomineuro/jalali-date-picker@1.0.0
 ├── 📄 LICENSE (1.1 KB)
 ├── 📄 README.md (4.0 KB)
 ├── 📄 package.json (1.3 KB)
@@ -87,9 +87,9 @@
    # فایل: projects/jalali-date-picker/package.json
    
    تغییر دهید:
-   - "@your-org" → نام سازمان یا username واقعی npm
-   - "Your Name" → نام شما
-   - "your.email@example.com" → ایمیل شما
+   - نام سازمان: @lomineuro
+   - نام شما: Amirreza Ghafarian
+   - ایمیل شما: amirghafarian7879@gmail.com
    - URLهای repository → آدرس مخزن GitHub شما
    ```
 
@@ -129,10 +129,10 @@ npm publish
 
 ```bash
 # نصب پکیج
-npm install @your-org/jalali-date-picker
+npm install @lomineuro/jalali-date-picker
 
 # استفاده در پروژه Angular
-import { JalaliDatePickerComponent } from '@your-org/jalali-date-picker';
+import { JalaliDatePickerComponent } from '@lomineuro/jalali-date-picker';
 ```
 
 ## 📚 مستندات
@@ -144,7 +144,7 @@ import { JalaliDatePickerComponent } from '@your-org/jalali-date-picker';
 
 ## ⚠️ نکات مهم
 
-1. **نام پکیج:** حتما `@your-org` را با نام واقعی خود جایگزین کنید
+1. **نام پکیج:** `@lomineuro/jalali-date-picker`
 2. **دسترسی عمومی:** برای اولین بار از `--access public` استفاده کنید
 3. **نسخه‌گذاری:** از Semantic Versioning پیروی کنید
 4. **تست محلی:** قبل از انتشار، پکیج را محلی تست کنید

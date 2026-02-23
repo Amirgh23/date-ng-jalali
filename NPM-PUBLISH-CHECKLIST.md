@@ -3,7 +3,7 @@
 ## Pre-Publish Checklist
 
 ### 1. Package Configuration ✅
-- [x] Package name set to scoped: `@your-org/jalali-date-picker`
+- [x] Package name set to scoped: `@lomineuro/jalali-date-picker`
 - [x] Version set to `1.0.0`
 - [x] Description added
 - [x] Keywords added for discoverability
@@ -46,10 +46,10 @@
 1. **Update package.json with your information:**
    ```bash
    # Edit: projects/jalali-date-picker/package.json
-   # Change:
-   # - @your-org/jalali-date-picker → @your-actual-org/jalali-date-picker
-   # - Author name and email
-   # - Repository URLs
+   # Already updated:
+   # - @lomineuro/jalali-date-picker ✅
+   # - Author: Amirreza Ghafarian ✅
+   # - Repository URLs ✅
    ```
 
 2. **Login to npm:**
@@ -99,11 +99,11 @@ npm version major
 ## Post-Publish
 
 1. **Verify package on npm:**
-   - Visit: https://www.npmjs.com/package/@your-org/jalali-date-picker
+   - Visit: https://www.npmjs.com/package/@lomineuro/jalali-date-picker
 
 2. **Test installation:**
    ```bash
-   npm install @your-org/jalali-date-picker
+   npm install @lomineuro/jalali-date-picker
    ```
 
 3. **Create a GitHub release:**
@@ -122,9 +122,9 @@ The published package includes:
 ## Important Notes
 
 ⚠️ **Before publishing:**
-1. Replace `@your-org` with your actual npm organization/username
-2. Update author information
-3. Update repository URLs
+1. Package name: @lomineuro/jalali-date-picker ✅
+2. Author information: Amirreza Ghafarian ✅
+3. Repository URLs: Updated ✅
 4. Test the package locally first
 
 ✅ **Package is ready for npm publish!**
@@ -133,7 +133,7 @@ The published package includes:
 
 ```
 Build Mode: Partial Compilation ✅
-Package Name: @your-org/jalali-date-picker
+Package Name: @lomineuro/jalali-date-picker
 Version: 1.0.0
 License: MIT
 Size: ~408 KB (minified)
