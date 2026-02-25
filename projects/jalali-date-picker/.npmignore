@@ -1,4 +1,4 @@
-# Source files
+# Source files (already compiled)
 src/
 *.ts
 !*.d.ts
@@ -7,16 +7,42 @@ src/
 tsconfig*.json
 ng-package.json
 karma.conf.js
+angular.json
 
 # Test files
 *.spec.ts
 *.spec.js
+test/
+tests/
 
 # Development files
 .editorconfig
 .gitignore
+.vscode/
+.idea/
+.kiro/
 
-# Documentation (except README)
+# Build files
+node_modules/
+dist/
+.angular/
+
+# Documentation (keep only essential)
 *.md
 !README.md
+!CHANGELOG.md
+!CONTRIBUTING.md
 !LICENSE
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Git files
+.git/
+.gitignore
+.gitattributes

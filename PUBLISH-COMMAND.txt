@@ -1,0 +1,11 @@
+دستور انتشار (در پوشه dist/jalali-date-picker اجرا کنید):
+
+npm publish --access public --otp=YOUR_6_DIGIT_CODE
+
+مثال:
+npm publish --access public --otp=123456
+
+توجه:
+- کد OTP را از اپلیکیشن authenticator بگیرید
+- کد فقط 30 ثانیه معتبر است
+- سریع دستور را اجرا کنید

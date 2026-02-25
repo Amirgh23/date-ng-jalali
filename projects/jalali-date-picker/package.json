@@ -1,6 +1,6 @@
 {
   "name": "@lomineuro/jalali-date-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A comprehensive Angular date picker component supporting Jalali (Persian), Gregorian, and Hijri calendars with 21 beautiful themes and full RTL support",
   "keywords": [
     "angular",
