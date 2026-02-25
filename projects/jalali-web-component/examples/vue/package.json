@@ -1,0 +1,48 @@
+{
+  "name": "@jalali-web-component/vue-example",
+  "version": "1.0.0",
+  "description": "Vue 3 integration example for Jalali Date Picker Web Component",
+  "type": "module",
+  "main": "JalaliDatePickerVue.vue",
+  "types": "types.ts",
+  "files": [
+    "JalaliDatePickerVue.vue",
+    "types.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest --run",
+    "test:coverage": "vitest --coverage"
+  },
+  "keywords": [
+    "jalali",
+    "date-picker",
+    "vue",
+    "vue3",
+    "web-component",
+    "persian",
+    "calendar"
+  ],
+  "author": "Jalali Web Component Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.0.0",
+    "@jalali-web-component/core": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.4.0",
+    "vitest": "^0.34.0",
+    "typescript": "^5.0.0",
+    "vue": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jalali-web-component/jalali-web-component.git",
+    "directory": "projects/jalali-web-component/examples/vue"
+  },
+  "bugs": {
+    "url": "https://github.com/jalali-web-component/jalali-web-component/issues"
+  },
+  "homepage": "https://github.com/jalali-web-component/jalali-web-component#readme"
+}

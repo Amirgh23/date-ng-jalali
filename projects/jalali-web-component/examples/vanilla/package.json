@@ -1,0 +1,40 @@
+{
+  "name": "jalali-date-picker-vanilla-example",
+  "version": "1.0.0",
+  "description": "Vanilla JavaScript example for Jalali Date Picker Web Component",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "serve": "http-server -p 8080",
+    "dev": "http-server -p 8080 -c-1"
+  },
+  "keywords": [
+    "jalali",
+    "date-picker",
+    "web-component",
+    "vanilla-js",
+    "custom-element"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "http-server": "^14.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "collectCoverageFrom": [
+      "app.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  }
+}
